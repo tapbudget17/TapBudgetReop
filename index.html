@@ -607,9 +607,102 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
 .cashprev.ok { background:var(--success-soft); color:var(--success-text); }
 .cashprev.warn { background:var(--warning-soft); color:var(--warning-text); }
 .cashprev.bad { background:var(--danger-soft); color:var(--danger-text); }
+
+/* ===== Easy mode: big print, three buttons, plain words, no charts or tables ===== */
+#easy { display:none; }
+html[data-easy] .wrap, html[data-easy] .tabbar, html[data-easy] .scrim, html[data-easy] .drawer, html[data-easy] .sheet-wrap, html[data-easy] .bill-screen, html[data-easy] .wall { display:none !important; }
+html[data-easy] body, html[data-easy] body.ov:not(.ovscroll), html[data-easy] body.noscroll { overflow:auto !important; height:auto !important; overscroll-behavior:auto !important; }
+html[data-easy] #easy { display:block; --ez:22px; font-size:var(--ez); line-height:1.4; color:var(--text); min-height:100vh; min-height:100dvh; padding:18px 16px calc(6em + env(safe-area-inset-bottom, 0px)); }
+html[data-easy][data-easysize="xl"] #easy { --ez:27px; }
+html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); width:calc(100% - 32px); max-width:600px; box-sizing:border-box; font-size:20px; line-height:1.3; padding:14px 20px; border-radius:20px; text-align:center; }
+.ez-page { max-width:640px; margin:0 auto; }
+.ez-page:focus { outline:none; }
+.ez-page h1 { font-size:1.45em; line-height:1.15; letter-spacing:-0.02em; margin:0; font-weight:800; }
+.ez-page h1:focus { outline:none; }
+.ez-sub { margin:4px 0 0; font-size:.85em; color:var(--text-muted); font-weight:600; }
+.ez-card { background:var(--surface); border:2px solid var(--border); border-radius:22px; padding:18px; margin-top:16px; box-shadow:var(--shadow-1); }
+.ez-card.warn { border-color:var(--warning); background:var(--warning-soft); }
+.ez-card.bad { border-color:var(--danger); background:var(--danger-soft); }
+.ez-card.good { border-color:var(--success); background:var(--success-soft); }
+.ez-card h2 { margin:0 0 6px; font-size:.82em; font-weight:800; letter-spacing:.02em; color:inherit; opacity:.85; text-transform:none; }
+.ez-big { font-size:1.55em; font-weight:800; line-height:1.15; letter-spacing:-0.02em; }
+.ez-text { margin:6px 0 0; font-size:1em; font-weight:600; }
+.ez-btn { display:flex; align-items:center; justify-content:center; gap:.5em; width:100%; min-height:3.2em; margin-top:14px; padding:.5em 1em; border:0; border-radius:18px; background:var(--solid); color:var(--on-solid); font:inherit; font-size:1em; font-weight:800; text-align:center; }
+.ez-btn.alt { background:var(--surface-2); color:var(--text); border:2px solid var(--border); }
+.ez-btn.danger { background:var(--danger); color:#fff; }
+.ez-btn svg, .ez-when svg, .ez-tab svg { width:1.2em; height:1.2em; flex:none; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+.ez-btn:focus-visible, .ez-tab:focus-visible, .ez-link:focus-visible, .ez-seg button:focus-visible, .ez-page input:focus-visible, .ez-page select:focus-visible { outline:4px solid var(--brand); outline-offset:3px; }
+.ez-link { display:block; width:100%; min-height:2.6em; margin-top:8px; padding:.4em; border:0; background:transparent; color:var(--text); font:inherit; font-size:.85em; font-weight:700; text-decoration:underline; text-underline-offset:.2em; }
+.ez-row { background:var(--surface); border:2px solid var(--border); border-radius:20px; padding:16px; margin-top:12px; }
+.ez-row.late { border-color:var(--danger); }
+.ez-line { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+.ez-name { font-size:1.15em; font-weight:800; overflow-wrap:anywhere; }
+.ez-amt { font-size:1.2em; font-weight:800; white-space:nowrap; }
+.ez-when { display:flex; align-items:center; gap:.4em; margin-top:2px; font-weight:700; }
+.ez-when.late { color:var(--danger-text); } .ez-when.soon { color:var(--warning-text); } .ez-when.ok { color:var(--success-text); }
+.ez-note { margin-top:6px; font-weight:600; font-size:.9em; }
+.ez-h2 { margin:26px 0 0; font-size:1.05em; font-weight:800; }
+.ez-lines { display:grid; gap:10px; margin:0; }
+.ez-lines > div { display:flex; justify-content:space-between; gap:12px; align-items:baseline; }
+.ez-lines dt { font-weight:700; } .ez-lines dd { margin:0; font-weight:800; font-size:1.15em; white-space:nowrap; }
+.ez-seg { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+.ez-seg button { min-height:3em; border:2px solid var(--border); border-radius:16px; background:var(--surface); color:var(--text); font:inherit; font-size:1em; font-weight:800; }
+.ez-seg button[aria-pressed="true"] { background:var(--solid); color:var(--on-solid); border-color:var(--solid); }
+.ez-page label { display:block; margin:16px 0 6px; font-weight:800; }
+.ez-page input, .ez-page select { width:100%; min-height:3em; padding:0 .7em; border:2px solid var(--text-muted); border-radius:14px; background:var(--surface); color:var(--text); font:inherit; font-size:1em; font-weight:700; }
+.ez-err { margin-top:10px; font-weight:800; color:var(--danger-text); }
+.ez-nav { position:fixed; left:0; right:0; bottom:0; z-index:30; display:grid; grid-template-columns:repeat(4, 1fr); gap:6px; padding:8px 10px calc(8px + env(safe-area-inset-bottom, 0px)); background:var(--surface); border-top:2px solid var(--border); font-size:var(--ez, 22px); }
+.ez-tab { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; min-height:calc(var(--ez, 22px) * 3.3); border:0; border-radius:16px; background:transparent; color:var(--text); font:inherit; font-size:min(.8em, 4.6vw); font-weight:800; }
+.ez-tab svg { width:1.6em; height:1.6em; }
+.ez-tab[aria-current="page"] { background:var(--solid); color:var(--on-solid); }
+
+/* ===== Easy mode: the Overview dashboard (read only) ===== */
+.ez-banner { display:flex; align-items:center; gap:.7em; }
+.ez-banner svg { width:2.2em; height:2.2em; flex:none; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+.ez-bar { height:1.1em; margin-top:12px; border-radius:999px; background:var(--track); border:2px solid var(--border); overflow:hidden; }
+.ez-bar > i { display:block; height:100%; border-radius:999px; background:var(--success-text); }
+.ez-bar > i.warn, .ez-meter > i.warn { background:var(--warning-text); }
+.ez-bar > i.bad, .ez-meter > i.bad { background:var(--danger-text); }
+.ez-meter { position:relative; height:1.1em; margin:16px 0 8px; border-radius:999px; background:var(--track); border:2px solid var(--border); }
+.ez-meter > i { position:absolute; left:0; top:0; bottom:0; border-radius:999px; background:var(--success-text); }
+.ez-meter > b { position:absolute; top:-.4em; bottom:-.4em; width:5px; margin-left:-2.5px; border-radius:3px; background:var(--text); }
+.ez-cap { margin:6px 0 0; font-size:.85em; font-weight:600; }
+.ez-soon { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; padding:12px 0; border-top:2px solid var(--border); }
+.ez-soon:first-of-type { border-top:0; padding-top:4px; }
+.ez-soon .ez-name { font-size:1em; }
+
+/* ===== the four gauge chips always fit: label on top, number underneath ===== */
+#deckChips { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:6px; overflow:visible; }
+#deckChips .chipbtn { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; min-height:54px; padding:6px 3px; border-radius:18px; line-height:1.15; text-align:center; white-space:nowrap; }
+#deckChips .chipbtn .lab { font-size:13.5px; font-weight:700; }
+#deckChips .chipbtn .n { margin:0; font-size:13px; font-weight:600; opacity:.78; }
+@media (max-width:350px) { #deckChips .chipbtn .lab { font-size:12px; } #deckChips .chipbtn .n { font-size:12px; } #deckChips { gap:4px; } }
+@media (min-width:640px) { #deckChips { max-width:600px; margin-left:auto; margin-right:auto; } }
+
+/* ===== loans and cards that follow your bills ===== */
+.leff { display:flex; align-items:center; gap:8px; margin:8px 0 0 64px; padding:8px 12px; border-radius:12px; font-size:var(--fs-sm); font-weight:700; line-height:1.3; background:var(--surface-2); color:var(--text); }
+.leff svg { width:16px; height:16px; flex:none; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+.leff.down { background:var(--success-soft); color:var(--success-text); }
+.leff.up { background:var(--warning-soft); color:var(--warning-text); }
+.linkhead { margin:16px 0 0; font-weight:800; font-size:var(--fs-md); }
+.radlist { display:flex; flex-direction:column; gap:8px; max-height:300px; overflow-y:auto; padding:2px; }
+.rad { display:flex; align-items:center; gap:12px; width:100%; min-height:56px; padding:8px 14px; border:1px solid var(--border); border-radius:var(--r-md); background:var(--surface); color:var(--text); font:inherit; text-align:left; }
+.rad.on { border:2px solid var(--solid); background:var(--surface-2); padding:7px 13px; }
+.rad .dot { flex:none; width:22px; height:22px; border-radius:50%; border:2px solid var(--text-muted); display:grid; place-items:center; }
+.rad .dot.sq { border-radius:7px; }
+.rad.on .dot { border-color:var(--solid); }
+.rad.on .dot::after { content:""; width:10px; height:10px; border-radius:50%; background:var(--solid); }
+.rad.on .dot.sq::after { border-radius:3px; }
+.rad .rt { flex:1; min-width:0; display:flex; flex-direction:column; }
+.rad .rt b { font-size:var(--fs-md); }
+.cklist { display:flex; flex-direction:column; gap:10px; margin-top:var(--s3); }
+.ckrow { border:1px solid var(--border); border-radius:var(--r-md); padding:12px 14px; background:var(--surface); }
+.ckrow.open { border:2px solid var(--solid); padding:11px 13px; }
+.ckrow.done { display:flex; align-items:center; justify-content:space-between; gap:12px; opacity:.85; }
+.ckrow .lactions { display:flex; gap:8px; flex-wrap:wrap; margin-top:var(--s2); }
 </style>
 
-<script>try{var t=localStorage.getItem("budget-tracker:theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("budget-tracker:look")==="glass")document.documentElement.setAttribute("data-look","glass");var k=localStorage.getItem("budget-tracker:colorsCss");if(k){var s=document.createElement("style");s.id="userColors";s.textContent=k;document.head.appendChild(s)}var w=JSON.parse(localStorage.getItem("budget-tracker:wall")||"null");if(w&&w.on){var r=document.documentElement;r.classList.add("has-wall");r.style.setProperty("--wall-dim",String(Math.min(80,Math.max(0,+w.dim||0))/100));r.style.setProperty("--wall-blur",(Math.min(100,Math.max(0,+w.blur||0))*0.24)+"px")}}catch(e){}</script>
+<script>try{var t=localStorage.getItem("budget-tracker:theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("budget-tracker:look")==="glass")document.documentElement.setAttribute("data-look","glass");if(localStorage.getItem("budget-tracker:easy")==="1")document.documentElement.setAttribute("data-easy","1");if(localStorage.getItem("budget-tracker:easysize")==="xl")document.documentElement.setAttribute("data-easysize","xl");var k=localStorage.getItem("budget-tracker:colorsCss");if(k){var s=document.createElement("style");s.id="userColors";s.textContent=k;document.head.appendChild(s)}var w=JSON.parse(localStorage.getItem("budget-tracker:wall")||"null");if(w&&w.on){var r=document.documentElement;r.classList.add("has-wall");r.style.setProperty("--wall-dim",String(Math.min(80,Math.max(0,+w.dim||0))/100));r.style.setProperty("--wall-blur",(Math.min(100,Math.max(0,+w.blur||0))*0.24)+"px")}}catch(e){}</script>
 </head>
 <body>
 <div class="wall" id="wall" aria-hidden="true"></div>
@@ -658,6 +751,8 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
   <p class="sub foot-note">Your budgets are saved on this device only. Open the menu to add items, share, import or back up. <a data-ext href="about/privacy.html" target="_blank" rel="noopener">Privacy policy</a> · <a data-ext href="about/support.html" target="_blank" rel="noopener">Support</a></p>
 </div>
 
+<div id="easy"></div>
+
 <nav class="tabbar" id="tabbar" aria-label="Sections"><div class="tabbar-in" id="tabbarIn"></div></nav>
 
 <div class="scrim" id="scrim"></div>
@@ -673,6 +768,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     <div id="restoreHost"></div>
     <div id="themeHost"></div>
     <div id="cashHost"></div>
+    <div id="checkHost"></div>
   </div>
 </div>
 <div class="bill-screen" id="billScreen" role="dialog" aria-modal="true" aria-labelledby="billTitle" tabindex="-1" hidden></div>
@@ -693,7 +789,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
   const niceDate = (iso) => { const p = parseISO(iso); const w = new Date(Date.UTC(p.y, p.m, p.d)).getUTCDay(); return DOW[w] + ", " + MONTHS[p.m].slice(0, 3) + " " + p.d; };
   const fmt = (v) => { const n = Math.abs(v); const s = Number.isInteger(+n.toFixed(2)) ? n.toLocaleString("en-CA", { maximumFractionDigits: 0 }) : n.toLocaleString("en-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); return (v < 0 ? "−$" : "$") + s; };
 
-  const state = { items: [], pay: new Map(), y: new Date().getFullYear(), m: new Date().getMonth(), manage: false, adding: false, ready: true, mode: "saved", note: "", budgets: {}, activeId: null, panel: false, pending: null, renaming: null, importText: "", sharing: false, importOpen: false, drawer: false, tab: "overview", billFilter: "all", spendFilter: "all", billView: "list", overdueCount: 0, themeOpen: false, cash: null, cashOpen: false, loans: [], loanEdit: null, loanPay: null, ovCard: 0, billQuery: "", bill: null, billEdit: false, billList: null };
+  const state = { items: [], pay: new Map(), y: new Date().getFullYear(), m: new Date().getMonth(), manage: false, adding: false, ready: true, mode: "saved", note: "", budgets: {}, activeId: null, panel: false, pending: null, renaming: null, importText: "", sharing: false, importOpen: false, drawer: false, tab: "overview", billFilter: "all", spendFilter: "all", billView: "list", overdueCount: 0, themeOpen: false, easy: false, easyTab: "home", easyForm: null, easyConfirm: null, easyMonth: 0, cash: null, cashOpen: false, checkOpen: false, loans: [], loanEdit: null, loanPay: null, ovCard: 0, billQuery: "", bill: null, billEdit: false, billList: null };
   let itemsCol = null, payCol = null;
 
   /* ---------- storage: this device's localStorage, one entry holding every budget ---------- */
@@ -746,7 +842,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
   const upsert = (arr, it) => { const i = arr.findIndex((x) => x.id === it.id); if (i >= 0) arr[i] = it; else arr.push(it); };
   const store = {
     setItem(it) { state.budgets[state.activeId].sample = false; upsert(state.items, it); persist(); render(); },
-    delItem(id) { state.budgets[state.activeId].sample = false; state.items = state.items.filter((x) => x.id !== id); for (const [k, v] of Array.from(state.pay)) if (v.item === id) state.pay.delete(k); persist(); render(); },
+    delItem(id) { state.budgets[state.activeId].sample = false; const keep = state.loans.filter(isLinked).map((l) => ({ id: l.id, cur: debtNow(l) })); state.items = state.items.filter((x) => x.id !== id); for (const [k, v] of Array.from(state.pay)) if (v.item === id) state.pay.delete(k); state.loans = state.loans.map((l) => { const k = keep.find((z) => z.id === l.id); if (!k) return l; const { payBill, ...rest } = l; return rebase(payBill === id ? rest : l, k.cur); }); persist(); render(); },
     setPay(key, p) { state.pay.set(key, p); persist(); render(); },
     delPay(key) { state.pay.delete(key); persist(); render(); },
     setLoan(l) { state.budgets[state.activeId].sample = false; upsert(state.loans, l); persist(); render(); },
@@ -769,7 +865,12 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     const total = num(x.total), balance = num(x.balance), payment = num(x.payment);
     if (total == null || total < 0 || balance == null || balance < 0) return null;
     const card = x.kind === "card";
-    return { id: str(x.id, 80), name: str(x.name, 60) || (card ? "Credit card" : "Loan"), kind: card ? "card" : "loan", total, balance, payment: payment == null || payment < 0 ? 0 : payment };
+    const out = { id: str(x.id, 80), name: str(x.name, 60) || (card ? "Credit card" : "Loan"), kind: card ? "card" : "loan", total, balance, payment: payment == null || payment < 0 ? 0 : payment };
+    if (typeof x.payBill === "string" && x.payBill) out.payBill = str(x.payBill, 120);
+    if (card && Array.isArray(x.accounts)) { const a = x.accounts.filter((v) => typeof v === "string" && v.trim()).slice(0, 8).map((v) => str(v, 40)); if (a.length) out.accounts = a; }
+    const apr = num(x.apr); if (!card && apr != null && apr > 0 && apr <= 100) out.apr = apr;
+    if ((out.payBill || out.accounts) && typeof x.asOf === "string" && ISO.test(x.asOf)) { out.asOf = x.asOf; if (Array.isArray(x.seen)) out.seen = x.seen.filter((v) => typeof v === "string").slice(0, 600).map((v) => str(v, 140)); }
+    return out;
   }
   function cleanPay(raw, items) {
     const out = {};
@@ -802,6 +903,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
       const fromFile = String(fileName || "").replace(/\.json$/i, "").replace(/^budget-/, "").replace(/-\d{4}-\d{2}-\d{2}$/, "").replace(/[-_]+/g, " ").trim().replace(/\b\w/g, (c) => c.toUpperCase());
       const name = str(d.name, 60).trim() || fromFile || "Imported budget";
       state.pending = { name, items, pay: cleanPay(d.pay, items), loans, cash: d.cash ? cleanCash(d.cash) : null, fileName: fileName || "pasted text" };
+      if (state.easy) { state.easy = false; document.documentElement.removeAttribute("data-easy"); }      // the import prompt lives in the full app
       state.note = ""; state.panel = false; state.importOpen = false; state.sharing = false; render();
       const rh = document.getElementById("restoreHost"); if (rh && rh.scrollIntoView) rh.scrollIntoView({ block: "nearest" });
     } catch (e) { state.pending = null; state.note = "That doesn’t look like a budget link or backup."; render(); }
@@ -826,7 +928,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
   }
   function payload(withHistory) {
     persist();
-    return { app: "budget-tracker", version: 2, name: curName(), items: state.items, pay: withHistory ? Object.fromEntries(state.pay) : {}, loans: state.loans, ...(withHistory ? { cash: state.cash } : {}) };
+    return { app: "budget-tracker", version: 2, name: curName(), items: state.items, pay: withHistory ? Object.fromEntries(state.pay) : {}, loans: withHistory ? state.loans : state.loans.map(({ asOf, seen, ...rest }) => rest), ...(withHistory ? { cash: state.cash } : {}) };
   }
   async function makeLink(withHistory) { return location.href.split("#")[0] + "#b=" + await toToken(payload(withHistory)); }
   async function importText(text) {
@@ -908,6 +1010,8 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
       { ...mk(8, "car", "Car insurance", "bill", 140, 20, "Auto-pay"), recurring: true, autoSince: since },
       mk(9, "savings", "Savings transfer", "bill", 150, 21, "Chequing"),
       mk(10, "card", "Credit card payment", "bill", 200, 25, "Chequing"),
+      mk(15, "carloan", "Car loan payment", "bill", 385, 27, "Chequing"),
+      mk(16, "studentloan", "Student loan payment", "bill", 150, 26, "Chequing"),
       mk(11, "groceries", "Groceries", "variable", 450, 0, "Chequing"),
       mk(12, "gas", "Gas", "variable", 120, 0, "Chequing"),
       mk(13, "dining", "Dining out", "variable", 150, 0, "Chequing"),
@@ -915,12 +1019,13 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     ];
   }
   function sampleLoans() {
+    const its = sampleItems(), pay = new Map(Object.entries(samplePay(its)));
     return [
-      { id: "sample-loan-car", name: "Car loan", kind: "loan", total: 18000, balance: 11250, payment: 385 },
-      { id: "sample-loan-school", name: "Student loan", kind: "loan", total: 9000, balance: 3900, payment: 150 },
-      { id: "sample-card-visa", name: "Rewards Visa", kind: "card", total: 6000, balance: 1850, payment: 150 },
+      { id: "sample-loan-car", name: "Car loan", kind: "loan", total: 18000, balance: 11250, payment: 385, payBill: "sample-carloan" },
+      { id: "sample-loan-school", name: "Student loan", kind: "loan", total: 9000, balance: 3900, payment: 150, payBill: "sample-studentloan" },
+      { id: "sample-card-visa", name: "Rewards Visa", kind: "card", total: 6000, balance: 1850, payment: 200, payBill: "sample-card", accounts: ["Credit card"] },
       { id: "sample-card-store", name: "Store card", kind: "card", total: 2500, balance: 2050, payment: 50 }
-    ];
+    ].map((l) => (isLinked(l) ? { ...l, asOf: todayISO(), seen: snapshotSeen(l, its, pay) } : l));
   }
   function samplePay(items) {
     // Pretend the last two months, and the days so far this month, have been tracked, so the example looks lived in.
@@ -1086,7 +1191,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     share: "M12 3v12M7 8l5-5 5 5M5 14v5h14v-5", download: "M12 3v12M7 10l5 5 5-5M5 19h14", upload: "M12 15V3M7 8l5-5 5 5M5 19h14",
     inbox: "M4 13l2-8h12l2 8M4 13v6h16v-6M4 13h5l1 2h4l1-2h5", folder: "M3 7h6l2 2h10v10H3z", check: "M5 13l4 4L19 7",
     circle: "M12 7a5 5 0 100 10 5 5 0 000-10z",
-    chevL: "M15 6l-6 6 6 6", chevR: "M9 6l6 6-6 6", search: "M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-4.3-4.3",
+    alert: "M12 4l9 16H3zM12 10v4M12 17v.5", easy: "M3 19l5-13 5 13M5.2 14h5.6M14.5 19l3.5-8 3.5 8M15.8 17h4.4", down: "M12 5v14M5 12l7 7 7-7", up: "M12 19V5M5 12l7-7 7 7", link: "M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1", chevL: "M15 6l-6 6 6 6", chevR: "M9 6l6 6-6 6", search: "M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-4.3-4.3",
     lock: "M7 11V8a5 5 0 0110 0v3M6 11h12v9H6zM12 15v2", sliders: "M4 7h9M17 7h3M4 17h3M11 17h9M15 4v6M9 14v6",
     palette: "M12 3a9 9 0 100 18c1.2 0 2-.8 2-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 004-4c0-4.4-4-8-9-8zM7.5 11a1 1 0 100-2 1 1 0 000 2zM11 7.5a1 1 0 100-2 1 1 0 000 2zM15.5 8.5a1 1 0 100-2 1 1 0 000 2z",
     home: "M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10", bills: "M7 3h10v18l-2.5-1.5L12 21l-2.5-1.5L7 21V3zM10 8h4M10 12h4", wallet: "M3 7h16a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7zM3 7l12-3v3M16 14h3", chart: "M5 20V10M12 20V4M19 20v-7", star: "M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z",
@@ -1127,9 +1232,10 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     else if (drawerFocus && drawerFocus.focus) { drawerFocus.focus(); drawerFocus = null; }
   }
   function openSheet(kind) {
-    state.panel = state.sharing = state.importOpen = state.adding = state.themeOpen = state.cashOpen = false; state.pending = null; cashDraft = null;
+    state.panel = state.sharing = state.importOpen = state.adding = state.themeOpen = state.cashOpen = state.checkOpen = false; state.pending = null; cashDraft = null;
     if (kind === "manage") state.panel = true;
     if (kind === "cash") state.cashOpen = true;
+    if (kind === "check") state.checkOpen = true;
     if (kind === "theme") state.themeOpen = true;
     if (kind === "add") state.adding = true;
     if (kind === "share") state.sharing = true;
@@ -1138,7 +1244,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     render();
     if (kind === "import") tryClipboardImport();
   }
-  function closeSheet() { state.panel = state.sharing = state.importOpen = state.adding = state.themeOpen = state.cashOpen = false; state.pending = null; render(); }
+  function closeSheet() { state.panel = state.sharing = state.importOpen = state.adding = state.themeOpen = state.cashOpen = state.checkOpen = false; state.pending = null; render(); }
   async function tryClipboardImport() {
     try { const t = await navigator.clipboard.readText(); if (t && /[uz]\.[A-Za-z0-9_-]{20,}|^\s*\{/.test(t)) { importText(t); return; } } catch (e) { /* the box is there to paste into */ }
     const bx = $("importText"); if (bx) bx.focus();
@@ -1173,6 +1279,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
       item("download", "Save a backup file", () => { setDrawer(false); backup(); }, { id: "menuBackup" }),
       item("upload", "Restore from a file…", () => { setDrawer(false); $("restoreFile").click(); }, { id: "menuRestore" }),
       h("h2", {}, "Appearance"), seg,
+      item("easy", "Easy mode (big print)", () => setEasy(true), { id: "menuEasy" }),
       item("palette", "Wallpaper and colors…", () => openSheet("theme"), { id: "menuColors", right: h("span", { class: "dots", "aria-hidden": "true" }, [col.brand, col.primary, col.accent].map((c) => h("i", { style: "background:" + c })), ) }),
       h("h2", {}, "About"),
       item("info", "About TapBudget", () => openPage(sitePage("about/")), { id: "menuAbout" }),
@@ -1208,7 +1315,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     const eb = $("editBar"); eb.replaceChildren();
     if (state.manage) eb.append(h("div", { class: "callout" }, h("b", {}, "Editing items. "), "Change names, amounts and due days below, or remove an item. ", h("button", { class: "btn small primary", onclick: () => { state.manage = false; render(); } }, "Done")));
     renderDrawer();
-    const open = state.panel || state.sharing || state.importOpen || state.adding || state.themeOpen || state.cashOpen || !!state.pending;
+    const open = state.panel || state.sharing || state.importOpen || state.adding || state.themeOpen || state.cashOpen || state.checkOpen || !!state.pending;
     const wrap = $("sheetWrap");
     if (open && wrap.hidden) { wrap.hidden = false; sheetFocus = document.activeElement; document.body.classList.add("noscroll"); setTimeout(() => $("sheet").focus(), 0); }
     if (!open && !wrap.hidden) { wrap.hidden = true; syncNoScroll(); if (sheetFocus && sheetFocus.focus) { try { sheetFocus.focus(); } catch (e) { /* element is gone */ } } sheetFocus = null; }
@@ -1436,6 +1543,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
   const goToday = () => { const t = new Date(); state.y = t.getFullYear(); state.m = t.getMonth(); render(); };
 
   function render() {
+    _ledger = null;
     syncLook();
     applyAutoPay();
     const { y, m } = state;
@@ -1473,6 +1581,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     renderShareImport();
     renderThemeSheet();
     renderCashSheet();
+    renderCheckSheet();
     renderSample();
     renderOverview(ctx);
     renderLoans();
@@ -1490,6 +1599,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     renderChrome();
     renderTabs();
     fitOverview();
+    renderEasy();
   }
 
   function renderStrip(level) {                                    // the pinned month bar: month arrows, Today and the health light
@@ -1609,7 +1719,8 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
   function cashSvg(mod, W, H) {                                    // W and H: the size of the box it will fill, so it uses all of it
     W = Math.max(160, Math.round(W || 320)); H = Math.max(80, Math.round(H || 200));
     const L = 46, R = W - 6, T = 14, B = H - 22, cols = mod.cols, n = cols.length;
-    let hi = Math.max(mod.warn, ...cols.map((c) => Math.max(c.from, c.to))), lo = Math.min(0, ...cols.map((c) => Math.min(c.from, c.to)));
+    const real = mod.st.kind !== "unset";
+    let hi = Math.max(real ? mod.warn : 0, ...cols.map((c) => Math.max(c.from, c.to))), lo = Math.min(0, ...cols.map((c) => Math.min(c.from, c.to)));
     if (hi === lo) hi = lo + 1000;
     const pad2 = (hi - lo) * 0.08; hi += pad2; if (lo < 0) lo -= pad2;
     const y = (v) => B - ((v - lo) / (hi - lo)) * (B - T), cw = (R - L) / n, bw = Math.max(4, Math.min(14, cw * 0.66)), cx = (i) => L + (i + 0.5) * cw;
@@ -1619,33 +1730,49 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
       out.push('<line x1="' + L + '" y1="' + f1(y(tv)) + '" x2="' + R + '" y2="' + f1(y(tv)) + '" stroke="#ffffff" stroke-opacity="' + (Math.abs(tv) < 1e-6 ? 0.4 : 0.12) + '"/>');
       if (Math.abs(y(tv) - y(mod.warn)) > 11) out.push('<text x="' + (L - 6) + '" y="' + f1(y(tv) + 3.5) + '" text-anchor="end" font-size="10" fill="#d3e1e6">' + kfmt(tv) + '</text>');
     }
-    if (mod.warn > lo) {
+    if (real && mod.warn > lo) {
       out.push('<rect x="' + L + '" y="' + f1(y(Math.min(mod.warn, hi))) + '" width="' + (R - L) + '" height="' + f1(B - y(Math.min(mod.warn, hi))) + '" fill="#ff6b6b" fill-opacity="0.24"/>');
       out.push('<line x1="' + L + '" y1="' + f1(y(mod.warn)) + '" x2="' + R + '" y2="' + f1(y(mod.warn)) + '" stroke="#ff9b9b" stroke-width="1.2" stroke-dasharray="4 3"/>');
       out.push('<text x="' + (L - 6) + '" y="' + f1(y(mod.warn) + 3.5) + '" text-anchor="end" font-size="10" font-weight="700" fill="#ffb4b4">' + kfmt(mod.warn) + '</text>');
     }
     const fillOf = { total: "#8fe3f2", inc: "#6ee7a0", dec: "#c27be8" }, steps = cols.filter((c) => c.kind !== "total"), maxAbs = Math.max(1, ...steps.map((c) => Math.abs(c.amt)));
-    let labels = 0, prev = null;
+    let labels = 0, prev = null; const cands = [], bars = [];
     cols.forEach((c, i) => {
       const top = Math.max(c.from, c.to), bot = Math.min(c.from, c.to), x = cx(i) - bw / 2, yt = y(top), h = Math.max(1.4, y(bot) - y(top));
+      bars.push({ x1: x, x2: x + bw, y1: yt, y2: yt + h });
       if (prev !== null) out.push('<line x1="' + f1(cx(i - 1) + bw / 2) + '" y1="' + f1(y(prev)) + '" x2="' + f1(x) + '" y2="' + f1(y(prev)) + '" stroke="#9fb4bf" stroke-width="0.9"/>');
       const under = mod.st.kind !== "unset" && c.kind !== "total" && c.to < mod.warn;
       out.push('<rect x="' + f1(x) + '" y="' + f1(yt) + '" width="' + f1(bw) + '" height="' + f1(h) + '" rx="2" fill="' + fillOf[c.kind] + '"' + (under ? ' stroke="#ff8f8f" stroke-width="1.6"' : "") + '/>');
       const edge = i === 0 || i === n - 1, showLab = edge ? cw >= 14 || i === 0 : (cw >= 24 || (i % (cw >= 17 ? 1 : cw >= 11 ? 2 : 3) === 0 && i !== 1 && i !== n - 2));
       if (showLab) out.push('<text x="' + f1(cx(i)) + '" y="' + (B + 16) + '" text-anchor="middle" font-size="10" fill="#d3e1e6">' + c.label + '</text>');
-      if (c.kind === "total") out.push('<text x="' + f1(cx(i)) + '" y="' + f1(c.to >= 0 ? yt - 4 : y(bot) + 11) + '" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">' + kfmt(c.to) + '</text>');
-      else if (Math.abs(c.amt) >= 0.5 * maxAbs && labels < 6) { labels++; out.push('<text x="' + f1(cx(i)) + '" y="' + f1(c.amt > 0 ? yt - 4 : y(bot) + 11) + '" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">' + (c.amt > 0 ? "+" : "") + kfmt(c.amt) + '</text>'); }
+      if (c.kind === "total") cands.push({ i, x: cx(i), y: c.to >= 0 ? yt - 4 : y(bot) + 11, above: c.to >= 0, txt: kfmt(c.to), pri: 0 });
+      else if (Math.abs(c.amt) >= 0.5 * maxAbs && labels < 6) { labels++; cands.push({ i, x: cx(i), y: c.amt > 0 ? yt - 4 : y(bot) + 11, above: c.amt > 0, txt: (c.amt > 0 ? "+" : "") + kfmt(c.amt), pri: 1 }); }
       prev = c.to;
     });
-    if (mod.under) {
-      const lx = cx(mod.lowAt), anchorEnd = lx > (L + R) / 2;
+    const placed = [], clash = (r) => placed.some((q) => r.x1 < q.x2 + 2 && r.x2 > q.x1 - 2 && r.y1 < q.y2 + 1 && r.y2 > q.y1 - 1);
+    cands.sort((a, b) => a.pri - b.pri || a.i - b.i).forEach((c) => {       // totals first, then the biggest steps; a label that would sit on another moves up or down, or is left out
+      const w = c.txt.length * 5.9 + 2, x = Math.max(2 + w / 2, Math.min(W - 2 - w / 2, c.x));
+      for (const dy of [0, c.above ? -11 : 11, c.above ? -22 : 22, c.above ? 11 : -11]) {
+        const yy = c.y + dy, r = { x1: x - w / 2, x2: x + w / 2, y1: yy - 9, y2: yy + 2 };
+        if (r.y1 < 1 || r.y2 > B + 3) continue;
+        if (!clash(r)) { placed.push(r); out.push('<text x="' + f1(x) + '" y="' + f1(yy) + '" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">' + c.txt + '</text>'); return; }
+      }
+      if (c.pri === 0) { const r = { x1: x - w / 2, x2: x + w / 2, y1: c.y - 9, y2: c.y + 2 }; placed.push(r); out.push('<text x="' + f1(x) + '" y="' + f1(c.y) + '" text-anchor="middle" font-size="10" font-weight="700" fill="#ffffff">' + c.txt + '</text>'); }
+    });
+    if (mod.under) {                                               // the lowest point: a marker always, and a label when there is a clear spot for it
+      const lx = cx(mod.lowAt), txt = "Low " + kfmt(mod.low), w = txt.length * 6.2 + 2;
       out.push('<line x1="' + f1(lx) + '" y1="' + (T + 14) + '" x2="' + f1(lx) + '" y2="' + f1(y(mod.low) - 3) + '" stroke="#ffb454" stroke-width="1" stroke-dasharray="2 2"/>');
       out.push('<circle cx="' + f1(lx) + '" cy="' + f1(y(mod.low)) + '" r="3.6" fill="#ffb454" stroke="#101b20" stroke-width="1.2"/>');
-      out.push('<text x="' + f1(lx + (anchorEnd ? 4 : -4)) + '" y="' + (T + 9) + '" text-anchor="' + (anchorEnd ? "end" : "start") + '" font-size="10.5" font-weight="800" fill="#ffb454">Low ' + kfmt(mod.low) + '</text>');
+      const hit = (r) => clash(r) || bars.some((b) => r.x1 < b.x2 + 1 && r.x2 > b.x1 - 1 && r.y1 < b.y2 + 1 && r.y2 > b.y1 - 1);
+      tryFlag: for (const dy of [9, 21, 33]) for (const end of lx > (L + R) / 2 ? [true, false] : [false, true]) {
+        const x = lx + (end ? 4 : -4), r = { x1: end ? x - w : x, x2: end ? x : x + w, y1: T + dy - 10, y2: T + dy + 3 };
+        if (r.x1 < 2 || r.x2 > W - 2) continue;
+        if (!hit(r)) { out.push('<text x="' + f1(x) + '" y="' + (T + dy) + '" text-anchor="' + (end ? "end" : "start") + '" font-size="10.5" font-weight="800" fill="#ffb454">' + txt + '</text>'); break tryFlag; }
+      }
     }
     const label = "Waterfall for the month. Starts at " + fmt(mod.start) + ", ends at " + fmt(mod.end) + ". Lowest point " + fmt(mod.low) + ".";
     const div = document.createElement("div");
-    div.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" role="img" aria-label="' + label + '">' + out.join("") + "</svg>";
+    div.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" role="img" aria-label="' + label + '"' + (real ? "" : ' opacity="0.55"') + '>' + out.join("") + "</svg>";
     return div.firstChild;
   }
   function cashCard(i, mod) {
@@ -1714,6 +1841,217 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
         isNum(state.cash.starts[key]) ? h("button", { class: "btn", onclick: clear }, "Clear this month") : null)));
   }
 
+
+  /* ---------- Easy mode: a few big buttons, plain words, large print ---------- */
+  const EASY_KEY = "budget-tracker:easy", EASY_SIZE_KEY = "budget-tracker:easysize";
+  let ezDraft = null;
+  function setEasy(on) {
+    try { localStorage.setItem(EASY_KEY, on ? "1" : "0"); } catch (e) { /* not saved */ }
+    const r = document.documentElement; if (on) r.setAttribute("data-easy", "1"); else r.removeAttribute("data-easy");
+    state.easy = !!on; state.easyTab = "home"; state.easyForm = null; state.easyConfirm = null; state.easyMonth = 0; ezDraft = null;
+    if (state.drawer) setDrawer(false);
+    state.note = on ? "Easy mode is on. You can turn it off under More." : "You are back in the full app.";
+    render(); window.scrollTo(0, 0);
+  }
+  function setEasySize(sz) {
+    try { localStorage.setItem(EASY_SIZE_KEY, sz); } catch (e) { /* not saved */ }
+    const r = document.documentElement; if (sz === "xl") r.setAttribute("data-easysize", "xl"); else r.removeAttribute("data-easysize");
+    render();
+  }
+  const easySize = () => (document.documentElement.getAttribute("data-easysize") === "xl" ? "xl" : "l");
+  function easyGo(tab) {
+    state.easyTab = tab; state.easyForm = null; state.easyConfirm = null; ezDraft = null; render(); window.scrollTo(0, 0);
+    const t = document.querySelector("#easy h1"); if (t) t.focus({ preventScroll: true });
+  }
+  function easyMonth(offset) {                                     // the bills and money in for one month, in date order
+    const now = new Date(), idx = now.getFullYear() * 12 + now.getMonth() + offset, y = Math.floor(idx / 12), m = idx % 12, rows = [];
+    for (const it of state.items) {
+      if (it.type !== "income" && it.type !== "bill") continue;
+      for (const o of occurrences(it, y, m)) { const p = state.pay.get(o.key) || null; rows.push({ it, key: o.key, due: o.due, p, paid: !!p, inc: it.type === "income", auto: isAuto(it, o.due) }); }
+    }
+    rows.sort((a, b) => (a.due < b.due ? -1 : a.due > b.due ? 1 : a.it.name.localeCompare(b.it.name)));
+    return { y, m, rows };
+  }
+  function ezWhen(due, inc) {
+    const d = daysUntil(due);
+    if (inc) return d < 0 ? { text: "Not received yet. It was expected " + niceDate(due), cls: "soon" } : d === 0 ? { text: "Expected today", cls: "soon" } : d === 1 ? { text: "Expected tomorrow", cls: "" } : { text: "Expected " + niceDate(due), cls: "" };
+    if (d < -1) return { text: "Late. It was due " + niceDate(due), cls: "late" };
+    if (d === -1) return { text: "Late. It was due yesterday", cls: "late" };
+    if (d === 0) return { text: "Due today", cls: "soon" };
+    if (d === 1) return { text: "Due tomorrow", cls: "soon" };
+    return { text: "Due " + niceDate(due), cls: d <= 3 ? "soon" : "" };
+  }
+  function ezRow(r) {
+    const it = r.it, w = ezWhen(r.due, r.inc), amt = r.paid && r.p && isNum(+r.p.amt) ? +r.p.amt : it.amount;
+    const kids = [h("div", { class: "ez-line" }, h("div", { class: "ez-name" }, it.name), h("div", { class: "ez-amt" }, fmt(amt)))];
+    if (r.paid) kids.push(h("div", { class: "ez-when ok" }, ico("check"), (r.inc ? "Received " : "Paid ") + (r.p && r.p.on ? niceDate(r.p.on) : "")));
+    else kids.push(h("div", { class: "ez-when " + w.cls }, w.cls === "late" ? ico("alert") : null, w.text));
+    if (!r.paid && r.auto) kids.push(h("div", { class: "ez-note" }, "This one " + (r.inc ? "arrives" : "pays") + " by itself on its date."));
+    else if (!r.paid) kids.push(...(linkWords(it) ? [h("div", { class: "ez-note" }, linkWords(it))] : []), h("button", { class: "ez-btn", onclick: () => markPaid(r.key, { item: it.id, due: r.due, on: todayISO(), amt: it.amount }) }, ico("check"), r.inc ? "I got paid" : "I paid it"));
+    else if (!r.auto) kids.push(h("button", { class: "ez-btn alt", onclick: () => store.delPay(r.key) }, "Undo"));
+    kids.push(h("button", { class: "ez-link", onclick: () => easyOpenForm("edit", it.id) }, "Change or remove"));
+    return h("div", { class: "ez-row" + (!r.paid && w.cls === "late" ? " late" : "") }, kids);
+  }
+  function easyOpenForm(mode, id) {
+    state.easyForm = { mode, id: id || null }; state.easyConfirm = null;
+    if (mode === "balance") { const c = cashStart(new Date().getFullYear(), new Date().getMonth(), state.cash); ezDraft = { amount: c.kind === "unset" ? "" : String(c.v) }; }
+    else if (mode === "edit") { const it = state.items.find((x) => x.id === id); if (!it) { state.easyForm = null; render(); return; } ezDraft = { name: it.name, amount: String(it.amount), day: String(it.day || 1), kind: it.type === "income" ? "income" : "bill" }; }
+    else ezDraft = { name: "", amount: "", day: String(Math.min(28, new Date().getDate())), kind: "bill" };
+    render(); window.scrollTo(0, 0);
+    const f = document.querySelector("#easy input"); if (f && mode !== "edit") f.focus({ preventScroll: true });
+  }
+  const ezParse = (v) => { const t = String(v).replace(/[$,\s]/g, ""); return /^-?(\d+\.?\d*|\.\d+)$/.test(t) ? parseFloat(t) : NaN; };
+  function ezForm() {
+    const f = state.easyForm, edit = f.mode === "edit", it = edit ? state.items.find((x) => x.id === f.id) : null;
+    if (state.easyConfirm && it) {
+      return [h("h1", { tabindex: "-1" }, "Remove “" + it.name + "”?"),
+        h("div", { class: "ez-card bad" }, h("div", { class: "ez-text" }, "This takes it out of your budget for good. Anything you marked paid for it is removed too.")),
+        h("button", { class: "ez-btn danger", onclick: () => { state.easyForm = null; state.easyConfirm = null; state.note = "Removed “" + it.name + "”."; store.delItem(it.id); } }, "Yes, remove it"),
+        h("button", { class: "ez-btn alt", onclick: () => { state.easyConfirm = null; render(); } }, "No, keep it")];
+    }
+    const err = h("div", { class: "ez-err", role: "alert" });
+    if (f.mode === "balance") {
+      const inp = h("input", { id: "ezAmt", type: "text", inputmode: "decimal", autocomplete: "off", value: ezDraft.amount, placeholder: "for example 2500" });
+      inp.addEventListener("input", () => { ezDraft.amount = inp.value; });
+      return [h("h1", { tabindex: "-1" }, "My account balance"),
+        h("p", { class: "ez-sub" }, "This helps TapBudget tell you if you will have enough money."),
+        h("label", { for: "ezAmt" }, "How much is in your account on the 1st of " + MONTHS[new Date().getMonth()] + "?"), inp, err,
+        h("button", { class: "ez-btn", onclick: () => {
+          const v = ezParse(inp.value); if (isNaN(v)) { err.textContent = "Please type a number, like 2500."; inp.focus(); return; }
+          const d = new Date(), key = ymKey(d.getFullYear(), d.getMonth()); state.budgets[state.activeId].sample = false;
+          state.cash = { ...state.cash, starts: { ...state.cash.starts, [key]: Math.round(v * 100) / 100 } }; persist();
+          state.easyForm = null; ezDraft = null; state.note = "Saved. Thank you."; render(); window.scrollTo(0, 0);
+        } }, "Save"),
+        h("button", { class: "ez-btn alt", onclick: () => easyGo(state.easyTab) }, "Cancel")];
+    }
+    const name = h("input", { id: "ezName", type: "text", maxlength: "60", autocomplete: "off", value: ezDraft.name, placeholder: "for example Electric bill" });
+    const amt = h("input", { id: "ezAmt", type: "text", inputmode: "decimal", autocomplete: "off", value: ezDraft.amount, placeholder: "for example 120" });
+    const day = h("select", { id: "ezDay" }); for (let d = 1; d <= 31; d++) day.append(h("option", { value: String(d) }, String(d))); day.value = ezDraft.day;
+    name.addEventListener("input", () => { ezDraft.name = name.value; }); amt.addEventListener("input", () => { ezDraft.amount = amt.value; }); day.addEventListener("change", () => { ezDraft.day = day.value; });
+    const kind = h("div", { class: "ez-seg", role: "group", "aria-label": "What is this?" });
+    const paint = () => { kind.replaceChildren(...[["bill", "A bill I pay"], ["income", "Money coming in"]].map(([v, l]) => h("button", { type: "button", "aria-pressed": String(ezDraft.kind === v), onclick: () => { ezDraft.kind = v; paint(); } }, l))); };
+    paint();
+    const monthly = !edit || (it && it.freq !== "biweekly");
+    const dayF = h("div", {}, h("label", { for: "ezDay" }, "Which day of the month is it due?"), day);
+    return [h("h1", { tabindex: "-1" }, edit ? "Change this" : "Add a bill"),
+      h("p", { class: "ez-sub" }, edit ? "Make your change, then tap Save." : "Fill in three things, then tap Save."),
+      h("label", { for: "ezName" }, "What is it called?"), name,
+      h("label", { for: "ezAmt" }, "How much is it? (dollars)"), amt,
+      monthly ? dayF : null, kind, err,
+      h("button", { class: "ez-btn", onclick: () => {
+        const nm = name.value.trim(), a = ezParse(amt.value), d = parseInt(day.value, 10);
+        if (!nm) { err.textContent = "Please type a name."; name.focus(); return; }
+        if (isNaN(a) || a <= 0) { err.textContent = "Please type how much, like 120."; amt.focus(); return; }
+        state.easyForm = null; state.easyTab = "bills"; const kd = ezDraft.kind; ezDraft = null;
+        if (edit) { state.note = "Saved “" + nm + "”."; store.setItem({ ...it, name: nm, amount: Math.round(a * 100) / 100, type: kd, ...(monthly ? { freq: "monthly", day: d } : {}) }); }
+        else { state.note = "Added “" + nm + "”."; store.setItem({ id: nm.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) + "-" + Date.now().toString(36), name: nm, type: kd, amount: Math.round(a * 100) / 100, account: "", freq: "monthly", day: d, order: Math.max(0, ...state.items.map((x) => x.order || 0)) + 1 }); }
+        window.scrollTo(0, 0);
+      } }, "Save"),
+      h("button", { class: "ez-btn alt", onclick: () => easyGo(state.easyTab) }, "Cancel"),
+      edit ? h("button", { class: "ez-link", onclick: () => { state.easyConfirm = it.id; render(); window.scrollTo(0, 0); } }, "Remove this") : null];
+  }
+  function ezHome() {
+    const t = todayISO(), mo = easyMonth(0), bills = mo.rows.filter((r) => !r.inc), ins = mo.rows.filter((r) => r.inc);
+    const unpaid = bills.filter((r) => !r.paid), needs = unpaid.filter((r) => !r.auto), late = needs.filter((r) => r.due < t), next = late[0] || needs.find((r) => r.due >= t) || null;
+    const left = unpaid.reduce((sum, r) => sum + r.it.amount, 0), coming = ins.filter((r) => !r.paid).reduce((sum, r) => sum + r.it.amount, 0);
+    const out = [h("h1", { tabindex: "-1" }, greeting()), h("p", { class: "ez-sub" }, curName() + " · " + MONTHS[mo.m] + " " + mo.y)];
+    if (!state.items.length) {
+      out.push(h("div", { class: "ez-card" }, h("div", { class: "ez-big" }, "Welcome"), h("p", { class: "ez-text" }, "Let’s add your first bill. It only takes a minute.")), h("button", { class: "ez-btn", onclick: () => easyOpenForm("add") }, "Add a bill"));
+      return out;
+    }
+    if (next) {
+      const w = ezWhen(next.due, false);
+      out.push(h("div", { class: "ez-card" + (late.length ? " bad" : w.cls === "soon" ? " warn" : "") }, h("h2", {}, late.length ? (late.length > 1 ? late.length + " bills are late. This one is the oldest." : "This bill is late") : "Your next bill"),
+        h("div", { class: "ez-line" }, h("div", { class: "ez-big" }, next.it.name), h("div", { class: "ez-big" }, fmt(next.it.amount))),
+        h("div", { class: "ez-text" }, w.text),
+        h("button", { class: "ez-btn", onclick: () => markPaid(next.key, { item: next.it.id, due: next.due, on: todayISO(), amt: next.it.amount }) }, ico("check"), "I paid it")));
+    } else if (unpaid.length) out.push(h("div", { class: "ez-card good" }, h("div", { class: "ez-big" }, "Nothing to do"), h("p", { class: "ez-text" }, "The rest of this month’s bills pay by themselves.")));
+    else if (bills.length) out.push(h("div", { class: "ez-card good" }, h("div", { class: "ez-big" }, "All paid"), h("p", { class: "ez-text" }, "Every bill for " + MONTHS[mo.m] + " is paid. Well done.")));
+    out.push(h("div", { class: "ez-card" }, h("h2", {}, "This month"), h("dl", { class: "ez-lines" },
+      h("div", {}, h("dt", {}, "Bills left to pay"), h("dd", {}, fmt(left))), h("div", {}, h("dt", {}, "Money still to come"), h("dd", {}, fmt(coming))))));
+    const cm = cashModel(mo.y, mo.m, state.cash), mon = MONTHS[mo.m].slice(0, 3);
+    if (cm.st.kind === "unset") out.push(h("div", { class: "ez-card" }, h("h2", {}, "Your account"), h("p", { class: "ez-text", style: "margin-top:0" }, "Tell us what is in your account and we will tell you if you will have enough."), h("button", { class: "ez-btn alt", onclick: () => easyOpenForm("balance") }, "Tell us my balance")));
+    else {
+      const until = cm.back ? " until " + cm.back.name + " on " + mon + " " + cm.back.day : "";
+      const tone = cm.below0 ? "bad" : cm.under ? "warn" : "good";
+      out.push(h("div", { class: "ez-card " + tone }, h("h2", {}, "Your account"),
+        h("div", { class: "ez-big" }, cm.below0 ? "You may run short" : cm.under ? "Watch your balance" : "You should be fine"),
+        h("p", { class: "ez-text" }, cm.below0 ? "Your balance could go below $0 (" + fmt(cm.low) + ") on " + mon + " " + cm.lowCol.day + until + "." : cm.under ? "It gets low, about " + fmt(cm.low) + ", on " + mon + " " + cm.lowCol.day + until + "." : "About " + fmt(cm.end) + " should be left at the end of the month.")));
+    }
+    out.push(h("button", { class: "ez-btn alt", onclick: () => easyGo("bills") }, "See all my bills"), h("button", { class: "ez-btn alt", onclick: () => easyOpenForm("add") }, "Add a bill"));
+    return out;
+  }
+  function ezBills() {
+    const mo = easyMonth(state.easyMonth), bills = mo.rows.filter((r) => !r.inc && !r.paid), ins = mo.rows.filter((r) => r.inc && !r.paid), done = mo.rows.filter((r) => r.paid);
+    const out = [h("h1", { tabindex: "-1" }, "My bills"), h("p", { class: "ez-sub" }, MONTHS[mo.m] + " " + mo.y),
+      ezMonthSeg()];
+    if (!mo.rows.length) { out.push(h("div", { class: "ez-card" }, h("p", { class: "ez-text", style: "margin-top:0" }, "Nothing here yet.")), h("button", { class: "ez-btn", onclick: () => easyOpenForm("add") }, "Add a bill")); return out; }
+    if (bills.length) out.push(h("h2", { class: "ez-h2" }, "Bills to pay"), ...bills.map(ezRow));
+    if (ins.length) out.push(h("h2", { class: "ez-h2" }, "Money coming in"), ...ins.map(ezRow));
+    if (done.length) out.push(h("h2", { class: "ez-h2" }, "Done"), ...done.map(ezRow));
+    if (!bills.length && !ins.length) out.unshift(...[]);
+    out.push(h("button", { class: "ez-btn", style: "margin-top:24px", onclick: () => easyOpenForm("add") }, "Add a bill"));
+    return out;
+  }
+
+  const ezClamp = (v) => Math.max(0, Math.min(1, v));
+  const ezBar = (frac, label, tone) => h("div", { class: "ez-bar", role: "img", "aria-label": label }, h("i", { class: tone || "", style: "width:" + Math.round(ezClamp(frac) * 100) + "%" }));
+  const ezMonthSeg = () => h("div", { class: "ez-seg", role: "group", "aria-label": "Which month" }, [[0, "This month"], [1, "Next month"]].map(([v, l]) => h("button", { type: "button", "aria-pressed": String(state.easyMonth === v), onclick: () => { state.easyMonth = v; render(); window.scrollTo(0, 0); } }, l)));
+  function ezOverview() {                                          // how the month looks: big bars and plain words, nothing to edit
+    const t = todayISO(), mo = easyMonth(state.easyMonth), bills = mo.rows.filter((r) => !r.inc), ins = mo.rows.filter((r) => r.inc);
+    const paidB = bills.filter((r) => r.paid), unpaidB = bills.filter((r) => !r.paid), late = unpaidB.filter((r) => r.due < t), soon = unpaidB.filter((r) => r.due >= t && daysUntil(r.due) <= 3);
+    const toPay = unpaidB.reduce((sum, r) => sum + r.it.amount, 0), expIn = ins.reduce((sum, r) => sum + r.it.amount, 0);
+    const gotIn = ins.filter((r) => r.paid).reduce((sum, r) => sum + (r.p && isNum(+r.p.amt) ? +r.p.amt : r.it.amount), 0);
+    const cm = cashModel(mo.y, mo.m, state.cash), mon = MONTHS[mo.m].slice(0, 3), real = cm.st.kind !== "unset";
+    let spent = 0, budget = 0, vars = 0;
+    for (const it of state.items) if (it.type === "variable") { vars++; budget += it.amount; const pr = state.pay.get(it.id + "_" + ymKey(mo.y, mo.m)); if (pr && isNum(+pr.amt)) spent += +pr.amt; }
+    const level = late.length || (real && cm.below0) ? "bad" : soon.length || (real && cm.under) ? "warn" : "good";
+    const plural = (n, one, many) => (n === 1 ? "1 " + one : n + " " + many);
+    const head = late.length ? plural(late.length, "bill is late", "bills are late") : real && cm.below0 ? "Your balance may run short" : soon.length ? plural(soon.length, "bill is due soon", "bills are due soon") : real && cm.under ? "Watch your balance" : "Everything looks good";
+    const out = [h("h1", { tabindex: "-1" }, "Overview"), h("p", { class: "ez-sub" }, curName() + " · " + MONTHS[mo.m] + " " + mo.y), ezMonthSeg()];
+    if (!state.items.length) { out.push(h("div", { class: "ez-card" }, h("div", { class: "ez-big" }, "Nothing to show yet"), h("p", { class: "ez-text" }, "Add your first bill and this page will fill in.")), h("button", { class: "ez-btn", onclick: () => easyOpenForm("add") }, "Add a bill")); return out; }
+    out.push(h("div", { class: "ez-card " + level }, h("div", { class: "ez-banner" }, ico(level === "good" ? "check" : "alert"), h("div", {}, h("div", { class: "ez-big" }, head), h("div", { class: "ez-text", style: "margin-top:2px" }, level === "good" ? "Nothing needs your attention right now." : "Open Home to take care of it.")))));
+    if (bills.length) out.push(h("div", { class: "ez-card" }, h("h2", {}, "Bills"), h("div", { class: "ez-big" }, paidB.length + " of " + bills.length + " paid"),
+      ezBar(paidB.length / bills.length, "Bills paid: " + paidB.length + " of " + bills.length, late.length ? "bad" : soon.length ? "warn" : ""),
+      h("div", { class: "ez-text" }, unpaidB.length ? fmt(toPay) + " still to pay" + (late.length ? ". " + plural(late.length, "is late", "are late") : "") : "Every bill is paid")));
+    if (ins.length) out.push(h("div", { class: "ez-card" }, h("h2", {}, "Money in"), h("div", { class: "ez-big" }, fmt(gotIn) + " of " + fmt(expIn)), ezBar(expIn ? gotIn / expIn : 0, "Money received: " + fmt(gotIn) + " of " + fmt(expIn), ""),
+      h("div", { class: "ez-text" }, expIn > gotIn ? fmt(expIn - gotIn) + " still to come" : "All received")));
+    if (vars) out.push(h("div", { class: "ez-card" }, h("h2", {}, "Everyday spending"), h("div", { class: "ez-big" }, fmt(spent) + " of " + fmt(budget)),
+      ezBar(budget ? spent / budget : 0, "Spent " + fmt(spent) + " of " + fmt(budget), spent > budget ? "bad" : budget && spent / budget > 0.85 ? "warn" : ""),
+      h("div", { class: "ez-text" }, spent > budget ? fmt(spent - budget) + " over what you planned" : fmt(budget - spent) + " left to spend")));
+    if (!real) out.push(h("div", { class: "ez-card" }, h("h2", {}, "Your account"), h("p", { class: "ez-text", style: "margin-top:0" }, "Tell us what is in your account and we will show if you will have enough."), h("button", { class: "ez-btn alt", onclick: () => easyOpenForm("balance") }, "Tell us my balance")));
+    else {
+      const lo = Math.min(0, cm.low), hi = Math.max(cm.start, cm.end, cm.warn * 1.4, 1), pos = (v) => (ezClamp((v - lo) / (hi - lo)) * 100).toFixed(1), tone = cm.below0 ? "bad" : cm.under ? "warn" : "";
+      out.push(h("div", { class: "ez-card" }, h("h2", {}, "Your account"), h("div", { class: "ez-big" }, cm.below0 ? "You may run short" : cm.under ? "Watch your balance" : "You should be fine"),
+        h("div", { class: "ez-meter", role: "img", "aria-label": "Lowest balance " + fmt(cm.low) + ". Your warning line is " + fmt(cm.warn) + "." }, h("i", { class: tone, style: "width:" + pos(cm.low) + "%" }), h("b", { style: "left:" + pos(cm.warn) + "%" })),
+        h("p", { class: "ez-cap" }, "The dark mark is your warning line, " + fmt(cm.warn) + ". The bar shows your lowest point."),
+        h("dl", { class: "ez-lines", style: "margin-top:12px" }, h("div", {}, h("dt", {}, "Starts at"), h("dd", {}, fmt(cm.start))), h("div", {}, h("dt", {}, "Lowest point"), h("dd", {}, fmt(cm.low))), h("div", {}, h("dt", {}, "Ends at"), h("dd", {}, fmt(cm.end)))),
+        h("p", { class: "ez-cap" }, "Lowest on " + mon + " " + cm.lowCol.day + ".")));
+    }
+    const next = mo.rows.filter((r) => !r.paid).slice(0, 4);
+    out.push(h("div", { class: "ez-card" }, h("h2", {}, "Coming up"), next.length ? next.map((r) => { const w = ezWhen(r.due, r.inc); return h("div", { class: "ez-soon" }, h("div", {}, h("div", { class: "ez-name" }, r.it.name), h("div", { class: "ez-when " + (r.inc ? "" : w.cls) }, w.text)), h("div", { class: "ez-amt" }, (r.inc ? "+" : "") + fmt(r.it.amount))); }) : h("p", { class: "ez-text", style: "margin-top:0" }, "Nothing else this month.")));
+    out.push(h("button", { class: "ez-btn alt", onclick: () => easyGo("bills") }, "See all my bills"));
+    return out;
+  }
+  function ezMore() {
+    const ids = Object.keys(state.budgets), now = new Date(), cur = cashStart(now.getFullYear(), now.getMonth(), state.cash);
+    const out = [h("h1", { tabindex: "-1" }, "More"), h("p", { class: "ez-sub" }, "Settings and extras")];
+    out.push(h("div", { class: "ez-card" }, h("h2", {}, "Print size"), h("div", { class: "ez-seg", style: "margin-top:6px", role: "group", "aria-label": "Print size" },
+      [["l", "Large"], ["xl", "Extra large"]].map(([v, l]) => h("button", { type: "button", "aria-pressed": String(easySize() === v), onclick: () => setEasySize(v) }, l)))));
+    out.push(h("div", { class: "ez-card" }, h("h2", {}, "My account balance"), h("p", { class: "ez-text", style: "margin-top:0" }, cur.kind === "unset" ? "Not set yet." : "About " + fmt(cur.v) + " on the 1st of " + MONTHS[now.getMonth()] + "."), h("button", { class: "ez-btn alt", onclick: () => easyOpenForm("balance") }, cur.kind === "unset" ? "Tell us my balance" : "Change my balance")));
+    if (ids.length > 1) out.push(h("div", { class: "ez-card" }, h("h2", {}, "My budgets"), h("p", { class: "ez-text", style: "margin-top:0" }, "Showing: " + curName()), ...ids.filter((id) => id !== state.activeId).map((id) => h("button", { class: "ez-btn alt", onclick: () => { switchTo(id); state.easyTab = "home"; render(); window.scrollTo(0, 0); } }, "Show " + state.budgets[id].name))));
+    out.push(h("div", { class: "ez-card" }, h("h2", {}, "Keep a copy"), h("p", { class: "ez-text", style: "margin-top:0" }, "Save a backup copy of your budget on this phone, in case you ever need it."), h("button", { class: "ez-btn alt", onclick: () => backup() }, "Save a backup copy")));
+    out.push(h("div", { class: "ez-card" }, h("h2", {}, "The full app"), h("p", { class: "ez-text", style: "margin-top:0" }, "It has charts, spending budgets, loans and more."), h("button", { class: "ez-btn alt", onclick: () => setEasy(false) }, "Use the full app")));
+    return out;
+  }
+  function renderEasy() {
+    const host = $("easy"); if (!host) return;
+    if (!state.easy) { host.replaceChildren(); return; }
+    const body = state.easyForm ? ezForm() : state.easyTab === "overview" ? ezOverview() : state.easyTab === "bills" ? ezBills() : state.easyTab === "more" ? ezMore() : ezHome();
+    const tab = (id, label, icon) => h("button", { class: "ez-tab", "aria-current": !state.easyForm && state.easyTab === id ? "page" : null, onclick: () => easyGo(id) }, ico(icon), label);
+    host.replaceChildren(h("main", { class: "ez-page", id: "ezMain" }, body), h("nav", { class: "ez-nav", "aria-label": "Main" }, tab("home", "Home", "home"), tab("overview", "Overview", "chart"), tab("bills", "Bills", "bills"), tab("more", "More", "menu")));
+  }
+
   function renderDeck(c) {
     const deck = $("deck"), chipsEl = $("deckChips"); deck.replaceChildren(); chipsEl.replaceChildren();
     if (!state.items.length) return;
@@ -1738,7 +2076,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
         goLabel: "See spending", go: () => setTab("spending") }];
     const cm = cashModel(state.y, state.m, state.cash);
     const chipText = [gauges[0].big, gauges[1].big, gauges[2].big, cm.st.kind === "unset" ? "Set up" : cm.below0 ? "Below $0" : cm.under ? "Low" : kfmt(cm.end)];
-    chipsEl.append(...GAUGES.map((t, i) => h("button", { class: "chipbtn", "aria-pressed": String(i === state.ovCard), onclick: () => showGauge(i, true) }, t, " ", h("span", { class: "n" }, chipText[i]))));
+    chipsEl.append(...GAUGES.map((t, i) => h("button", { class: "chipbtn", "aria-label": t + ", " + chipText[i], "aria-pressed": String(i === state.ovCard), onclick: () => showGauge(i, true) }, h("span", { class: "lab" }, t), h("span", { class: "n" }, chipText[i]))));
     cashCharts = [];
     deck.append(...gauges.map((g, i) => deckCard(i, g)), cashCard(3, cm));
     watchCharts();
@@ -1835,11 +2173,69 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
   const loanBar = (pct, color, label) => h("div", { class: "lbar", role: "img", "aria-label": label }, h("i", { style: "width:" + (pct > 0 ? Math.max(2, Math.round(pct * 100)) : 0) + "%;background:" + color }));
 
   const isCard = (l) => l.kind === "card";
+
+  /* ---------- balances that follow your bills: tick a bill, the loan or card moves ---------- */
+  const normAcc = (v) => String(v || "").trim().toLowerCase();
+  const isLinked = (l) => !!(l.payBill || (l.accounts && l.accounts.length));
+  let _ledger = null;
+  function linkedRecords(l, items, pay) {                          // paid bills that move this loan or card, oldest first
+    items = items || state.items; pay = pay || state.pay;
+    const byId = new Map(items.map((x) => [x.id, x])), accs = new Set((isCard(l) ? l.accounts || [] : []).map(normAcc).filter(Boolean)), seen = new Set(l.seen || []), out = [];
+    for (const [key, pr] of pay) {
+      const it = byId.get(pr.item); if (!it || it.type !== "bill") continue;
+      const kind = l.payBill && it.id === l.payBill ? "pay" : accs.size && accs.has(normAcc(it.account)) ? "charge" : null;
+      if (kind) out.push({ key, it, kind, amt: isNum(+pr.amt) ? +pr.amt : it.amount, date: pr.on || pr.due || "", seen: seen.has(key) });
+    }
+    return out.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : a.key < b.key ? -1 : 1));
+  }
+  function debtLedger(l) {                                         // the balance now, and what each new payment did to it
+    let bal = isNum(+l.balance) ? +l.balance : 0; const steps = new Map();
+    for (const r of linkedRecords(l)) {
+      if (r.seen) continue;                                        // already inside the balance you typed
+      const before = bal;
+      if (r.kind === "charge") bal += r.amt;
+      else if (isCard(l)) bal = Math.max(0, bal - r.amt);
+      else { const interest = l.apr > 0 ? Math.round(bal * l.apr / 1200 * 100) / 100 : 0; bal = Math.max(0, bal - (r.amt - interest)); }
+      bal = Math.round(bal * 100) / 100; steps.set(r.key, { before, after: bal, kind: r.kind });
+    }
+    return { now: bal, steps };
+  }
+  const debtNow = (l) => debtLedger(l).now;
+  const debtPayment = (l) => { const it = l.payBill && state.items.find((x) => x.id === l.payBill); return it ? it.amount : l.payment > 0 ? l.payment : 0; };
+  const liveLoans = () => state.loans.map((l) => ({ ...l, balance: debtNow(l), payment: debtPayment(l) }));
+  const ledgers = () => _ledger || (_ledger = new Map(state.loans.map((l) => [l.id, debtLedger(l)])));
+  const snapshotSeen = (l, items, pay) => linkedRecords({ ...l, seen: [] }, items, pay).map((r) => r.key).slice(-600);
+  const rebase = (l, bal) => ({ ...l, balance: Math.round(bal * 100) / 100, ...(isLinked(l) ? { asOf: todayISO(), seen: snapshotSeen(l) } : {}) });   // "this is the balance as of today"
+  function debtEffect(it, key, paid) {                             // the small line under a bill that says what it does to a loan or card
+    if (it.type !== "bill" || !state.loans.length) return null;
+    for (const l of state.loans) {
+      if (!isLinked(l)) continue;
+      const kind = l.payBill === it.id ? "pay" : isCard(l) && normAcc(it.account) && (l.accounts || []).some((a) => normAcc(a) === normAcc(it.account)) ? "charge" : null;
+      if (!kind) continue;
+      const st = paid ? ledgers().get(l.id).steps.get(key) : null;
+      if (paid && !st) continue;
+      const down = kind === "pay";
+      return h("div", { class: "leff " + (paid ? (down ? "down" : "up") : "will") }, ico(paid ? (down ? "down" : "up") : "link"),
+        h("span", {}, paid ? l.name + ": " + fmt(st.before) + " → " + fmt(st.after) : "When paid: " + l.name + (down ? " goes down by " : " goes up by ") + fmt(it.amount)));
+    }
+    return null;
+  }
+  function markPaid(key, rec) {                                    // tick a bill; say what happened to the loan or card it belongs to
+    store.setPay(key, rec);
+    const it = state.items.find((x) => x.id === rec.item);
+    if (it && it.type === "bill") for (const l of state.loans) { const st = isLinked(l) && ledgers().get(l.id).steps.get(key); if (st) { showToast(l.name + " is now " + fmt(st.after)); break; } }
+  }
+  const linkWords = (it) => { for (const l of state.loans) { if (!isLinked(l) || it.type !== "bill") continue; if (l.payBill === it.id) return "Paying this lowers your " + l.name + "."; if (isCard(l) && normAcc(it.account) && (l.accounts || []).some((a) => normAcc(a) === normAcc(it.account))) return "This is charged to your " + l.name + "."; } return ""; };
+  const payoffMonths = (l) => {                                    // months until it is paid off, with interest if there is a rate; null if the payment never gets there
+    let bal = l.balance; if (bal <= 0) return 0; const pay = l.payment > 0 ? l.payment : 0; if (!pay) return null;
+    for (let j = 1; j <= 600; j++) { const interest = !isCard(l) && l.apr > 0 ? bal * l.apr / 1200 : 0; if (pay <= interest) return null; bal -= pay - interest; if (bal <= 0.005) return j; }
+    return null;
+  };
   function loanStats(l) {                                          // payments made and left are worked out from total, balance and payment (interest is not included)
     const used = l.total > 0 ? clamp01(l.balance / l.total) : 0;
     if (isCard(l)) return { card: true, used, avail: Math.max(0, l.total - l.balance) };
     let made = null, count = null;
-    if (l.payment > 0) { made = Math.max(0, Math.round((l.total - l.balance) / l.payment)); count = made + Math.ceil(l.balance / l.payment); }
+    if (l.payment > 0) { made = Math.max(0, Math.round((l.total - l.balance) / l.payment)); const left = payoffMonths(l); count = made + (left == null ? Math.ceil(l.balance / l.payment) : left); }
     return { card: false, left: used, made, count, done: l.balance <= 0 };
   }
 
@@ -1860,35 +2256,65 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
   function renderLoans() {                                        // slim card at the bottom of the Overview
     const host = $("loanHost"); host.replaceChildren();
     if (!state.loans.length) return;
-    const sorted = state.loans.slice().sort((a, b) => (isCard(a) ? 1 : 0) - (isCard(b) ? 1 : 0)), shown = sorted.slice(0, 4), more = sorted.length - shown.length;
-    host.append(h("div", { class: "lhead" }, h("b", {}, "Loans and cards"), h("button", { class: "linkbtn", onclick: () => setTab("settings") }, more ? "Manage · " + more + " more" : "Manage")), ...shown.map(loanLine));
+    const sorted = liveLoans().sort((a, b) => (isCard(a) ? 1 : 0) - (isCard(b) ? 1 : 0)), shown = sorted.slice(0, 4), more = sorted.length - shown.length;
+    const stale = state.loans.some((l) => isLinked(l) && (!l.asOf || -daysUntil(l.asOf) > 35));
+    host.append(h("div", { class: "lhead" }, h("b", {}, "Loans and cards"), h("span", {}, stale ? h("button", { class: "linkbtn", onclick: () => openSheet("check") }, "Check in") : null, h("button", { class: "linkbtn", onclick: () => setTab("settings") }, more ? "Manage · " + more + " more" : "Manage"))), ...shown.map(loanLine));
   }
 
+  function accountLabels() { const m = new Map(); for (const it of state.items) if (it.type === "bill" && it.account && it.account.trim()) { const k = normAcc(it.account), e = m.get(k) || { label: it.account.trim(), n: 0 }; e.n++; m.set(k, e); } return Array.from(m.values()); }
+  function suggestBill(name, card) {                               // the bill whose name best matches, if any
+    const n = normAcc(name); if (n.length < 3) return null;
+    const words = n.split(/[^a-z0-9]+/).filter((w) => w.length > 2); let best = null, score = 0;
+    for (const b of state.items) { if (b.type !== "bill") continue; const bn = normAcc(b.name); let sc = 0; if (bn.includes(n) || n.includes(bn)) sc += 3; for (const w of words) if (bn.includes(w)) sc++; if (card && /pay/.test(bn)) sc++; if (sc > score) { score = sc; best = b; } }
+    return score >= 2 ? best : null;
+  }
   function loanForm(l) {
-    const isNew = !l, f = {};
+    const isNew = !l, f = {}, card0 = !!(l && isCard(l)), bills = state.items.filter((x) => x.type === "bill").sort((a, b) => a.name.localeCompare(b.name));
     f.kind = h("select", { "aria-label": "Type" }, h("option", { value: "loan" }, "Loan"), h("option", { value: "card" }, "Credit card"));
-    f.kind.value = l && isCard(l) ? "card" : "loan";
+    f.kind.value = card0 ? "card" : "loan";
     const num0 = (v, ph) => h("input", { type: "number", step: "0.01", min: "0", inputmode: "decimal", value: v == null ? "" : String(v), placeholder: ph || "0.00" });
     f.name = h("input", { type: "text", maxlength: "60", value: l ? l.name : "" });
-    f.total = num0(l && l.total); f.balance = num0(l && l.balance); f.payment = num0(l && l.payment && l.payment > 0 ? l.payment : null);
+    f.total = num0(l && l.total); f.balance = num0(l && l.balance); f.payment = num0(l && l.payment && l.payment > 0 ? l.payment : null); f.apr = num0(l && l.apr, "for example 6.9");
+    let sel = l && l.payBill && bills.some((b) => b.id === l.payBill) ? l.payBill : "", touched = !!l; const accSel = new Set((l && l.accounts || []).map(normAcc));
     const totalText = document.createTextNode(""), payText = document.createTextNode(""), payHintText = document.createTextNode(""), payHint = h("span", { class: "sub" }, payHintText);
-    const typeF = h("label", {}, "Type", f.kind), totalF = h("label", {}, totalText, f.total), payF = h("label", {}, payText, f.payment, payHint);
+    const typeF = h("label", {}, "Type", f.kind), totalF = h("label", {}, totalText, f.total), payF = h("label", {}, payText, f.payment, payHint), aprF = h("label", {}, "Interest rate, a year (%), optional", f.apr, h("span", { class: "sub" }, "Adds interest to each payment, so your balance matches your statement more closely."));
     typeF.hidden = !isNew;
-    const sync = () => { const card = f.kind.value === "card"; totalText.nodeValue = card ? "Credit limit ($)" : "Total value ($)"; payText.nodeValue = card ? "Monthly payment ($)" : "Payment amount ($)"; payHintText.nodeValue = card ? "Optional. Used to project your balance." : "Optional. Used to estimate payments left."; f.name.placeholder = card ? "e.g. Rewards Visa" : "e.g. Car loan"; };
-    f.kind.addEventListener("change", sync);
+    const radHost = h("div", { class: "radlist", role: "radiogroup", "aria-label": "Which bill pays this?" }), accHost = h("div", { class: "radlist" }), linkHead = h("div", { class: "linkhead" }), linkSub = h("p", { class: "sub", style: "margin:2px 0 8px" });
+    const accountsBlock = h("div", {}, h("div", { class: "linkhead" }, "Which bills are charged to this card?"), h("p", { class: "sub", style: "margin:2px 0 8px" }, "Pick the “Paid with” names of your bills. When you tick one of those bills, it adds to this card."), accHost);
+    const callout = h("div", { class: "leff down", style: "margin:12px 0 0;align-items:flex-start" }, ico("check"), h("span", {}));
+    const radio = (id, label, sub, badge) => h("button", { type: "button", class: "rad" + (sel === id ? " on" : ""), role: "radio", "aria-checked": String(sel === id), onclick: () => { sel = id; touched = true; paint(); } }, h("span", { class: "dot", "aria-hidden": "true" }), h("span", { class: "rt" }, h("b", {}, label), sub ? h("span", { class: "sub" }, sub) : null), badge ? h("span", { class: "tag ok" }, badge) : null);
+    const paint = () => {
+      const card = f.kind.value === "card", sug = suggestBill(f.name.value, card);
+      if (!touched && sug) sel = sug.id;
+      const first = (b) => (b.id === sel ? 2 : 0) + (sug && sug.id === b.id ? 1 : 0), ordered = bills.slice().sort((a, b) => first(b) - first(a) || a.name.localeCompare(b.name));     // the chosen and suggested bills come first
+      radHost.replaceChildren(...ordered.map((b) => radio(b.id, b.name, fmt(b.amount) + " · the " + ordinal(b.day || 1), sug && sug.id === b.id ? "Suggested" : null)), radio("", "None, I will update it myself", "You type each payment"));
+      accHost.replaceChildren(...(accountLabels().length ? accountLabels().sort((a, b) => (accSel.has(normAcc(b.label)) ? 1 : 0) - (accSel.has(normAcc(a.label)) ? 1 : 0) || a.label.localeCompare(b.label)).map((a) => { const on = accSel.has(normAcc(a.label)); return h("button", { type: "button", class: "rad" + (on ? " on" : ""), role: "checkbox", "aria-checked": String(on), onclick: () => { if (on) accSel.delete(normAcc(a.label)); else accSel.add(normAcc(a.label)); paint(); } }, h("span", { class: "dot sq", "aria-hidden": "true" }), h("span", { class: "rt" }, h("b", {}, a.label), h("span", { class: "sub" }, a.n + (a.n === 1 ? " bill" : " bills"))), null); }) : [h("p", { class: "sub" }, "None of your bills has a “Paid with” yet. Give a bill one, like Visa, and it can count toward this card.")]));
+      linkHead.textContent = card ? "Which bill pays this card?" : "Which bill pays this loan?";
+      callout.lastChild.textContent = card ? "Tick that bill paid and this balance goes down. Bills charged to the card add to it when you tick them. Untick and it goes back. You never type a payment." : "Tick that bill paid and this balance drops by the amount you paid. Untick it and the balance goes back. You never type a payment.";
+      payF.hidden = !!sel; aprF.hidden = card; accountsBlock.hidden = !card; callout.hidden = !sel && !(card && accSel.size);
+    };
+    const sync = () => { const card = f.kind.value === "card"; totalText.nodeValue = card ? "Credit limit ($)" : "Total value ($)"; payText.nodeValue = card ? "Monthly payment ($)" : "Payment amount ($)"; payHintText.nodeValue = card ? "Optional. Used to project your balance." : "Optional. Used to estimate payments left."; f.name.placeholder = card ? "e.g. Rewards Visa" : "e.g. Car loan"; paint(); };
+    f.kind.addEventListener("change", sync); f.name.addEventListener("input", () => { if (!touched) paint(); });
     const err = h("div", { class: "sub", role: "alert" });
     let armed = false;
     const save = h("button", { class: "btn primary", onclick: () => {
-      const card = f.kind.value === "card", name = f.name.value.trim(), total = parseFloat(f.total.value), balance = parseFloat(f.balance.value), payment = f.payment.value === "" ? 0 : parseFloat(f.payment.value);
+      const card = f.kind.value === "card", name = f.name.value.trim(), total = parseFloat(f.total.value), balance = parseFloat(f.balance.value), apr = f.apr.value === "" ? 0 : parseFloat(f.apr.value);
+      let payment = f.payment.value === "" ? 0 : parseFloat(f.payment.value);
       if (!name) { err.textContent = "Please enter a name."; return; }
       if (isNaN(total) || total <= 0) { err.textContent = card ? "Please enter the credit limit." : "Please enter the total value."; return; }
       if (isNaN(balance) || balance < 0) { err.textContent = "Please enter the current balance, or 0 if it is paid off."; return; }
-      if (isNaN(payment) || payment < 0) { err.textContent = "Please enter the payment amount, or leave it blank."; return; }
+      if (!sel && (isNaN(payment) || payment < 0)) { err.textContent = "Please enter the payment amount, or leave it blank."; return; }
+      if (!card && (isNaN(apr) || apr < 0 || apr > 100)) { err.textContent = "Please enter the interest rate as a number from 0 to 100, or leave it blank."; return; }
+      const bill = sel && bills.find((b) => b.id === sel); if (bill) payment = bill.amount;
+      const accounts = card ? accountLabels().filter((a) => accSel.has(normAcc(a.label))).map((a) => a.label) : [];
+      let loan = { id: l ? l.id : "loan-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), name, kind: card ? "card" : "loan", total, balance, payment, ...(sel ? { payBill: sel } : {}), ...(accounts.length ? { accounts } : {}), ...(!card && apr > 0 ? { apr } : {}) };
+      if (isLinked(loan)) loan = { ...loan, asOf: todayISO(), seen: snapshotSeen(loan) };      // from now on, new ticks move the balance
       state.loanEdit = null; state.note = isNew ? "Added “" + name + "”." : "Saved “" + name + "”.";
-      store.setLoan({ id: l ? l.id : "loan-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), name, kind: card ? "card" : "loan", total, balance, payment });
+      store.setLoan(loan);
     } }, isNew ? "Add" : "Save");
     const rm = isNew ? null : h("button", { class: "btn danger", onclick: () => { if (!armed) { armed = true; rm.textContent = "Tap again to remove"; return; } state.loanEdit = null; store.delLoan(l.id); } }, "Remove");
-    const form = h("div", {}, h("div", { class: "fields" }, typeF, h("label", {}, "Name", f.name), totalF, h("label", {}, "Current balance ($)", f.balance), payF),
+    const form = h("div", {}, h("div", { class: "fields" }, typeF, h("label", {}, "Name", f.name), totalF, h("label", {}, "Balance now ($)", f.balance)),
+      linkHead, linkSub, radHost, accountsBlock, callout, h("div", { class: "fields", style: "margin-top:12px" }, aprF, payF),
       err, h("div", { class: "actions" }, save, h("button", { class: "btn", onclick: () => { state.loanEdit = null; render(); } }, "Cancel"), rm));
     sync();
     return form;
@@ -1908,15 +2334,55 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
       ? [h("span", {}, fmt(l.balance) + " used of " + fmt(l.total)), h("span", {}, fmt(st.avail) + " available"), l.payment > 0 ? h("span", {}, fmt(l.payment) + " a month") : null]
       : [h("span", {}, fmt(l.balance) + " left of " + fmt(l.total)), st.count > 0 && !st.done ? h("span", {}, "about " + (st.count - st.made) + " payments left") : null, l.payment > 0 ? h("span", {}, fmt(l.payment) + " each") : null, st.done ? h("span", { class: "tag ok" }, "Paid off") : null];
     return h("div", { class: "row" },
-      h("div", { class: "main" }, h("div", { class: "name" }, l.name, " ", h("span", { class: "tag" }, card ? "Card" : "Loan")), h("div", { class: "meta" }, meta)),
+      h("div", { class: "main" }, h("div", { class: "name" }, l.name, " ", h("span", { class: "tag" }, card ? "Card" : "Loan"), isLinked(l) ? " " : null, isLinked(l) ? h("span", { class: "tag ok" }, "Follows your bills") : null), h("div", { class: "meta" }, meta)),
       h("div", { class: "lactions" },
-        st.done ? null : h("button", { class: "btn small primary", onclick: () => { state.loanPay = l.id; state.loanEdit = null; render(); } }, card ? "Update balance" : "Record a payment"),
+        isLinked(l) ? h("button", { class: "btn small primary", onclick: () => openSheet("check") }, "Check in") : st.done ? null : h("button", { class: "btn small primary", onclick: () => { state.loanPay = l.id; state.loanEdit = null; render(); } }, card ? "Update balance" : "Record a payment"),
         h("button", { class: "btn small", onclick: () => { state.loanEdit = l.id; state.loanPay = null; render(); } }, "Edit")),
       pay);
   }
 
-    /* ---------- debt balance prediction ---------- */
-  const debtAt = (l, k) => Math.max(0, l.balance - (l.payment > 0 ? l.payment : 0) * Math.max(0, k));   // k months after this one; no interest, no new spending
+  
+  /* ---------- check in with your statements: once a month, one tap if the app got it right ---------- */
+  let checkDraft = {}; const checkDone = new Set();
+  function renderCheckSheet() {
+    const host = $("checkHost"); host.replaceChildren();
+    if (!state.checkOpen) { checkDraft = {}; checkDone.clear(); return; }
+    const parse = (v) => { const t = String(v).replace(/[$,\s]/g, ""); return /^-?(\d+\.?\d*|\.\d+)$/.test(t) ? parseFloat(t) : NaN; };
+    const apply = (id, bal, said) => { const raw = state.loans.find((x) => x.id === id); if (!raw) return; delete checkDraft[id]; checkDone.add(id); state.note = said; store.setLoan(rebase(raw, bal)); };
+    const rows = liveLoans().map((l) => {
+      const card = isCard(l), est = l.balance;
+      if (checkDone.has(l.id)) return h("div", { class: "ckrow done" }, h("div", { class: "main" }, h("div", { class: "name" }, l.name), h("div", { class: "meta" }, h("span", {}, "Now " + fmt(est)))), h("span", { class: "tag ok" }, "Checked"));
+      if (checkDraft[l.id] !== undefined) {
+        const inp = h("input", { id: "chk-" + l.id, type: "text", inputmode: "decimal", autocomplete: "off", value: checkDraft[l.id] }), msg = h("div", { class: "cashprev", role: "status", "aria-live": "polite" });
+        const upd = () => {
+          checkDraft[l.id] = inp.value; const v = parse(inp.value), d = Math.round((v - est) * 100) / 100;
+          if (isNaN(v) || v < 0) { msg.textContent = "Type the balance your bank shows."; msg.className = "cashprev"; return; }
+          msg.className = "cashprev " + (d === 0 ? "ok" : "warn");
+          msg.textContent = d === 0 ? "That matches what we thought." : d < 0 ? fmt(-d) + " lower than we thought." + (card ? " Maybe a payment we missed?" : " That is usually interest.") : fmt(d) + " higher than we thought." + (card ? " Maybe a charge we missed?" : " Maybe a fee or interest?");
+        };
+        inp.addEventListener("input", upd);
+        const chip = (t, dv) => h("button", { type: "button", class: "btn", onclick: () => { const v = parse(inp.value); inp.value = String(Math.round(((isNaN(v) ? est : v) + dv) * 100) / 100); upd(); } }, t);
+        upd();
+        return h("div", { class: "ckrow open" }, h("div", { class: "line" }, h("div", { class: "main" }, h("div", { class: "name" }, l.name), h("div", { class: "meta" }, h("span", {}, "We think " + fmt(est))))),
+          h("label", { for: "chk-" + l.id, style: "display:block;margin:10px 0 6px;font-weight:700;font-size:var(--fs-sm)" }, "What does your bank app say?"), inp,
+          h("div", { class: "cashquick" }, chip("−$10", -10), chip("−$1", -1), chip("+$1", 1), chip("+$10", 10)), msg,
+          h("div", { class: "actions" }, h("button", { class: "btn primary", onclick: () => { const v = parse(inp.value); if (isNaN(v) || v < 0) { inp.focus(); return; } apply(l.id, v, l.name + " is now " + fmt(v) + "."); } }, "Save"), h("button", { class: "btn", onclick: () => { delete checkDraft[l.id]; render(); } }, "Keep " + fmt(est))));
+      }
+      return h("div", { class: "ckrow" }, h("div", { class: "main" }, h("div", { class: "name" }, l.name, " ", h("span", { class: "tag" }, card ? "Card" : "Loan")), h("div", { class: "meta" }, h("span", {}, "We think " + fmt(est)))),
+        h("div", { class: "lactions" }, h("button", { class: "btn small primary", onclick: () => apply(l.id, est, l.name + " checked.") }, ico("check"), "Looks right"), h("button", { class: "btn small", onclick: () => { checkDraft[l.id] = String(est); render(); } }, "It is different")));
+    });
+    host.append(h("div", { class: "panel" }, h("h3", { class: "cashhead" }, "Check in"),
+      h("p", { class: "sub" }, "Compare with your bank app, about once a month. One tap if we got it right. If it is off, type the real number."),
+      state.loans.length ? h("div", { class: "cklist" }, ...rows) : h("p", { class: "sub" }, "Add a loan or credit card first."),
+      h("div", { class: "actions" }, h("button", { class: "btn primary", onclick: closeSheet }, "Done"))));
+  }
+
+  /* ---------- debt balance prediction ---------- */
+  const debtAt = (l, k) => {                                       // k months after this one; interest on loans that have a rate, no new spending
+    let bal = l.balance; const pay = l.payment > 0 ? l.payment : 0;
+    for (let j = 0; j < Math.max(0, k); j++) { const interest = !isCard(l) && l.apr > 0 ? bal * l.apr / 1200 : 0; bal = Math.max(0, bal - (pay - interest)); }
+    return Math.round(bal * 100) / 100;
+  };
   function chartDebt(vals, labels, mark) {
     const W = Math.max(280, Math.min(900, window.innerWidth - 32 - 30)), H = 210, L = 54, R = 16, T = 36, B = 26;
     const maxV = Math.max(1, ...vals), raw = maxV / 4, pw = Math.pow(10, Math.floor(Math.log10(raw)));
@@ -1945,13 +2411,13 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     const host = $("debts"); host.replaceChildren();
     host.append(h("div", { class: "bar-title", style: "--role:var(--primary)" }, h("span", { class: "bt" }, "Debt balance prediction")));
     if (!state.loans.length) { host.append(h("div", { class: "list" }, h("div", { class: "empty" }, "Add a loan or credit card in Settings to see how its balance could fall, month by month. ", h("button", { class: "btn small", onclick: () => setTab("settings") }, "Open Settings")))); return; }
-    const now = new Date(), ty = now.getFullYear(), tm = now.getMonth(), debts = state.loans.slice().sort((a, b) => b.balance - a.balance);
+    const now = new Date(), ty = now.getFullYear(), tm = now.getMonth(), debts = liveLoans().sort((a, b) => b.balance - a.balance);
     const sel = (state.y - ty) * 12 + (state.m - tm), k = Math.max(0, sel);
     const total = (j) => debts.reduce((sum, l) => sum + debtAt(l, j), 0);
     const monthAt = (j) => { const t = tm + j; return { y: ty + Math.floor(t / 12), m: ((t % 12) + 12) % 12 }; };
     const short = (p) => MONTHS[p.m].slice(0, 3) + " " + p.y;
     const unset = debts.some((l) => l.balance > 0 && !(l.payment > 0));
-    const K = unset ? null : Math.max(0, ...debts.map((l) => (l.balance > 0 ? Math.ceil(l.balance / l.payment) : 0)));
+    const ks = debts.map(payoffMonths), K = unset || ks.some((v) => v == null) ? null : Math.max(0, ...ks);
     const sum = (label, value, cls) => h("div", {}, h("div", { class: "l" }, label), h("div", { class: "v " + (cls || "") }, value));
     const len = Math.min(120, Math.max(12, k + 1)), pts = [], labels = [];
     for (let j = 0; j < len; j++) { pts.push(total(j)); const p = monthAt(j); labels.push(MONTHS[p.m].slice(0, 3) + (j === 0 || p.m === 0 ? " ’" + String(p.y).slice(2) : "")); }
@@ -1989,7 +2455,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
         h("div", { class: "main" }, h("div", { class: "name" }, it.name), h("div", { class: "meta" }, h("span", {}, freqText(it) + " · " + fmt(it.amount)), it.type === "income" ? h("span", { class: "tag" }, "Money in") : null, on ? h("span", { class: "tag ok" }, "Automatic") : null)),
         on ? h("span", { class: "lockmark", "aria-hidden": "true" }, ico("lock")) : null));
     });
-    const loanRows = state.loans.map(loanItem);
+    const loanRows = liveLoans().map(loanItem);
     if (state.loanEdit === "new") loanRows.push(h("div", { class: "row" }, loanForm(null)));
     if (!loanRows.length) loanRows.push(h("div", { class: "empty" }, "Nothing here yet. Add a loan or credit card to see its balance on the Overview."));
     const nCards = state.loans.filter(isCard).length, nLoans = state.loans.length - nCards;
@@ -1999,8 +2465,8 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
       h("p", { class: "sub", style: "margin-top:12px" }, "Switch on bills that come out by themselves. They are marked paid on the due day and show a lock instead of a switch."),
       group("Automatic bills", autoRows.length ? autoRows : [h("div", { class: "empty" }, "Add a bill first, then come back to make it automatic.")], cand.length ? onCount + " of " + cand.length + " automatic" : null, "brand"),
       group("Loans and cards", loanRows, loanCount || null, "primary"),
-      state.loanEdit === "new" ? null : h("div", { class: "actions" }, h("button", { class: "btn primary", onclick: () => { state.loanEdit = "new"; state.loanPay = null; render(); } }, "Add a loan or card")),
-      group("Appearance and data", [mi("palette", "Wallpaper and colors…", () => openSheet("theme")), mi("folder", "Manage budgets…", () => openSheet("manage")), mi("share", "Share this budget", () => openSheet("share")), mi("download", "Save a backup file", backup)], null, "accent"));
+      state.loanEdit === "new" ? null : h("div", { class: "actions" }, h("button", { class: "btn primary", onclick: () => { state.loanEdit = "new"; state.loanPay = null; render(); } }, "Add a loan or card"), state.loans.length ? h("button", { class: "btn", onclick: () => openSheet("check") }, "Check in with your statements") : null),
+      group("Appearance and data", [mi("easy", "Easy mode (big print)", () => setEasy(true)), mi("palette", "Wallpaper and colors…", () => openSheet("theme")), mi("folder", "Manage budgets…", () => openSheet("manage")), mi("share", "Share this budget", () => openSheet("share")), mi("download", "Save a backup file", backup)], null, "accent"));
   }
 
 /* ---------- tabs, filters and the views behind them ---------- */
@@ -2145,7 +2611,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
       : h("button", {
           class: "sw", role: "switch", "aria-checked": String(paid),
           "aria-label": (it.type === "income" ? "Mark received: " : "Mark paid: ") + it.name + ", " + niceDate(o.due),
-          onclick: () => paid ? store.delPay(o.key) : store.setPay(o.key, { item: it.id, due: o.due, on: todayISO(), amt: it.amount })
+          onclick: () => paid ? store.delPay(o.key) : markPaid(o.key, { item: it.id, due: o.due, on: todayISO(), amt: it.amount })
         });
     const autoTag = auto ? h("span", { class: "tag" }, "Automatic") : null;
     const amtShown = paid && p.amt != null ? p.amt : it.amount;
@@ -2154,6 +2620,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
         h("div", { class: "main" }, h("div", { class: "name" }, it.name), h("div", { class: "meta" }, h("span", {}, niceDate(o.due) + (it.account ? " · " + it.account : "")), tag, autoTag)),
         h("div", { class: "amt" + (it.type === "income" ? " in" : "") }, (it.type === "income" ? "+" : "") + fmt(amtShown)),
         h("button", { class: "go", "data-key": o.key, "aria-label": "Details for " + it.name + ", " + niceDate(o.due), title: "Details", onclick: () => openBill(o.key) }, ico("chevR"))));
+    { const eff = debtEffect(it, o.key, paid); if (eff) r.append(eff); }
     if (paid) r.append(h("div", { class: "detail" },
       h("label", {}, it.type === "income" ? "Received on" : "Paid on", h("input", { type: "date", value: p.on || todayISO(), "aria-label": "Date " + it.name + " was paid",
         onchange: (e) => { if (e.target.value) store.setPay(o.key, { ...p, on: e.target.value }); } })),
@@ -2206,7 +2673,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     if (isAuto(it, o.due)) return h("button", { class: "sw lock" + (paid ? " on" : ""), "data-f": fid, "aria-label": "Automatic " + (inc ? "deposit" : "withdrawal") + ": " + it.name + ", " + niceDate(o.due) + (paid ? ", paid" : ", not due yet"),
       onclick: () => showToast("“" + it.name + "” is automatic. It is marked paid on its due day. Change this in Settings.") }, ico("lock"));
     return h("button", { class: "sw", role: "switch", "data-f": fid, "aria-checked": String(paid), "aria-label": (inc ? "Mark received: " : "Mark paid: ") + it.name + ", " + niceDate(o.due),
-      onclick: () => paid ? store.delPay(o.key) : store.setPay(o.key, { item: it.id, due: o.due, on: todayISO(), amt: it.amount }) });
+      onclick: () => paid ? store.delPay(o.key) : markPaid(o.key, { item: it.id, due: o.due, on: todayISO(), amt: it.amount }) });
   }
   function statusOf(o, c) {                                        // [words, dot colour]
     const inc = o.item.type === "income", d = daysUntil(o.due);
@@ -2325,7 +2792,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
     return progress;
   }
   document.addEventListener("touchstart", (e) => {
-    drag = null;
+    drag = null; if (state.easy) return;
     if (e.touches.length !== 1) return;
     const t = e.touches[0];
     if (state.bill) { if (t.clientX <= EDGE && $("sheetWrap").hidden) drag = { mode: "back", x0: t.clientX, y0: t.clientY, t0: Date.now(), lock: null, dx: 0, x: 0 }; return; }
@@ -2409,6 +2876,7 @@ html[data-look="glass"] .drawer { background:linear-gradient(165deg, rgba(48,49,
   }
   window.addEventListener("resize", measureChrome);
   if (window.ResizeObserver) { const ro = new ResizeObserver(measureChrome); ro.observe($("strip")); }
+  state.easy = document.documentElement.hasAttribute("data-easy");
   applyTheme();
   applyLook();
   applyColors(getColors());

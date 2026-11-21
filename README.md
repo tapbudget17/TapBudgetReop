@@ -12,23 +12,51 @@ If someone already has budgets saved, the example is added to their list once. *
 - **Header (top):** the app icon on the left opens the menu, which slides out from the left edge. You can also swipe in from the left edge of the screen. Next to the icon is a greeting, with the open budget's name underneath. Tap the name to switch budgets. The round **+** button on the right adds an item.
 - **Month bar:** stays pinned at the top while you scroll. The arrows move between months and **Today** jumps back to this month. Next to it is the health light. Green means all clear. Amber means a bill is due within 3 days, everyday spending is over budget, or your balance dips under your low balance line. Red means a bill is overdue or your balance would go below zero. On narrow phones the light shows without its word.
 - **Tab bar (bottom):** a floating dark bar with five tabs. The open tab turns white and shows its name. A red badge on Bills counts overdue bills.
-  - **Overview:** one fixed screen with no scrolling. Four cards (Bills, Money in, Spending and Cash flow) sit in a stack. They are wide, using most of the window, and they grow with it. Swipe left or right, tap a card peeking out at the side, or tap the chips above the stack. **See bills**, **See money in** and **See spending** open the matching tab, and the Cash flow card's button opens the starting balance sheet. Underneath, the month summary, loans and cards, and the example-budget note sit side by side. Swipe sideways to see them all. On a short screen these get shorter first, so the cards keep their room.
+  - **Overview:** one fixed screen with no scrolling. Four cards (Bills, Money in, Spending and Cash flow) sit in a stack. They are wide, using most of the window, and they grow with it. Swipe left or right, tap a card peeking out at the side, or tap the chips above the stack. All four chips share one row (the name on top, the number underneath), so none is ever hidden off the edge. **See bills**, **See money in** and **See spending** open the matching tab, and the Cash flow card's button opens the starting balance sheet. Underneath, the month summary, loans and cards, and the example-budget note sit side by side. Swipe sideways to see them all. On a short screen these get shorter first, so the cards keep their room.
 
   **Cash flow** is a waterfall of the month. It starts at your starting balance, steps up with each paycheck and down with each bill in date order, and ends at the projected balance on the last day. Everyday spending budgets are not in it. Paid items use what you actually paid, and unpaid ones use the planned amount. Below your **low balance line** the chart is shaded red, any step that ends there is outlined, and a flag marks the lowest point. Tap **Starting balance** on the card to set what is in your account on the 1st, move it with the quick −$500, −$100, +$100 and +$500 buttons, and set the low balance line (it starts at $500). The preview shows the lowest point and the ending balance before you save. With **Carry over each month** on, every later month starts from the month before's ending balance, so you only set it once. A month before your first starting balance shows "Set starting balance". Each budget keeps its own.
   - **Bills:** a summary card at the top (bills paid and money received, each with a bar in your colors), then your income and bills, with a search box and filters: **All, Unpaid, Paid, Overdue**. The dark round button in the search box switches to the weekly schedule, one card per week, opening on this week. Swipe through the weeks, and tap **Show list** to go back. This tab scrolls.
   - **Spending:** what you have spent against each everyday budget, with filters: **All, Over budget, Within budget**.
   - **Insights:** expected income, planned spending and net for the month, where the money goes, a six-month chart and a debt balance prediction.
-  - **Settings:** automatic bills, loans and credit cards, and shortcuts to wallpaper and colors, budgets, sharing and backup.
+  - **Settings:** automatic bills, loans and credit cards that follow your bills, and shortcuts to wallpaper and colors, budgets, sharing and backup.
   - The app remembers the tab, view and filters you were using, and which gauge card was in front.
 - **Bill details:** the round arrow at the end of each bill opens its own screen. It shows the amount and due date in a colored header, the switch, and the paid date and amount once it is paid. The pencil button edits the item. **Coming up** is a row of cards for the other bills still to pay this month. Swipe through them, switch one on, or tap its dark arrow to open it. Go back with the back button, Escape, or a swipe in from the left edge.
 - **Menu (slide-out):**
   - **Budgets:** switch budgets, manage them, or open the example.
   - **Tools:** Add item, Edit items, Share this budget, Import a budget.
   - **Backup:** save a budget to a file, or restore one from a file.
-  - **Appearance:** Auto (follows the phone), Light or Dark, and **Wallpaper and colors…**.
+  - **Appearance:** Auto (follows the phone), Light or Dark, **Easy mode (big print)**, and **Wallpaper and colors…**.
   - **About:** the About page, privacy policy and support.
 - **Sheets:** Add item, Share, Import and Manage budgets open as a panel that slides up from the bottom. Close it with the X, by tapping outside it, or with Escape.
 - **Messages:** short confirmations such as "Link copied" appear above the tab bar and fade away.
+
+## Loans and cards that follow your bills
+
+You no longer have to type a payment. Link each loan or card to the bills you already tick, and its balance moves by itself.
+
+- **Set it up once** in **Settings → Loans and cards → Edit** (or when you add one). Pick **which bill pays it**. The app suggests the bill whose name matches. For a credit card, also pick which bills are **charged to the card**, using the "Paid with" names on your bills. An optional **interest rate** on a loan splits each payment into interest and principal, so the balance matches your statement more closely.
+- **Then just tick bills.** Tick *Car loan payment* and the loan drops by the amount you paid. Tick a bill that was paid with the card and the card goes up. Tick the card's payment bill and it comes down. Untick any of them and the balance goes back. A short line under each linked bill shows the change (for example *Car loan: $11,250 → $10,865*) and says what will happen before you tick it. A short message says the new balance when you tick.
+- **Automatic bills work too.** When an automatic payment is marked paid on its due day, the loan or card follows, with no taps at all.
+- **Nothing is counted twice.** When you link a loan or card, or save a new balance, the bills already paid are treated as inside that balance. Only ticks after that move it. If you delete a linked bill, the balance stays where it was.
+- **Check in about once a month.** **Settings → Check in with your statements** (or the *Check in* link on the Overview when it has been a while) lists each loan and card with what the app thinks. Tap **Looks right** if it matches your bank, or **It is different** and type the real number. It says how far off it was and why that usually happens, such as interest.
+- **If you would rather type it,** choose **None, I will update it myself**. Those loans and cards work as before, with **Record a payment** or **Update balance**.
+- The Overview card, the debt chart on Insights and the example budget all use these live balances. In Easy mode, a bill that is linked says so in plain words, and **I paid it** moves the loan too.
+- A **Share with paid history** link and a backup file carry the links and the bookkeeping. **Share setup** keeps the links but leaves the bookkeeping out, so the person who receives it starts fresh.
+
+## Easy mode
+
+For anyone who wants a calmer, larger app. Turn it on from **Menu → Easy mode (big print)** or **Settings → Easy mode (big print)**. The app then opens in Easy mode every time, until someone chooses **More → Use the full app**. The choice and the print size are saved on that device only.
+
+Easy mode shows the same budget, with the same data, in a much simpler way. It has no waterfall, tables, swipe-in menu or search, and only four big buttons along the bottom:
+
+- **Home:** the next bill (or the oldest late one) with a big **I paid it** button, the bills left to pay and money still to come in plain numbers, and a plain-words message about the account: *You should be fine*, *Watch your balance* or *You may run short*. It uses the starting balance you set.
+- **Overview:** the month at a glance, with nothing to edit. A banner says in plain words whether *Everything looks good*, a bill is *due soon* or *late*, or the balance needs watching. Under it are big cards with thick progress bars: **Bills** (for example *4 of 7 paid*), **Money in**, **Everyday spending** (when you have spending budgets) and **Your account**, which has a simple bar for the lowest point against your warning line plus where the month starts, bottoms out and ends. **Coming up** lists the next few bills and paydays. A **This month / Next month** switch sits at the top. Bars always come with the numbers in words, so color is never the only clue.
+- **Bills:** this month's bills and money coming in, each with one big button (**I paid it**, **I got paid**, or **Undo**), with a switch between **This month** and **Next month**. Late bills have a red border and the word *Late*. Bills set to pay by themselves say so and have no button.
+- **More:** **Large** or **Extra large** print, the account balance, switching between budgets, **Save a backup copy**, and **Use the full app**.
+
+**Add a bill** takes three things: what it is called, how much, and which day of the month it is due, plus a choice between a bill and money coming in. **Change or remove** on any item opens the same form. Removing always asks first.
+
+In Easy mode you can change only bills and money in. The Overview also shows everyday spending, read only. Loans and cards, the charts and the look settings stay in the full app, and are not changed by Easy mode. Text and buttons are at least 22px (27px on Extra large), buttons are at least 64px tall, and every word of text meets the 4.5:1 contrast target in light and dark, at both sizes. Wallpaper and Glass are not used in Easy mode, so text always sits on a plain background.
 
 ## Wallpaper and colors
 
@@ -105,4 +133,4 @@ Tap the budget name under the greeting, or use the menu. **Menu → Manage budge
 ## Notes
 
 - Data lives in the browser on that device and is not encrypted. The budgets and settings are in localStorage. Each budget's look is in localStorage too. The wallpaper pictures are in IndexedDB, so they never take room from your budgets. A different phone or browser starts with the example until you Import.
-- Updating the app: re-upload the files that changed. Each time `index.html` changes, also change the cache name at the top of `sw.js` (for example `tapbudget-v23` to `tapbudget-v24`) so phones drop the old copy. If a change doesn't appear, close and reopen the app.
+- Updating the app: re-upload the files that changed. Each time `index.html` changes, also change the cache name at the top of `sw.js` (for example `tapbudget-v27` to `tapbudget-v28`) so phones drop the old copy. If a change doesn't appear, close and reopen the app.

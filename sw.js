@@ -1,5 +1,5 @@
 // Keeps the app working offline. Network first, so updates show up as soon as you are online.
-const CACHE = "tapbudget-v23";
+const CACHE = "tapbudget-v27";
 const FILES = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 
 self.addEventListener("install", (e) => {
