@@ -176,10 +176,32 @@ section.group, #schedule:not(:empty), #planned:not(:empty), #where:not(:empty), 
 .row { padding:14px var(--s4); border-top:1px solid var(--border); }
 .row:first-child { border-top:0; }
 .line { display:flex; align-items:center; gap:var(--s3); }
-.sw { flex:none; width:50px; height:30px; border-radius:var(--r-pill); border:0; background:var(--track); position:relative; padding:0; transition:background .18s; }
-.sw::after { content:""; position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.25); transition:transform .18s; }
-.sw[aria-checked="true"] { background:var(--success); }
-.sw[aria-checked="true"]::after { transform:translateX(20px); }
+.sw { flex:none; width:50px; height:30px; box-sizing:border-box; border-radius:var(--r-pill); border:var(--sw-bw) solid var(--sw-bd-off); background:var(--sw-bg-off); box-shadow:var(--sw-sh-off); -webkit-backdrop-filter:var(--sw-blur); backdrop-filter:var(--sw-blur); position:relative; padding:0; transition:background .18s, border-color .18s, box-shadow .18s; }
+.sw::before { content:""; position:absolute; top:50%; right:8px; width:14px; height:14px; margin-top:-7px; background:var(--sw-ico-off) center/contain no-repeat; pointer-events:none; }
+.sw::after { content:""; position:absolute; top:calc(50% - 12px); left:3px; width:24px; height:24px; box-sizing:border-box; border-radius:50%; border:var(--sw-kbw) solid var(--sw-kbd-off); background:var(--sw-k-off); box-shadow:var(--sw-ksh-off); filter:var(--sw-kf-off); transition:transform .18s, background .18s, box-shadow .18s, filter .18s; }
+.sw[aria-checked="true"] { background:var(--sw-bg-on); border-color:var(--sw-bd-on); box-shadow:var(--sw-sh-on); }
+.sw[aria-checked="true"]::before { right:auto; left:8px; background-image:var(--sw-ico-on); }
+.sw[aria-checked="true"]::after { transform:translateX(calc(20px - 2 * var(--sw-bw))); background:var(--sw-k-on); border-color:var(--sw-kbd-on); box-shadow:var(--sw-ksh-on); filter:var(--sw-kf-on); }
+@media (prefers-reduced-motion: reduce) { .sw, .sw::after { transition:none; } }
+/* ----- the five switch styles (chosen under Wallpaper and colors > Switches) ----- */
+:root { --sw-ink:29,30,33; --sw-ring:#c2570a; --sw-og1:#3fd17a; --sw-og2:#0f8a3c; --sw-og3:#075c27; --sw-ogs:24%; --sw-gglow:rgba(20,163,75,.55); --sw-or1:#ff7a68; --sw-or2:#c42a1d; --sw-or3:#7d160d; --sw-ors:26%; --sw-rglow:rgba(217,45,32,.45); --sw-sun1:#ffe27a; --sw-sun2:#f59a0c; --sw-sun3:#c2410c; --sw-sunedge:#b45309; --sw-sunglow:rgba(245,154,12,.5);
+  --sw-bw:0px; --sw-bg-off:var(--track); --sw-bg-on:var(--success); --sw-bd-off:transparent; --sw-bd-on:transparent; --sw-sh-off:none; --sw-sh-on:none; --sw-blur:none;
+  --sw-k-off:#fff; --sw-k-on:#fff; --sw-kbw:0px; --sw-kbd-off:transparent; --sw-kbd-on:transparent; --sw-ksh-off:0 1px 3px rgba(0,0,0,.25); --sw-ksh-on:0 1px 3px rgba(0,0,0,.25); --sw-kf-off:none; --sw-kf-on:none; --sw-ico-off:none; --sw-ico-on:none; }
+:root[data-theme="dark"] { --sw-ink:241,241,243; --sw-ring:var(--accent); --sw-og1:#c9ffd9; --sw-og2:#2ee07a; --sw-og3:#12994a; --sw-ogs:42%; --sw-gglow:rgba(46,224,122,.75); --sw-or1:#ffa38f; --sw-or2:#e5533d; --sw-or3:#9d2918; --sw-ors:55%; --sw-rglow:rgba(229,83,61,.55); --sw-sun1:#fff6c9; --sw-sun2:var(--accent); --sw-sun3:#e8780a; --sw-sunedge:transparent; --sw-sunglow:var(--accent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --sw-ink:241,241,243; --sw-ring:var(--accent); --sw-og1:#c9ffd9; --sw-og2:#2ee07a; --sw-og3:#12994a; --sw-ogs:42%; --sw-gglow:rgba(46,224,122,.75); --sw-or1:#ffa38f; --sw-or2:#e5533d; --sw-or3:#9d2918; --sw-ors:55%; --sw-rglow:rgba(229,83,61,.55); --sw-sun1:#fff6c9; --sw-sun2:var(--accent); --sw-sun3:#e8780a; --sw-sunedge:transparent; --sw-sunglow:var(--accent); } }
+[data-sw="check"] { --sw-bw:2px; --sw-bg-on:#2e9b63; --sw-bd-on:#1f7a4b; --sw-bg-off:#e0575b; --sw-bd-off:#b83a3f; --sw-k-off:#f4f4f6; --sw-k-on:#f4f4f6; --sw-kbw:1px; --sw-kbd-off:rgba(0,0,0,.16); --sw-kbd-on:rgba(0,0,0,.16); --sw-ksh-off:0 1px 2px rgba(0,0,0,.3); --sw-ksh-on:0 1px 2px rgba(0,0,0,.3); --sw-kf-off:none; --sw-kf-on:none;
+  --sw-ico-on:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 12.5l5 5L19.5 7'/%3E%3C/svg%3E");
+  --sw-ico-off:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E"); }
+[data-sw="orb"] { --sw-bw:1.5px; --sw-bg-off:rgba(var(--sw-ink),.09); --sw-bg-on:rgba(var(--sw-ink),.09); --sw-bd-off:rgba(var(--sw-ink),.55); --sw-bd-on:rgba(var(--sw-ink),.55); --sw-blur:blur(6px); --sw-sh-off:inset 0 1px 3px rgba(0,0,0,.2); --sw-sh-on:inset 0 1px 3px rgba(0,0,0,.2);
+  --sw-k-on:radial-gradient(circle at 35% 30%, var(--sw-og1), var(--sw-og2) var(--sw-ogs), var(--sw-og3) 100%); --sw-ksh-on:0 0 12px 3px var(--sw-gglow); --sw-kbd-on:transparent; --sw-kf-on:none;
+  --sw-k-off:radial-gradient(circle at 40% 35%, var(--sw-or1), var(--sw-or2) var(--sw-ors), var(--sw-or3) 100%); --sw-ksh-off:0 0 10px 2px var(--sw-rglow); --sw-kbd-off:transparent; --sw-kf-off:blur(1.4px); }
+[data-sw="sun"] { --sw-bw:1.5px; --sw-bg-off:transparent; --sw-bg-on:transparent; --sw-bd-off:rgba(var(--sw-ink),.72); --sw-bd-on:rgba(var(--sw-ink),.72);
+  --sw-k-on:radial-gradient(circle at 35% 30%, var(--sw-sun1), var(--sw-sun2) 45%, var(--sw-sun3) 100%); --sw-ksh-on:0 0 12px 3px var(--sw-sunglow); --sw-kbd-on:var(--sw-sunedge); --sw-kbw:3px;
+  --sw-k-off:transparent; --sw-kbd-off:var(--sw-ring); --sw-ksh-off:0 0 7px 1px var(--sw-ring); --sw-kf-off:none; --sw-kf-on:none; }
+[data-sw="sun"] .sw[aria-checked="true"]::after { border-width:1.5px; }
+[data-sw="soft"] { --sw-bw:1.5px; --sw-bg-off:transparent; --sw-bg-on:var(--info-soft); --sw-bd-off:var(--primary); --sw-bd-on:var(--primary);
+  --sw-k-on:var(--primary); --sw-kbd-on:transparent; --sw-ksh-on:none; --sw-k-off:transparent; --sw-kbw:3px; --sw-kbd-off:var(--primary); --sw-ksh-off:none; --sw-kf-off:none; --sw-kf-on:none; }
+[data-sw="soft"] .sw[aria-checked="true"]::after { border-width:0; }
 .main { flex:1; min-width:0; }
 .name { font-weight:650; overflow-wrap:anywhere; }
 .row.paid .name { color:var(--text-muted); text-decoration:line-through; text-decoration-thickness:1px; }
@@ -434,8 +456,8 @@ section.group, #schedule:not(:empty), #planned:not(:empty), #where:not(:empty), 
 .menu-item .dots i { width:12px; height:12px; border-radius:50%; border:1px solid var(--border); }
 
 /* ===== automatic bills: a lock in place of the switch ===== */
-.sw.lock { display:inline-grid; place-items:center; color:var(--text-muted); }
-.sw.lock::after { display:none; }
+.sw.lock { display:inline-grid; place-items:center; color:var(--text-muted); border:0; background:var(--track); box-shadow:none; -webkit-backdrop-filter:none; backdrop-filter:none; }
+.sw.lock::before, .sw.lock::after { display:none; }
 .sw.lock svg, .lockmark svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .sw.lock.on { background:var(--success-soft); color:var(--success-text); box-shadow:inset 0 0 0 1.5px var(--success-text); }
 .lockmark { display:inline-grid; place-items:center; flex:none; color:var(--text-muted); }
@@ -526,7 +548,7 @@ html.has-wall body::before { background:var(--plate); }
 html.has-wall .strip { background:transparent; }
 html.has-wall .head { margin:var(--s1) 0 var(--s1); padding:10px 14px 10px 10px; background:var(--plate); border-radius:26px; box-shadow:var(--shadow-1); }
 html.has-wall .bar-title { align-items:center; margin-bottom:10px; padding:10px 16px; background:var(--plate); border-radius:var(--r-pill); box-shadow:var(--shadow-1); }
-html.has-wall .foot-note, html.has-wall #settingsHost > p.sub { padding:var(--s3) var(--s4); background:var(--plate); border-radius:var(--r-md); }
+html.has-wall .foot-note, html.has-wall #footVer, html.has-wall #settingsHost > p.sub { padding:var(--s3) var(--s4); background:var(--plate); border-radius:var(--r-md); }
 html.has-wall .nav.txt.here { color:var(--text); }
 html.has-wall[data-look="glass"] { --g-fill:rgba(var(--g-rgb), .92); --g-fill-strong:rgba(var(--g-rgb), .95); --g-sheen:none; }
 /* the wallpaper controls */
@@ -627,9 +649,9 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
 .ez-card h2 { margin:0 0 6px; font-size:.82em; font-weight:800; letter-spacing:.02em; color:inherit; opacity:.85; text-transform:none; }
 .ez-big { font-size:1.55em; font-weight:800; line-height:1.15; letter-spacing:-0.02em; }
 .ez-text { margin:6px 0 0; font-size:1em; font-weight:600; }
-.ez-btn { display:flex; align-items:center; justify-content:center; gap:.5em; width:100%; min-height:3.2em; margin-top:14px; padding:.5em 1em; border:0; border-radius:18px; background:var(--solid); color:var(--on-solid); font:inherit; font-size:1em; font-weight:800; text-align:center; }
+.ez-btn { display:flex; align-items:center; justify-content:center; gap:.5em; width:100%; min-height:3.2em; margin-top:14px; padding:.5em 1em; border:2px solid var(--primary); border-radius:18px; background:var(--info-soft); color:var(--text); font:inherit; font-size:1em; font-weight:800; text-align:center; }      /* light tint of your color, dark text, a clear outline */
 .ez-btn.alt { background:var(--surface-2); color:var(--text); border:2px solid var(--border); }
-.ez-btn.danger { background:var(--danger); color:#fff; }
+.ez-btn.danger { background:var(--danger); color:#fff; border-color:var(--danger); }
 .ez-btn svg, .ez-when svg, .ez-tab svg { width:1.2em; height:1.2em; flex:none; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
 .ez-btn:focus-visible, .ez-tab:focus-visible, .ez-link:focus-visible, .ez-seg button:focus-visible, .ez-page input:focus-visible, .ez-page select:focus-visible { outline:4px solid var(--brand); outline-offset:3px; }
 .ez-link { display:block; width:100%; min-height:2.6em; margin-top:8px; padding:.4em; border:0; background:transparent; color:var(--text); font:inherit; font-size:.85em; font-weight:700; text-decoration:underline; text-underline-offset:.2em; }
@@ -700,9 +722,56 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
 .ckrow.open { border:2px solid var(--solid); padding:11px 13px; }
 .ckrow.done { display:flex; align-items:center; justify-content:space-between; gap:12px; opacity:.85; }
 .ckrow .lactions { display:flex; gap:8px; flex-wrap:wrap; margin-top:var(--s2); }
+
+/* ===== cash flow card: the Start pill, and the explorer on Insights ===== */
+.dstart { display:inline-flex; align-items:center; gap:6px; min-height:36px; padding:0 12px; border-radius:var(--r-pill); border:1px solid rgba(255,255,255,.42); background:rgba(0,0,0,.3); color:#fff; font:inherit; font-size:13px; font-weight:700; white-space:nowrap; }
+.dstart svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+:root { --cx-up:#19a35a; --cx-down:#9b5cc9; --cx-spend:#d9780a; }
+:root[data-theme="dark"] { --cx-up:#6ee7a0; --cx-down:#c27be8; --cx-spend:#ffb454; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cx-up:#6ee7a0; --cx-down:#c27be8; --cx-spend:#ffb454; } }
+#cashx:not(:empty) { margin-top:var(--s4); }
+.cxwrap { padding-bottom:var(--s4); }
+.cxplot { position:relative; margin:var(--s2) var(--s3) 0; touch-action:pan-y; user-select:none; -webkit-user-select:none; cursor:grab; border-radius:var(--r-md); outline:none; overflow:hidden; }
+.cxplot:active { cursor:grabbing; }
+.cxplot:focus-visible { outline:3px solid var(--brand); outline-offset:2px; }
+.cxplot svg { display:block; max-width:100%; }
+.cxbar { display:flex; flex-wrap:wrap; gap:var(--s2); padding:var(--s2) var(--s3) 0; }
+.cxbar .btn { min-width:48px; min-height:44px; justify-content:center; font-size:18px; font-weight:700; }
+.cxchips { display:flex; flex-wrap:wrap; gap:6px; padding:var(--s2) var(--s3) 0; }
+.cxchips .chipbtn { min-height:40px; }
+.cxcap { margin:6px var(--s4) 0; min-height:2.6em; font-size:var(--fs-sm); color:var(--text-muted); font-weight:600; }
+.dlegend.cxkey { padding:var(--s2) var(--s4) 0; color:var(--text-muted); font-size:12px; font-weight:600; flex-wrap:wrap; gap:6px 14px; }
+.cxkey span { display:inline-flex; align-items:center; gap:6px; color:var(--text-muted); }
+.cxkey i { display:inline-block; width:12px; height:12px; border-radius:3px; flex:none; }
+.cxkey i.dash { width:16px; height:0; border-top:2px dashed var(--text-muted); background:none; border-radius:0; }
+.cxkey i.dia { width:9px; height:9px; background:var(--text); transform:rotate(45deg); border-radius:1px; }
+.cxkey i.zone { border:1px dashed #e5372f; background:rgba(255,107,107,.3); box-sizing:border-box; }
+.cxvs { display:flex; align-items:center; gap:8px; margin:var(--s2) var(--s3) 0; padding:8px 12px; border-radius:var(--r-md); font-weight:700; font-size:var(--fs-sm); }
+.cxvs svg { width:16px; height:16px; flex:none; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+.dsum .v.neg { color:var(--danger-text); }
+.cxvs.up { background:var(--success-soft); color:var(--success-text); } .cxvs.down { background:var(--warning-soft); color:var(--warning-text); }
+.cxform { margin:var(--s4) var(--s3) 0; padding-top:var(--s3); border-top:1px solid var(--border); }
+.cxrow { display:flex; align-items:center; justify-content:space-between; gap:var(--s3); padding:8px 0; border-top:1px solid var(--border); }
+.cxrow .name { font-weight:800; }
+
+/* ===== the Switches choice in Wallpaper and colors ===== */
+.swopts { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px; }
+.swopt { display:flex; flex-direction:column; align-items:flex-start; gap:10px; min-height:96px; padding:10px 12px; border:1px solid var(--border); border-radius:var(--r-md); background:var(--surface); color:var(--text); font:inherit; text-align:left; }
+.swopt[aria-checked="true"] { border:2px solid var(--solid); padding:9px 11px; }
+.swopt .swt { display:flex; flex-direction:column; gap:1px; }
+.swopt small { color:var(--text-muted); font-size:12px; line-height:1.3; }
+.swprev { display:flex; gap:10px; }
+.swprev .sw { display:inline-block; }
+.swtry { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border); font-weight:700; }
+
+/* ===== the version number, tucked away ===== */
+.verline { margin:var(--s4) 0 0; text-align:center; font-size:var(--fs-xs); font-variant-numeric:tabular-nums; }
+.drawer-ver { flex:none; padding:var(--s2) var(--s4) calc(var(--s3) + env(safe-area-inset-bottom, 0px)); text-align:center; font-size:var(--fs-xs); color:var(--dr-muted); font-variant-numeric:tabular-nums; }
+.drawer.rail .drawer-ver { display:none; }
+.ez-ver { text-align:center; margin-top:22px; }
 </style>
 
-<script>try{var t=localStorage.getItem("budget-tracker:theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("budget-tracker:look")==="glass")document.documentElement.setAttribute("data-look","glass");if(localStorage.getItem("budget-tracker:easy")==="1")document.documentElement.setAttribute("data-easy","1");if(localStorage.getItem("budget-tracker:easysize")==="xl")document.documentElement.setAttribute("data-easysize","xl");var k=localStorage.getItem("budget-tracker:colorsCss");if(k){var s=document.createElement("style");s.id="userColors";s.textContent=k;document.head.appendChild(s)}var w=JSON.parse(localStorage.getItem("budget-tracker:wall")||"null");if(w&&w.on){var r=document.documentElement;r.classList.add("has-wall");r.style.setProperty("--wall-dim",String(Math.min(80,Math.max(0,+w.dim||0))/100));r.style.setProperty("--wall-blur",(Math.min(100,Math.max(0,+w.blur||0))*0.24)+"px")}}catch(e){}</script>
+<script>try{var t=localStorage.getItem("budget-tracker:theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("budget-tracker:look")==="glass")document.documentElement.setAttribute("data-look","glass");var sw=localStorage.getItem("budget-tracker:sw");if(sw==="check"||sw==="orb"||sw==="sun"||sw==="soft")document.documentElement.setAttribute("data-sw",sw);if(localStorage.getItem("budget-tracker:easy")==="1")document.documentElement.setAttribute("data-easy","1");if(localStorage.getItem("budget-tracker:easysize")==="xl")document.documentElement.setAttribute("data-easysize","xl");var k=localStorage.getItem("budget-tracker:colorsCss");if(k){var s=document.createElement("style");s.id="userColors";s.textContent=k;document.head.appendChild(s)}var w=JSON.parse(localStorage.getItem("budget-tracker:wall")||"null");if(w&&w.on){var r=document.documentElement;r.classList.add("has-wall");r.style.setProperty("--wall-dim",String(Math.min(80,Math.max(0,+w.dim||0))/100));r.style.setProperty("--wall-blur",(Math.min(100,Math.max(0,+w.blur||0))*0.24)+"px")}}catch(e){}</script>
 </head>
 <body>
 <div class="wall" id="wall" aria-hidden="true"></div>
@@ -739,6 +808,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
   </div>
   <div class="view" id="view-insights" hidden>
     <div class="glance" id="glance"></div>
+    <section id="cashx"></section>
     <section id="where"></section>
     <section id="planned"></section>
     <section id="debts"></section>
@@ -749,6 +819,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
   <input type="file" id="restoreFile" accept="application/json,.json" hidden>
   <input type="file" id="wallFile" accept="image/*" hidden>
   <p class="sub foot-note">Your budgets are saved on this device only. Open the menu to add items, share, import or back up. <a data-ext href="about/privacy.html" target="_blank" rel="noopener">Privacy policy</a> · <a data-ext href="about/support.html" target="_blank" rel="noopener">Support</a></p>
+  <p class="sub verline" id="footVer" hidden></p>
 </div>
 
 <div id="easy"></div>
@@ -793,6 +864,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
   let itemsCol = null, payCol = null;
 
   /* ---------- storage: this device's localStorage, one entry holding every budget ---------- */
+  const APP_VERSION = "32";                                        // keep equal to the number in sw.js (CACHE = "tapbudget-v32")
   const KEY = "budget-tracker:v2", OLD_KEY = "budget-tracker:v1";
   const TYPES = ["income", "bill", "variable"];
   const ISO = /^\d{4}-\d{2}-\d{2}$/;
@@ -973,7 +1045,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
         for (const i of p.items) map.set(i.id, i);
         b.items = Array.from(map.values()); b.pay = { ...(b.pay || {}), ...p.pay };
         if (p.loans) { const lm = new Map((b.loans || []).map((l) => [l.id, l])); for (const l of p.loans) lm.set(l.id, l); b.loans = Array.from(lm.values()); }
-        if (p.cash) { const old = cleanCash(b.cash) || defaultCash(); b.cash = { starts: { ...old.starts, ...p.cash.starts }, warn: p.cash.warn, carry: p.cash.carry }; }
+        if (p.cash) { const old = cleanCash(b.cash) || defaultCash(); b.cash = { starts: { ...old.starts, ...p.cash.starts }, warn: p.cash.warn, carry: p.cash.carry, follow: p.cash.follow, spend: p.cash.spend, actuals: cleanActuals([...old.actuals, ...p.cash.actuals]) }; }
       } else { b.items = p.items; b.pay = p.pay; if (p.loans) b.loans = p.loans; if (p.cash) b.cash = p.cash; }
     }
     state.activeId = id; loadActive();
@@ -1203,6 +1275,13 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
   const THEME_KEY = "budget-tracker:theme";
   const getTheme = () => { try { return localStorage.getItem(THEME_KEY) || "auto"; } catch (e) { return "auto"; } };
   function applyTheme() { const t = getTheme(), r = document.documentElement; if (t === "auto") r.removeAttribute("data-theme"); else r.setAttribute("data-theme", t); }
+  const SW_KEY = "budget-tracker:sw";
+  const SW_STYLES = [["classic", "Classic", "The standard switch"], ["check", "Check and X", "Green with a check, red with an X"], ["orb", "Glow", "A glowing green light, a dim red one"], ["sun", "Sun and ring", "A bright sun when on, a ring when off"], ["soft", "Soft ring", "A solid dot when on, a ring when off"]];
+  const swOk = (v) => SW_STYLES.some((x) => x[0] === v) ? v : "classic";
+  const getSw = () => { try { return swOk(localStorage.getItem(SW_KEY)); } catch (e) { return "classic"; } };
+  function applySw() { const r = document.documentElement, v = getSw(); if (v === "classic") r.removeAttribute("data-sw"); else r.setAttribute("data-sw", v); }
+  function writeSw(v) { try { localStorage.setItem(SW_KEY, swOk(v)); } catch (e) { /* keep going without saving */ } applySw(); }
+  function setSw(v) { writeSw(v); rememberLook(); render(); }
   const LOOK_KEY = "budget-tracker:look";
   const getLook = () => { try { return localStorage.getItem(LOOK_KEY) === "glass" ? "glass" : "flat"; } catch (e) { return "flat"; } };
   function applyLook() { const r = document.documentElement; if (getLook() === "glass") r.setAttribute("data-look", "glass"); else r.removeAttribute("data-look"); }
@@ -1303,7 +1382,8 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
         h("button", { class: "iconbtn", "aria-label": "Close menu", onclick: () => setDrawer(false) }, ico("close"))),
       h("button", { class: "drawer-toggle", "aria-label": railOn ? "Expand menu" : "Collapse menu to icons", "aria-expanded": String(!railOn), onclick: () => setRail(!railOn) }, ico(railOn ? "chevR" : "chevL")),
       h("div", { class: "drawer-search" }, ico("search"), q),
-      body);
+      body,
+      h("div", { class: "drawer-ver" }, "TapBudget version " + APP_VERSION));
   }
 
   const greeting = () => { const hr = new Date().getHours(); return hr >= 5 && hr < 12 ? "Good morning" : hr >= 12 && hr < 18 ? "Good afternoon" : "Good evening"; };
@@ -1459,7 +1539,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
      The settings above always hold the open budget's look (the start-up script reads them before the first frame);
      this map remembers every budget's look, so switching budgets switches it back. It lives on this device only. ---------- */
   const LOOKS_KEY = "budget-tracker:looks";
-  const currentLook = () => ({ colors: getColors(), look: getLook(), wall: getWall() });
+  const currentLook = () => ({ colors: getColors(), look: getLook(), wall: getWall(), sw: getSw() });
   function getLooks() { try { const m = JSON.parse(localStorage.getItem(LOOKS_KEY) || "{}"); return m && typeof m === "object" && !Array.isArray(m) ? m : {}; } catch (e) { return {}; } }
   function putLooks(m) { try { localStorage.setItem(LOOKS_KEY, JSON.stringify(m)); } catch (e) { /* this session still follows it */ } }
   function rememberLook() { if (!state.activeId) return; const m = getLooks(); m[state.activeId] = currentLook(); putLooks(m); }
@@ -1476,6 +1556,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
     const before = getWall();
     if (e.colors && isHex(e.colors.brand) && isHex(e.colors.primary) && isHex(e.colors.accent)) saveColors(e.colors); else saveColors({ ...PRESETS[0], preset: "cyan" });
     writeLook(e.look === "glass" ? "glass" : "flat");
+    writeSw(swOk(e.sw));
     const w = e.wall && typeof e.wall === "object" ? e.wall : {};
     const wall = { on: !!w.on && typeof w.id === "string", dim: numIn(w.dim, 0, 80, 30), blur: numIn(w.blur, 0, 100, 0), id: w.on && typeof w.id === "string" ? w.id : null };
     saveWall(wall);
@@ -1514,8 +1595,15 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
       h("p", { class: "sub" }, "Glass makes the month bar, tab bar, menu and sheets see-through and blurred. Flat keeps them solid. It changes straight away."),
       h("div", { class: "seg", role: "group", "aria-label": "Style", style: "margin:12px 0 0" }, [["flat", "Flat"], ["glass", "Glass"]].map(([v, l]) => h("button", { "aria-pressed": String(look === v), onclick: () => { setLook(v); const b = document.querySelector('#themeHost .seg button[aria-pressed="true"]'); if (b) b.focus({ preventScroll: true }); } }, l))),
       h("p", { class: "sub", style: "margin-top:8px" }, "With Increase Contrast turned on, Glass stays solid so text is easy to read."));
-    host.append(h("p", { class: "banner lookfor" }, "These settings are for “" + curName() + "”. Each budget keeps its own wallpaper, colors and look. Light, Dark or Auto is for the whole app."),
-      wallPanel(), lookPanel, h("div", { class: "panel" }, h("h3", {}, "Colors"),
+    const curSw = getSw(), demo = h("button", { type: "button", class: "sw", role: "switch", "aria-checked": "true", "aria-label": "Try the switch", onclick: () => demo.setAttribute("aria-checked", String(demo.getAttribute("aria-checked") !== "true")) });
+    const swPanel = h("div", { class: "panel" }, h("h3", {}, "Switches"),
+      h("p", { class: "sub" }, "How the paid switch on each bill, and the other on and off switches, look. It changes straight away."),
+      h("div", { class: "swopts", role: "radiogroup", "aria-label": "Switch style" }, SW_STYLES.map(([v, name, desc]) => h("button", { type: "button", class: "swopt", role: "radio", "aria-checked": String(curSw === v), "data-v": v, onclick: () => { setSw(v); const b = document.querySelector('.swopt[data-v="' + v + '"]'); if (b) b.focus(); } },
+        h("span", { class: "swprev", "data-sw": v, "aria-hidden": "true" }, h("span", { class: "sw", "aria-checked": "true" }), h("span", { class: "sw", "aria-checked": "false" })),
+        h("span", { class: "swt" }, h("b", {}, name), h("small", {}, desc))))),
+      h("div", { class: "swtry" }, h("span", {}, "Try it. Tap the switch."), demo));
+    host.append(h("p", { class: "banner lookfor" }, "These settings are for “" + curName() + "”. Each budget keeps its own wallpaper, colors, look and switches. Light, Dark or Auto is for the whole app."),
+      wallPanel(), lookPanel, swPanel, h("div", { class: "panel" }, h("h3", {}, "Colors"),
       h("p", { class: "sub" }, "Pick a ready-made set, or choose your own. Your choice is saved on this device."),
       h("div", { class: "swatches" }, PRESETS.map((p) => h("button", { class: "swatch", "aria-pressed": String(cur.preset === p.id), "aria-label": p.name + " colors", onclick: () => pickPreset(p.id) }, h("span", { class: "chipset", "aria-hidden": "true" }, [p.brand, p.primary, p.accent].map((c) => h("i", { style: "background:" + c }))), p.name))),
       h("h3", { style: "margin-top:20px" }, "Your own colors"),
@@ -1544,6 +1632,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
 
   function render() {
     _ledger = null;
+    { const fv = $("footVer"); if (fv) { fv.textContent = "TapBudget version " + APP_VERSION; fv.hidden = state.tab !== "settings"; } }       // the version, at the very bottom of the Settings page
     syncLook();
     applyAutoPay();
     const { y, m } = state;
@@ -1592,6 +1681,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
     renderBillsView(ctx);
     renderSpendingView(ctx);
     renderInsights(ctx);
+    renderCashx();
     renderDebts();
     renderSettings();
     renderAdd();
@@ -1665,56 +1755,99 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
   /* ---------- cash flow: a starting balance, a low-balance line, and a waterfall of the month ---------- */
   const isNum = (v) => typeof v === "number" && isFinite(v);
   const ymKey = (y, m) => y + "-" + pad(m + 1);
-  const defaultCash = () => ({ starts: {}, warn: 500, carry: true });
+  const defaultCash = () => ({ starts: {}, warn: 500, carry: true, follow: true, spend: true, actuals: [] });
   function cleanCash(x) {
     if (!x || typeof x !== "object") return null;
     const starts = {};
     if (x.starts && typeof x.starts === "object") for (const [k, v] of Object.entries(x.starts)) if (/^\d{4}-\d{2}$/.test(k) && isNum(v) && Math.abs(v) < 1e9) starts[k] = Math.round(v * 100) / 100;
-    return { starts, warn: isNum(x.warn) && x.warn >= 0 && x.warn < 1e9 ? Math.round(x.warn * 100) / 100 : 500, carry: x.carry !== false };
+    return { starts, warn: isNum(x.warn) && x.warn >= 0 && x.warn < 1e9 ? Math.round(x.warn * 100) / 100 : 500, carry: x.carry !== false, follow: x.follow !== false, spend: x.spend !== false, actuals: cleanActuals(x.actuals) };
   }
-  function sampleCash() { const t = new Date(); return { starts: { [ymKey(t.getFullYear(), t.getMonth())]: 1700 }, warn: 500, carry: true }; }
+  const cleanActuals = (a) => (Array.isArray(a) ? a : []).filter((x) => x && typeof x.d === "string" && ISO.test(x.d) && isNum(x.v) && Math.abs(x.v) < 1e9).map((x) => ({ d: x.d, v: Math.round(x.v * 100) / 100 })).sort((p, q) => (p.d < q.d ? -1 : p.d > q.d ? 1 : 0)).slice(-90);
+  const upsertActual = (list, d, v) => cleanActuals([...(list || []).filter((x) => x.d !== d), { d, v }]);
+  const actualsIn = (cash, y, m) => (cash && cash.follow !== false ? cleanActuals(cash.actuals) : []).filter((a) => a.d.slice(0, 7) === ymKey(y, m));
+  function sampleCash() { const t = new Date(); return { starts: { [ymKey(t.getFullYear(), t.getMonth())]: 1700 }, warn: 500, carry: true, spend: true }; }
   const kfmt = (v) => { const a = Math.abs(v), t = a >= 1000 ? ("$" + (a / 1000).toFixed(1) + "k").replace(".0k", "k") : "$" + Math.round(a); return (v < 0 ? "−" : "") + t; };
-  function monthSteps(y, m) {                                      // bills and money in for a month, in date order (money in first on the same day)
-    const rows = [];
+  function spendSteps(y, m, vars) {                                // everyday spending has no dates, so it becomes one step a week
+    const key = ymKey(y, m), t = new Date(), nowIdx = t.getFullYear() * 12 + t.getMonth(), idx = y * 12 + m; let planned = 0, spent = 0;
+    for (const it of vars) {
+      const pr = state.pay.get(it.id + "_" + key), sp = pr && isNum(+pr.amt) ? Math.max(0, +pr.amt) : 0;
+      spent += sp; planned += idx < nowIdx ? (sp > 0 ? sp : it.amount || 0) : Math.max(it.amount || 0, sp);     // an earlier month: what you tracked, else the plan
+    }
+    if (planned <= 0) return [];
+    const last = daysIn(y, m), days = [7, 14, 21, 28].filter((d) => d <= last), name = "Everyday spending";
+    const mk = (day, amt) => ({ due: isoOf(y, m, day), name, amt: -Math.round(amt * 100) / 100, inc: false, spend: true });
+    const spread = (list, total) => { if (!list.length || total <= 0) return []; const each = Math.floor((total / list.length) * 100) / 100, rest = Math.round((total - each * list.length) * 100) / 100; return list.map((d, k) => mk(d, each + (k === list.length - 1 ? rest : 0))); };
+    if (idx !== nowIdx) return spread(days, planned);              // other months: evenly through the month
+    const today = t.getDate(), w = planned / days.length, future = days.filter((d) => d > today); let past = days.filter((d) => d <= today);
+    const pastTotal = Math.max(spent, w * past.length);            // weeks that have passed: the plan, or what you actually spent if that is more
+    if (!past.length && pastTotal > 0) past = [today];             // early in the month: anything spent so far lands on today
+    return [...spread(past, pastTotal), ...spread(future, Math.max(0, planned - pastTotal))];       // the rest, evenly over the weeks ahead
+  }
+  function monthSteps(y, m, cash) {                                // bills, money in and everyday spending for a month, in date order (money in first on the same day)
+    const rows = [], vars = [];
     for (const it of state.items) {
+      if (it.type === "variable") { vars.push(it); continue; }
       if (it.type !== "income" && it.type !== "bill") continue;
       for (const o of occurrences(it, y, m)) { const pr = state.pay.get(o.key), amt = pr && isNum(+pr.amt) ? +pr.amt : it.amount; rows.push({ due: o.due, name: it.name, amt: it.type === "income" ? amt : -amt, inc: it.type === "income" }); }
     }
+    if (vars.length && !(cash && cash.spend === false)) rows.push(...spendSteps(y, m, vars));
     return rows.sort((a, b) => (a.due < b.due ? -1 : a.due > b.due ? 1 : (b.inc ? 1 : 0) - (a.inc ? 1 : 0) || a.name.localeCompare(b.name)));
   }
-  function cashStart(y, m, cash) {                                 // set for this month, else carried from the latest earlier month that has one
+  function endFrom(v, y, m, cash) {                                // a month's ending balance, given where it started and any chequing balances typed in it
+    const acts = actualsIn(cash, y, m); let run = v, ai = 0;
+    for (const r of monthSteps(y, m, cash)) { while (ai < acts.length && acts[ai].d < r.due) run = acts[ai++].v; run += r.amt; }
+    while (ai < acts.length) run = acts[ai++].v;
+    return run;
+  }
+  function cashStart(y, m, cash) {                                 // typed for this month; else carried forward; else worked out from a chequing balance typed this month
     const starts = (cash && cash.starts) || {}, here = y * 12 + m;
     if (isNum(starts[ymKey(y, m)])) return { v: starts[ymKey(y, m)], kind: "set" };
+    const base = (t) => {                                          // a month we can start from
+      const yy = Math.floor(t / 12), mm = t % 12;
+      if (isNum(starts[ymKey(yy, mm)])) return starts[ymKey(yy, mm)];
+      const a = actualsIn(cash, yy, mm); if (!a.length) return null;
+      const last = a[a.length - 1];
+      return Math.round((last.v - monthSteps(yy, mm, cash).filter((r) => r.due <= last.d).reduce((sum, r) => sum + r.amt, 0)) * 100) / 100;
+    };
     if (cash && cash.carry !== false) {
       for (let back = 1; back <= 36; back++) {
-        const t = here - back;
-        if (isNum(starts[ymKey(Math.floor(t / 12), t % 12)])) {
-          let v = starts[ymKey(Math.floor(t / 12), t % 12)];
-          for (let u = t; u < here; u++) v += monthSteps(Math.floor(u / 12), u % 12).reduce((sum, r) => sum + r.amt, 0);
-          return { v: Math.round(v * 100) / 100, kind: "carried" };
-        }
+        const t = here - back, b = base(t); if (b === null) continue;
+        let v = b; for (let u = t; u < here; u++) v = endFrom(v, Math.floor(u / 12), u % 12, cash);
+        return { v: Math.round(v * 100) / 100, kind: "carried" };
       }
     }
+    const b0 = base(here); if (b0 !== null) return { v: b0, kind: "implied" };
     return { v: 0, kind: "unset" };
   }
   function cashModel(y, m, cash) {
-    const st = cashStart(y, m, cash), warn = cash && isNum(cash.warn) ? cash.warn : 500, rows = monthSteps(y, m);
-    const cols = [{ kind: "total", label: "Start", from: 0, to: st.v, day: 1 }];
-    let run = st.v, low = st.v, lowAt = 0;
-    rows.forEach((r, i) => { const a = run; run = Math.round((run + r.amt) * 100) / 100; cols.push({ kind: r.amt > 0 ? "inc" : "dec", label: String(parseISO(r.due).d), from: a, to: run, amt: r.amt, name: r.name, due: r.due, day: parseISO(r.due).d }); if (run < low) { low = run; lowAt = i + 1; } });
+    const st = cashStart(y, m, cash), warn = cash && isNum(cash.warn) ? cash.warn : 500, rows = monthSteps(y, m, cash), follow = !(cash && cash.follow === false);
+    const acts = cleanActuals(cash && cash.actuals).filter((a) => a.d.slice(0, 7) === ymKey(y, m));
+    const cols = [{ kind: "total", label: "Start", from: 0, to: st.v, day: 1 }], marks = [];
+    let run = st.v, low = st.v, lowAt = 0, ai = 0;
+    const take = (before) => {                                     // chequing balances typed on a day: a marker, and (if following) the forecast starts again from them
+      while (ai < acts.length && (before === null || acts[ai].d < before)) {
+        const a = acts[ai++], day = parseISO(a.d).d, diff = Math.round((a.v - run) * 100) / 100;
+        marks.push({ d: a.d, day, v: a.v, plan: run, diff });
+        if (follow) { cols.push({ kind: "actual", label: "Now", from: run, to: a.v, amt: diff, day, due: a.d, name: "My balance" }); run = a.v; if (run < low) { low = run; lowAt = cols.length - 1; } }
+      }
+    };
+    rows.forEach((r) => { take(r.due); const a = run; run = Math.round((run + r.amt) * 100) / 100; cols.push({ kind: r.amt > 0 ? "inc" : "dec", label: String(parseISO(r.due).d), from: a, to: run, amt: r.amt, name: r.name, due: r.due, day: parseISO(r.due).d, spend: !!r.spend }); if (run < low) { low = run; lowAt = cols.length - 1; } });
+    take(null);
     cols.push({ kind: "total", label: "End", from: 0, to: run, day: daysIn(y, m) });
     const real = st.kind !== "unset";
     let firstUnder = -1, back = null;
     if (real && low < warn) { firstUnder = cols.findIndex((c, i) => i < cols.length - 1 && c.to < warn); for (let i = firstUnder + 1; i < cols.length - 1; i++) if (cols[i].to >= warn) { back = cols[i]; break; } }
-    return { st, cols, start: st.v, end: run, low, lowAt, lowCol: cols[lowAt], warn, under: real && low < warn, below0: real && low < 0, firstUnder, back };
+    return { st, cols, marks, start: st.v, end: run, low, lowAt, lowCol: cols[lowAt], warn, under: real && low < warn, below0: real && low < 0, firstUnder, back };
   }
   function cashNote(mod, y, m) {
     const mon = MONTHS[m].slice(0, 3), dayOf = (c) => mon + " " + c.day;
-    if (mod.st.kind === "unset") return { pill: "Set starting balance", dot: null, text: "Add your balance on the 1st to see where you land.", bad: false };
+    if (mod.st.kind === "unset") return { pill: "Set starting balance", dot: null, text: "Add your balance on the 1st, or your balance right now, to see where you land.", bad: false };
+    const last = mod.marks && mod.marks.length ? mod.marks[mod.marks.length - 1] : null;
+    const vs = last && Math.abs(last.diff) >= 1 ? " You are " + fmt(Math.abs(last.diff)) + (last.diff > 0 ? " ahead of" : " behind") + " plan." : "";
     const lowTxt = fmt(mod.low) + " on " + dayOf(mod.lowCol);
-    if (!mod.under) return { pill: "On track", dot: "green", text: "Ends at " + fmt(mod.end) + ". Lowest is " + lowTxt + ".", bad: false };
+    if (!mod.under) return { pill: "On track", dot: "green", text: "Ends at " + fmt(mod.end) + ". Lowest is " + lowTxt + "." + vs, bad: false };
     const until = mod.back ? " until " + mod.back.name + " on " + dayOf(mod.back) : " for the rest of the month";
-    return { pill: mod.below0 ? "Below $0" : "Low balance", dot: mod.below0 ? "red" : "amber", text: (mod.below0 ? "Goes below $0: " : "Dips to ") + lowTxt + until + ".", bad: true };
+    return { pill: mod.below0 ? "Below $0" : "Low balance", dot: mod.below0 ? "red" : "amber", text: (mod.below0 ? "Goes below $0: " : "Dips to ") + lowTxt + until + "." + vs, bad: true };
   }
   function cashSvg(mod, W, H) {                                    // W and H: the size of the box it will fill, so it uses all of it
     W = Math.max(160, Math.round(W || 320)); H = Math.max(80, Math.round(H || 200));
@@ -1735,17 +1868,19 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
       out.push('<line x1="' + L + '" y1="' + f1(y(mod.warn)) + '" x2="' + R + '" y2="' + f1(y(mod.warn)) + '" stroke="#ff9b9b" stroke-width="1.2" stroke-dasharray="4 3"/>');
       out.push('<text x="' + (L - 6) + '" y="' + f1(y(mod.warn) + 3.5) + '" text-anchor="end" font-size="10" font-weight="700" fill="#ffb4b4">' + kfmt(mod.warn) + '</text>');
     }
-    const fillOf = { total: "#8fe3f2", inc: "#6ee7a0", dec: "#c27be8" }, steps = cols.filter((c) => c.kind !== "total"), maxAbs = Math.max(1, ...steps.map((c) => Math.abs(c.amt)));
+    const fillOf = { total: "#8fe3f2", inc: "#6ee7a0", dec: "#c27be8", actual: "#ffffff" }, steps = cols.filter((c) => c.kind === "inc" || c.kind === "dec"), maxAbs = Math.max(1, ...steps.map((c) => Math.abs(c.amt)));
     let labels = 0, prev = null; const cands = [], bars = [];
     cols.forEach((c, i) => {
       const top = Math.max(c.from, c.to), bot = Math.min(c.from, c.to), x = cx(i) - bw / 2, yt = y(top), h = Math.max(1.4, y(bot) - y(top));
       bars.push({ x1: x, x2: x + bw, y1: yt, y2: yt + h });
       if (prev !== null) out.push('<line x1="' + f1(cx(i - 1) + bw / 2) + '" y1="' + f1(y(prev)) + '" x2="' + f1(x) + '" y2="' + f1(y(prev)) + '" stroke="#9fb4bf" stroke-width="0.9"/>');
-      const under = mod.st.kind !== "unset" && c.kind !== "total" && c.to < mod.warn;
-      out.push('<rect x="' + f1(x) + '" y="' + f1(yt) + '" width="' + f1(bw) + '" height="' + f1(h) + '" rx="2" fill="' + fillOf[c.kind] + '"' + (under ? ' stroke="#ff8f8f" stroke-width="1.6"' : "") + '/>');
+      const under = mod.st.kind !== "unset" && (c.kind === "inc" || c.kind === "dec") && c.to < mod.warn;
+      out.push('<rect x="' + f1(x) + '" y="' + f1(yt) + '" width="' + f1(bw) + '" height="' + f1(h) + '" rx="2" fill="' + (c.spend ? "#ffb454" : fillOf[c.kind]) + '"' + (under ? ' stroke="#ff8f8f" stroke-width="1.6"' : "") + '/>');
       const edge = i === 0 || i === n - 1, showLab = edge ? cw >= 14 || i === 0 : (cw >= 24 || (i % (cw >= 17 ? 1 : cw >= 11 ? 2 : 3) === 0 && i !== 1 && i !== n - 2));
       if (showLab) out.push('<text x="' + f1(cx(i)) + '" y="' + (B + 16) + '" text-anchor="middle" font-size="10" fill="#d3e1e6">' + c.label + '</text>');
+      if (c.kind === "actual") out.push('<path d="M' + f1(cx(i)) + " " + f1(y(c.to) - 5.5) + " L" + f1(cx(i) + 5.5) + " " + f1(y(c.to)) + " L" + f1(cx(i)) + " " + f1(y(c.to) + 5.5) + " L" + f1(cx(i) - 5.5) + " " + f1(y(c.to)) + ' Z" fill="#ffffff" stroke="#101b20" stroke-width="1.4"/>');
       if (c.kind === "total") cands.push({ i, x: cx(i), y: c.to >= 0 ? yt - 4 : y(bot) + 11, above: c.to >= 0, txt: kfmt(c.to), pri: 0 });
+      else if (c.kind === "actual") cands.push({ i, x: cx(i), y: c.to >= c.from ? y(c.to) - 9 : y(c.to) + 16, above: c.to >= c.from, txt: "Now " + kfmt(c.to), pri: 0 });
       else if (Math.abs(c.amt) >= 0.5 * maxAbs && labels < 6) { labels++; cands.push({ i, x: cx(i), y: c.amt > 0 ? yt - 4 : y(bot) + 11, above: c.amt > 0, txt: (c.amt > 0 ? "+" : "") + kfmt(c.amt), pri: 1 }); }
       prev = c.to;
     });
@@ -1782,12 +1917,13 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
     chart._draw = () => { const w = chart.clientWidth, hh = chart.clientHeight; if (w > 40 && hh > 40 && chart._size !== w + "x" + hh) { chart._size = w + "x" + hh; chart.replaceChildren(cashSvg(mod, w, hh)); } };
     cashCharts.push(chart);
     const card = h("div", { class: "dcard tinted dcash", role: "group", "aria-roledescription": "slide", "aria-label": "Cash flow, " + (i + 1) + " of " + GAUGES.length, "data-i": String(i), style: "--tint:var(--primary)" },
-      h("div", { class: "dtop" }, h("span", { class: "dpill" }, note.dot ? h("span", { class: "dot " + note.dot, "aria-hidden": "true" }) : null, note.pill), h("span", { class: "dcount", "aria-hidden": "true" }, (i + 1) + "/" + GAUGES.length)),
+      h("div", { class: "dtop" }, h("span", { class: "dpill" }, note.dot ? h("span", { class: "dot " + note.dot, "aria-hidden": "true" }) : null, note.pill),
+        h("button", { class: "dstart", "aria-label": mod.st.kind === "unset" ? "Set your starting balance" : "Starting balance " + fmt(mod.start) + ". Tap to change.", onclick: (e) => { e.stopPropagation(); openSheet("cash"); } }, mod.st.kind === "unset" ? "Set up" : (mod.st.kind === "set" ? "Start " : "Starts ") + fmt(mod.start), ico("edit"))),
       chart,
       h("div", { class: "dtext" }, h("h3", {}, "Cash flow"), h("p", { class: note.bad ? "dwarn" : "" }, note.text)),
-      h("div", { class: "dlegend", "aria-hidden": "true" }, lg("#6ee7a0", "Increase"), lg("#c27be8", "Decrease"), lg("#8fe3f2", "Total"), lg("", "Low zone", "zone")),
-      h("button", { class: "seemore", onclick: () => openSheet("cash") }, h("span", {}, mod.st.kind === "unset" ? "Set starting balance" : (mod.st.kind === "carried" ? "Starts at " : "Starting balance ") + fmt(mod.start)), h("span", { class: "go", "aria-hidden": "true" }, ico("edit"))));
-    card.addEventListener("click", (e) => { if (+card.dataset.i !== state.ovCard) { e.preventDefault(); e.stopPropagation(); showGauge(i, true); } });
+      h("div", { class: "dlegend", "aria-hidden": "true" }, lg("#6ee7a0", "Increase"), lg("#c27be8", "Decrease"), lg("#8fe3f2", "Total"), ...(mod.cols.some((c) => c.spend) ? [lg("#ffb454", "Spending")] : []), lg("", "Low zone", "zone"), ...(mod.marks && mod.marks.length ? [lg("#ffffff", "My balance")] : [])),
+      h("button", { class: "seemore", onclick: openCashExplorer }, h("span", {}, "Explore the cash flow"), h("span", { class: "go", "aria-hidden": "true" }, ico("arrowR"))));
+    card.addEventListener("click", (e) => { if (+card.dataset.i !== state.ovCard) { e.preventDefault(); e.stopPropagation(); showGauge(i, true); } else if (!e.target.closest("button")) openCashExplorer(); });      // tap the card: open the full chart
     return card;
   }
   let cashDraft = null, cashRO = null, cashCharts = [];
@@ -1801,31 +1937,35 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
     const host = $("cashHost"); host.replaceChildren();
     if (!state.cashOpen) { cashDraft = null; return; }
     const key = ymKey(state.y, state.m), monName = MONTHS[state.m] + " " + state.y, cur = cashStart(state.y, state.m, state.cash);
-    if (!cashDraft) cashDraft = { start: cur.kind === "unset" ? "" : String(cur.v), warn: String(state.cash.warn), carry: state.cash.carry !== false };
+    const lastAct = cleanActuals(state.cash.actuals).pop();
+    if (!cashDraft) cashDraft = { start: cur.kind === "unset" || cur.kind === "implied" ? "" : String(cur.v), warn: String(state.cash.warn), carry: state.cash.carry !== false, follow: state.cash.follow !== false, spend: state.cash.spend !== false, now: lastAct && lastAct.d === todayISO() ? String(lastAct.v) : "" };
     const parse = (v) => { const t = String(v).replace(/[$,\s]/g, "").replace(/^\((.*)\)$/, "-$1"); return /^-?(\d+\.?\d*|\.\d+)$/.test(t) ? parseFloat(t) : NaN; };
     const sInp = h("input", { id: "cashStart", type: "text", inputmode: "decimal", autocomplete: "off", value: cashDraft.start, "aria-describedby": "cashPrev" });
     const wInp = h("input", { id: "cashWarn", type: "text", inputmode: "decimal", autocomplete: "off", value: cashDraft.warn });
+    const nInp = h("input", { id: "cashNow", type: "text", inputmode: "decimal", autocomplete: "off", value: cashDraft.now, placeholder: "for example 2450" });
     const preview = h("div", { class: "cashprev", id: "cashPrev", role: "status", "aria-live": "polite" });
     const err = h("div", { class: "sub", role: "alert" });
     const refresh = () => {
-      cashDraft.start = sInp.value; cashDraft.warn = wInp.value;
-      const sv = parse(sInp.value), wv = parse(wInp.value);
-      if (isNaN(sv) || isNaN(wv) || wv < 0) { preview.textContent = "Enter your balance to see where you land."; preview.className = "cashprev"; return; }
-      const mm = cashModel(state.y, state.m, { starts: { ...state.cash.starts, [key]: sv }, warn: wv, carry: cashDraft.carry });
+      cashDraft.start = sInp.value; cashDraft.warn = wInp.value; cashDraft.now = nInp.value;
+      const sv = parse(sInp.value), wv = parse(wInp.value), nv = parse(nInp.value);
+      if ((isNaN(sv) && isNaN(nv)) || isNaN(wv) || wv < 0) { preview.textContent = "Enter your balance to see where you land."; preview.className = "cashprev"; return; }
+      const mm = cashModel(state.y, state.m, { starts: isNaN(sv) ? state.cash.starts : { ...state.cash.starts, [key]: sv }, warn: wv, carry: cashDraft.carry, follow: cashDraft.follow, spend: cashDraft.spend, actuals: isNaN(nv) ? state.cash.actuals : upsertActual(state.cash.actuals, todayISO(), nv) });
       preview.textContent = "With these numbers: lowest point " + fmt(mm.low) + " on " + MONTHS[state.m].slice(0, 3) + " " + mm.lowCol.day + ", ends at " + fmt(mm.end) + "." + (mm.below0 ? " That goes below $0." : mm.under ? " That is under your line." : "");
       preview.className = "cashprev " + (mm.below0 ? "bad" : mm.under ? "warn" : "ok");
     };
-    sInp.addEventListener("input", refresh); wInp.addEventListener("input", refresh);
+    sInp.addEventListener("input", refresh); wInp.addEventListener("input", refresh); nInp.addEventListener("input", refresh);
     const nudge = (d) => { const sv = parse(sInp.value); sInp.value = String(Math.round(((isNaN(sv) ? 0 : sv) + d) * 100) / 100); refresh(); };
     const quick = (label, d) => h("button", { type: "button", class: "btn", onclick: () => nudge(d) }, label);
     const sw = h("button", { type: "button", class: "sw", role: "switch", "aria-checked": String(cashDraft.carry), "aria-label": "Carry over each month", onclick: () => { cashDraft.carry = !cashDraft.carry; sw.setAttribute("aria-checked", String(cashDraft.carry)); refresh(); } });
+    const swFollow = h("button", { type: "button", class: "sw", role: "switch", "aria-checked": String(cashDraft.follow), "aria-label": "Update the forecast from my chequing balance", onclick: () => { cashDraft.follow = !cashDraft.follow; swFollow.setAttribute("aria-checked", String(cashDraft.follow)); refresh(); } });
+    const swSpend = h("button", { type: "button", class: "sw", role: "switch", "aria-checked": String(cashDraft.spend), "aria-label": "Include everyday spending", onclick: () => { cashDraft.spend = !cashDraft.spend; swSpend.setAttribute("aria-checked", String(cashDraft.spend)); refresh(); } });
     const save = () => {
-      const sv = parse(sInp.value), wv = parse(wInp.value);
-      if (isNaN(sv)) { err.textContent = "Enter your balance on the 1st, like 2500 or -150."; sInp.focus(); return; }
+      const sv = parse(sInp.value), wv = parse(wInp.value), nv = parse(nInp.value);
+      if (isNaN(sv) && isNaN(nv)) { err.textContent = "Enter your balance on the 1st (like 2500 or -150), or your chequing balance right now."; sInp.focus(); return; }
       if (isNaN(wv) || wv < 0) { err.textContent = "Enter the low balance line as 0 or more."; wInp.focus(); return; }
       state.budgets[state.activeId].sample = false;
-      state.cash = { starts: { ...state.cash.starts, [key]: Math.round(sv * 100) / 100 }, warn: Math.round(wv * 100) / 100, carry: cashDraft.carry };
-      persist(); state.cashOpen = false; state.note = "Starting balance saved for " + monName + "."; render();
+      state.cash = { ...state.cash, starts: isNaN(sv) ? state.cash.starts : { ...state.cash.starts, [key]: Math.round(sv * 100) / 100 }, warn: Math.round(wv * 100) / 100, carry: cashDraft.carry, follow: cashDraft.follow, spend: cashDraft.spend, actuals: isNaN(nv) ? cleanActuals(state.cash.actuals) : upsertActual(state.cash.actuals, todayISO(), nv) };
+      persist(); state.cashOpen = false; state.note = isNaN(nv) ? "Starting balance saved for " + monName + "." : "Saved. Your balance now is " + fmt(nv) + "."; render();
     };
     const clear = () => { const s2 = { ...state.cash.starts }; delete s2[key]; state.cash = { ...state.cash, starts: s2 }; persist(); state.cashOpen = false; state.note = "Cleared the starting balance for " + monName + "."; render(); };
     refresh();
@@ -1833,6 +1973,10 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
       h("p", { class: "sub" }, "What is in your account on " + MONTHS[state.m].slice(0, 3) + " 1? The waterfall starts here and rises or falls with every bill and paycheck."),
       h("label", { for: "cashStart", style: "display:block;margin:var(--s3) 0 6px;font-weight:700;font-size:var(--fs-sm)" }, "Balance on " + MONTHS[state.m].slice(0, 3) + " 1"), sInp,
       h("div", { class: "cashquick" }, quick("−$500", -500), quick("−$100", -100), quick("+$100", 100), quick("+$500", 500)),
+      h("label", { for: "cashNow", style: "display:block;margin:var(--s4) 0 6px;font-weight:700;font-size:var(--fs-sm)" }, "Chequing balance right now (optional)"), nInp,
+      h("p", { class: "sub", style: "margin-top:6px" }, "Adds a marker to the chart so you can see if you are ahead of or behind the plan. Leave the first box empty and this one is enough to start."),
+      h("div", { class: "cashrow" }, h("div", {}, h("b", {}, "Update the forecast from it"), h("span", { class: "sub" }, "From that day on, the chart starts again from your real balance.")), swFollow),
+      h("div", { class: "cashrow" }, h("div", {}, h("b", {}, "Include everyday spending"), h("span", { class: "sub" }, "Groceries, gas and the rest, spread through the month a week at a time. Weeks that have passed use what you have spent so far.")), swSpend),
       h("div", { class: "cashrow" }, h("div", {}, h("b", {}, "Carry over each month"), h("span", { class: "sub" }, "Start each later month from the month before’s ending balance.")), sw),
       h("label", { for: "cashWarn", style: "display:block;margin:var(--s4) 0 6px;font-weight:700;font-size:var(--fs-sm)" }, "Low balance warning"), wInp,
       h("p", { class: "sub", style: "margin-top:6px" }, "Anything under this line is shaded red on the waterfall, and the health light turns amber. Below $0 turns it red."),
@@ -2041,6 +2185,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
     out.push(h("div", { class: "ez-card" }, h("h2", {}, "My account balance"), h("p", { class: "ez-text", style: "margin-top:0" }, cur.kind === "unset" ? "Not set yet." : "About " + fmt(cur.v) + " on the 1st of " + MONTHS[now.getMonth()] + "."), h("button", { class: "ez-btn alt", onclick: () => easyOpenForm("balance") }, cur.kind === "unset" ? "Tell us my balance" : "Change my balance")));
     if (ids.length > 1) out.push(h("div", { class: "ez-card" }, h("h2", {}, "My budgets"), h("p", { class: "ez-text", style: "margin-top:0" }, "Showing: " + curName()), ...ids.filter((id) => id !== state.activeId).map((id) => h("button", { class: "ez-btn alt", onclick: () => { switchTo(id); state.easyTab = "home"; render(); window.scrollTo(0, 0); } }, "Show " + state.budgets[id].name))));
     out.push(h("div", { class: "ez-card" }, h("h2", {}, "Keep a copy"), h("p", { class: "ez-text", style: "margin-top:0" }, "Save a backup copy of your budget on this phone, in case you ever need it."), h("button", { class: "ez-btn alt", onclick: () => backup() }, "Save a backup copy")));
+    out.push(h("p", { class: "ez-sub ez-ver" }, "TapBudget version " + APP_VERSION));
     out.push(h("div", { class: "ez-card" }, h("h2", {}, "The full app"), h("p", { class: "ez-text", style: "margin-top:0" }, "It has charts, spending budgets, loans and more."), h("button", { class: "ez-btn alt", onclick: () => setEasy(false) }, "Use the full app")));
     return out;
   }
@@ -2375,6 +2520,135 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
       h("p", { class: "sub" }, "Compare with your bank app, about once a month. One tap if we got it right. If it is off, type the real number."),
       state.loans.length ? h("div", { class: "cklist" }, ...rows) : h("p", { class: "sub" }, "Add a loan or credit card first."),
       h("div", { class: "actions" }, h("button", { class: "btn primary", onclick: closeSheet }, "Done"))));
+  }
+
+
+  /* ---------- cash flow explorer (Insights): move and zoom the whole trend ---------- */
+  let cxView = null, cxSel = null, cxS = null, cxS2 = null, cxPaint = null;
+  const dnum = (iso) => { const q = parseISO(iso); return Math.round(Date.UTC(q.y, q.m, q.d) / 864e5); };
+  const dniso = (n) => { const t = new Date(n * 864e5); return isoOf(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate()); };
+  const cxVal = (pts, t) => { let v = pts[0].v; for (const q of pts) { if (q.t <= t) v = q.v; else break; } return v; };
+  function cashSeries(cash) {                                      // the balance, day by day, from the first month we know to a year ahead
+    const now = new Date(), ty = now.getFullYear(), tm = now.getMonth(); let first = null;
+    for (let back = 18; back >= 0; back--) { const t = ty * 12 + tm - back; if (cashModel(Math.floor(t / 12), t % 12, cash).st.kind !== "unset") { first = t; break; } }
+    if (first === null) return null;
+    const pts = [], steps = [];
+    for (let t = first; t <= ty * 12 + tm + 12; t++) {
+      const y = Math.floor(t / 12), m = t % 12, mod = cashModel(y, m, cash); if (mod.st.kind === "unset") continue;
+      const d0 = dnum(isoOf(y, m, 1)); pts.push({ t: d0, v: mod.start });
+      for (const c of mod.cols) { if (c.kind === "total") continue; const dt = dnum(c.due); pts.push({ t: dt, v: c.from }, { t: dt, v: c.to }); steps.push({ t: dt, before: c.from, after: c.to, name: c.name, amt: Math.round((c.to - c.from) * 100) / 100, kind: c.kind, due: c.due, spend: !!c.spend }); }
+      pts.push({ t: d0 + daysIn(y, m) - 1, v: mod.end });
+    }
+    return { first: pts[0].t, last: pts[pts.length - 1].t, pts, steps };
+  }
+  const cxClamp = (v) => { const total = cxS.last - cxS.first + 1, span = Math.max(7, Math.min(v.t1 - v.t0, total)), t0 = Math.max(cxS.first, Math.min(v.t0, cxS.last + 1 - span)); return { t0, t1: t0 + span }; };
+  const cxDefault = () => { const today = dnum(todayISO()); return cxClamp({ t0: today - 14, t1: today + 46 }); };
+  function cxDraw(box) {
+    const S = cxS, v = cxView, cash = state.cash, W = Math.max(280, Math.round(box.clientWidth || 340)), H = 270, L = 48, R = 12, T = 18, B = 32, pw = W - L - R, ph = H - T - B, span = v.t1 - v.t0;
+    const x = (t) => L + ((t - v.t0) / span) * pw, today = dnum(todayISO()), f1 = (n) => n.toFixed(1);
+    const inView = (q) => q.t >= v.t0 - 1 && q.t <= v.t1 + 1, vis = S.pts.filter(inView).map((q) => q.v).concat([cxVal(S.pts, v.t0), cxVal(S.pts, v.t1)]);
+    if (cxS2) vis.push(...cxS2.pts.filter(inView).map((q) => q.v));
+    const acts = cleanActuals(cash.actuals).map((a) => ({ ...a, t: dnum(a.d) })), actsIn = acts.filter((a) => a.t >= v.t0 - 1 && a.t <= v.t1 + 1); vis.push(...actsIn.map((a) => a.v));
+    let hi = Math.max(...vis), lo = Math.min(...vis); const rng = Math.max(hi - lo, 50);
+    if (cash.warn >= lo - rng * 1.5 && cash.warn <= hi + rng * 1.5) { hi = Math.max(hi, cash.warn); lo = Math.min(lo, cash.warn); }
+    if (lo < 0 && hi > 0) { /* zero is already inside */ } else if (lo >= 0 && lo < rng * 0.4) lo = 0;
+    const pad = (hi - lo) * 0.08 || 50; hi += pad; lo -= pad;
+    const y = (n) => T + ph - ((n - lo) / (hi - lo)) * ph;
+    const g = [], raw = (hi - lo) / 4, mag = Math.pow(10, Math.floor(Math.log10(raw))), step = [1, 2, 2.5, 5, 10].map((c) => c * mag).find((c) => c >= raw);
+    g.push('<defs><clipPath id="cxclip"><rect x="' + L + '" y="' + T + '" width="' + pw + '" height="' + ph + '"/></clipPath></defs>');
+    for (let tv = Math.ceil(lo / step) * step; tv <= hi + 1e-6; tv += step) {
+      g.push('<line x1="' + L + '" y1="' + f1(y(tv)) + '" x2="' + (W - R) + '" y2="' + f1(y(tv)) + '" style="stroke:var(--border);stroke-width:' + (Math.abs(tv) < 1e-6 ? 1.5 : 1) + '"/>');
+      if (Math.abs(y(tv) - y(cash.warn)) > 11) g.push('<text x="' + (L - 6) + '" y="' + f1(y(tv) + 3.5) + '" text-anchor="end" font-size="10.5" style="fill:var(--text-muted)">' + kfmt(tv) + '</text>');
+    }
+    const ticks = [];                                              // x axis: months when zoomed out, weeks or days when zoomed in
+    if (span > 150) { for (let n = Math.ceil(v.t0); n <= v.t1; n++) { const q = parseISO(dniso(n)); if (q.d === 1 && (span <= 400 || q.m % 3 === 0)) ticks.push({ t: n, label: MONTHS[q.m].slice(0, 3) + (q.m === 0 ? " ’" + String(q.y).slice(2) : "") }); } }
+    else { const every = span > 45 ? 7 : span > 21 ? 3 : 1; for (let n = Math.ceil(v.t0); n <= v.t1; n++) { const q = parseISO(dniso(n)); const wk = ((n + 3) % 7); if (every === 7 ? wk === 0 : every === 3 ? (n % 3 === 0) : true) ticks.push({ t: n, label: (n === Math.ceil(v.t0) || q.d === 1 || every === 7) ? MONTHS[q.m].slice(0, 3) + " " + q.d : String(q.d) }); } }
+    let lastX = -99; for (const k of ticks) { const px = x(k.t); g.push('<line x1="' + f1(px) + '" y1="' + (T + ph) + '" x2="' + f1(px) + '" y2="' + (T + ph + 4) + '" style="stroke:var(--border-strong,var(--text-muted))"/>'); if (px - lastX >= 42 && px > L - 4 && px < W - R + 4) { g.push('<text x="' + f1(px) + '" y="' + (H - 10) + '" text-anchor="middle" font-size="10.5" style="fill:var(--text-muted)">' + escapeHtml(k.label) + '</text>'); lastX = px; } }
+    g.push('<g clip-path="url(#cxclip)">');
+    if (cash.warn > lo) { g.push('<rect x="' + L + '" y="' + f1(y(Math.min(cash.warn, hi))) + '" width="' + pw + '" height="' + f1(Math.max(0, T + ph - y(Math.min(cash.warn, hi)))) + '" fill="#ff6b6b" fill-opacity="0.16"/><line x1="' + L + '" y1="' + f1(y(cash.warn)) + '" x2="' + (W - R) + '" y2="' + f1(y(cash.warn)) + '" stroke="#e5372f" stroke-width="1.2" stroke-dasharray="4 3"/>'); }
+    const pathOf = (pts) => { const a = pts.filter(inView); const edge = [{ t: v.t0, v: cxVal(pts, v.t0) }, ...a, { t: v.t1, v: cxVal(pts, v.t1) }]; return edge.map((q, i) => (i ? "L" : "M") + f1(x(q.t)) + " " + f1(y(q.v))).join(" "); };
+    const line = pathOf(S.pts);
+    g.push('<path d="' + line + ' L' + f1(x(v.t1)) + " " + f1(T + ph) + " L" + f1(x(v.t0)) + " " + f1(T + ph) + ' Z" style="fill:var(--info-soft);opacity:0.35"/>');
+    if (cxS2) g.push('<path d="' + pathOf(cxS2.pts) + '" style="fill:none;stroke:var(--text-muted);stroke-width:1.5;stroke-dasharray:5 4;opacity:0.85"/>');
+    if (today >= v.t0 && today <= v.t1) g.push('<line x1="' + f1(x(today)) + '" y1="' + T + '" x2="' + f1(x(today)) + '" y2="' + (T + ph) + '" style="stroke:var(--text);stroke-width:1;stroke-dasharray:3 3;opacity:0.6"/>');
+    const bw = Math.max(3, Math.min(11, (pw / span) * 0.55)), vsteps = S.steps.filter((q) => q.t >= v.t0 - 1 && q.t <= v.t1 + 1 && q.kind !== "actual");
+    if (span <= 80) for (const q of vsteps) g.push('<rect x="' + f1(x(q.t) - bw / 2) + '" y="' + f1(y(Math.max(q.before, q.after))) + '" width="' + f1(bw) + '" height="' + f1(Math.max(1.5, Math.abs(y(q.before) - y(q.after)))) + '" rx="1.5" style="fill:' + (q.spend ? "var(--cx-spend)" : q.amt > 0 ? "var(--cx-up)" : "var(--cx-down)") + '"/>');
+    g.push('<path d="' + line + '" style="fill:none;stroke:var(--primary);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round"/>');
+    if (acts.length > 1) g.push('<path d="' + acts.map((a, i) => (i ? "L" : "M") + f1(x(a.t)) + " " + f1(y(a.v))).join(" ") + '" style="fill:none;stroke:var(--text);stroke-width:1.2;stroke-dasharray:1 4;stroke-linecap:round"/>');
+    const placed = [], clash = (r) => placed.some((q) => r.x1 < q.x2 + 2 && r.x2 > q.x1 - 2 && r.y1 < q.y2 + 1 && r.y2 > q.y1 - 1), label = (px, py, txt, bold) => { const w = txt.length * 6 + 2; for (const dy of [0, -12, 12]) { const r = { x1: px - w / 2, x2: px + w / 2, y1: py + dy - 10, y2: py + dy + 3 }; if (r.x1 < L - 30 || r.x2 > W - 2 || r.y1 < 2 || r.y2 > T + ph + 3 || clash(r)) continue; placed.push(r); g.push('<text x="' + f1(px) + '" y="' + f1(py + dy) + '" text-anchor="middle" font-size="10.5" font-weight="' + (bold ? 700 : 600) + '" style="fill:var(--text)">' + escapeHtml(txt) + '</text>'); return; } };
+    const lastAct = acts[acts.length - 1];
+    for (const a of actsIn) { const px = x(a.t), py = y(a.v); g.push('<path d="M' + f1(px) + " " + f1(py - 6.5) + " L" + f1(px + 6.5) + " " + f1(py) + " L" + f1(px) + " " + f1(py + 6.5) + " L" + f1(px - 6.5) + " " + f1(py) + ' Z" style="fill:var(--text);stroke:var(--surface);stroke-width:1.6"/>'); if (a === lastAct) label(px, py - 12, "Now " + kfmt(a.v), true); }
+    if (span <= 45) { const maxAbs = Math.max(1, ...vsteps.map((q) => Math.abs(q.amt))); for (const q of vsteps.filter((r) => Math.abs(r.amt) >= 0.35 * maxAbs).slice(0, 8)) label(x(q.t), q.amt > 0 ? y(q.after) - 8 : y(q.after) + 16, (q.amt > 0 ? "+" : "") + kfmt(q.amt)); }
+    if (cxSel) { const px = x(cxSel.t), py = y(cxSel.v); g.push('<circle cx="' + f1(px) + '" cy="' + f1(py) + '" r="9" style="fill:none;stroke:var(--text);stroke-width:2"/>'); }
+    g.push('</g>');
+    if (today >= v.t0 && today <= v.t1) g.push('<text x="' + f1(x(today)) + '" y="' + (T - 5) + '" text-anchor="middle" font-size="10" font-weight="700" style="fill:var(--text)">Today</text>');
+    box.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" role="img" aria-label="Cash flow from ' + escapeHtml(niceDate(dniso(Math.round(v.t0)))) + ' to ' + escapeHtml(niceDate(dniso(Math.round(v.t1)))) + '. Drag to move, pinch or use the zoom buttons to zoom.">' + g.join("") + "</svg>";
+    box.dataset.span = String(Math.round(span)); box.dataset.from = dniso(Math.round(v.t0));
+    return { L, R, W, pw, x, today };
+  }
+  const escapeHtml = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  function openCashExplorer() { cxView = null; cxSel = null; setTab("insights"); requestAnimationFrame(() => { const el = $("cashx"); if (el) el.scrollIntoView({ block: "start", behavior: "smooth" }); }); }
+  function renderCashx() {
+    const host = $("cashx"); host.replaceChildren();
+    host.append(h("div", { class: "bar-title", style: "--role:var(--primary)" }, h("span", { class: "bt" }, "Cash flow")));
+    cxS = cashSeries(state.cash);
+    if (!cxS) { cxPaint = null; host.append(h("div", { class: "list" }, h("div", { class: "empty" }, "Set your starting balance, or type your chequing balance, and your cash flow shows up here. ", h("button", { class: "btn small", onclick: () => openSheet("cash") }, "Set it up")))); return; }
+    const hasActs = cleanActuals(state.cash.actuals).length > 0;
+    cxS2 = hasActs && state.cash.follow !== false ? cashSeries({ ...state.cash, follow: false }) : null;
+    cxView = cxView ? cxClamp(cxView) : cxDefault();
+    const today = dnum(todayISO()), todayV = cxVal(cxS.pts, today), ahead = cxS.pts.filter((q) => q.t >= today), minAhead = ahead.reduce((a, q) => (q.v < a.v ? q : a), ahead[0] || { t: today, v: todayV }), acts = cleanActuals(state.cash.actuals), last = acts[acts.length - 1];
+    const sum = (label, value, sub, cls) => h("div", {}, h("div", { class: "l" }, label), h("div", { class: "v " + (cls || "") }, value), sub ? h("div", { class: "l" }, sub) : null);
+    const cap = h("div", { class: "cxcap", role: "status", "aria-live": "polite" }, "Drag to move. Pinch, or use + and −, to zoom. Tap a bar for details.");
+    const plot = h("div", { class: "cxplot", tabindex: "0", role: "group", "aria-label": "Cash flow chart. Arrow keys move it, plus and minus zoom." });
+    let geom = null; const paint = () => { geom = cxDraw(plot); chips(); }; cxPaint = paint;
+    const setSpan = (days) => { const c = (cxView.t0 + cxView.t1) / 2, tdy = dnum(todayISO()), keep = c >= cxS.first && c <= cxS.last ? c : tdy; cxView = cxClamp({ t0: keep - days * 0.3, t1: keep + days * 0.7 }); cxSel = null; paint(); };
+    const zoom = (f, around) => { const span = cxView.t1 - cxView.t0, c = around == null ? (cxView.t0 + cxView.t1) / 2 : around, ns = span * f, t0 = c - (c - cxView.t0) * (ns / span); cxView = cxClamp({ t0, t1: t0 + ns }); paint(); };
+    const pan = (frac) => { const span = cxView.t1 - cxView.t0; cxView = cxClamp({ t0: cxView.t0 + span * frac, t1: cxView.t1 + span * frac }); paint(); };
+    const chipBtns = [[31, "1 month"], [92, "3 months"], [183, "6 months"], [365, "1 year"]].map(([d, l]) => h("button", { type: "button", class: "chipbtn", "data-d": String(d), onclick: () => setSpan(d) }, l));
+    const chips = () => { const sp = cxView.t1 - cxView.t0; chipBtns.forEach((b) => b.setAttribute("aria-pressed", String(Math.abs(sp - +b.dataset.d) < +b.dataset.d * 0.12))); };
+    const ctrl = (label, aria, fn) => h("button", { type: "button", class: "btn", "aria-label": aria, onclick: fn }, label);
+    const tAt = (cx) => { const r = plot.getBoundingClientRect(); return cxView.t0 + ((cx - r.left - 48) / (r.width - 60)) * (cxView.t1 - cxView.t0); };
+    const tap = (cx) => {                                          // nearest bar or balance marker, within a thumb's width
+      const r = plot.getBoundingClientRect(), pxPer = (r.width - 60) / (cxView.t1 - cxView.t0), t = tAt(cx); let best = null, bd = 22 / pxPer;
+      for (const q of cxS.steps) { const d = Math.abs(q.t - t); if (d < bd) { bd = d; best = { t: q.t, v: q.after, text: niceDate(q.due) + ": " + (q.kind === "actual" ? "you typed your balance, " + fmt(q.after) + " (the plan said " + fmt(q.before) + ")." : q.name + " " + (q.amt > 0 ? "+" : "") + fmt(q.amt) + ". Balance after: " + fmt(q.after) + ".") }; } }
+      for (const a of acts) { const d = Math.abs(dnum(a.d) - t); if (d < bd) { bd = d; best = { t: dnum(a.d), v: a.v, text: niceDate(a.d) + ": your balance was " + fmt(a.v) + "." }; } }
+      cxSel = best; cap.textContent = best ? best.text : "Drag to move. Pinch, or use + and −, to zoom. Tap a bar for details."; paint();
+    };
+    const ptrs = new Map(); let st = null, moved = 0, pinch = null;
+    plot.addEventListener("pointerdown", (e) => { try { plot.setPointerCapture(e.pointerId); } catch (x) { /* fine */ } ptrs.set(e.pointerId, { x: e.clientX }); moved = 0; if (ptrs.size === 1) st = { x: e.clientX, t0: cxView.t0, t1: cxView.t1 }; if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: Math.abs(a.x - b.x) || 1, mid: (a.x + b.x) / 2, t0: cxView.t0, t1: cxView.t1 }; } });
+    plot.addEventListener("pointermove", (e) => {
+      if (!ptrs.has(e.pointerId)) return; ptrs.set(e.pointerId, { x: e.clientX }); const r = plot.getBoundingClientRect(), pw = r.width - 60;
+      if (ptrs.size === 2 && pinch) { const [a, b] = [...ptrs.values()], d = Math.abs(a.x - b.x) || 1, span0 = pinch.t1 - pinch.t0, ns = span0 * (pinch.d / d), midT = pinch.t0 + ((pinch.mid - r.left - 48) / pw) * span0, t0 = midT - (((a.x + b.x) / 2 - r.left - 48) / pw) * ns; cxView = cxClamp({ t0, t1: t0 + ns }); moved = 99; paint(); return; }
+      if (ptrs.size === 1 && st) { const dx = e.clientX - st.x; moved = Math.max(moved, Math.abs(dx)); if (moved > 5) { const dt = (dx / pw) * (st.t1 - st.t0); cxView = cxClamp({ t0: st.t0 - dt, t1: st.t1 - dt }); paint(); } }
+    });
+    const up = (e) => { if (!ptrs.has(e.pointerId)) return; const wasTap = ptrs.size === 1 && moved <= 5; ptrs.delete(e.pointerId); pinch = null; if (ptrs.size === 1) { const q = [...ptrs.values()][0]; st = { x: q.x, t0: cxView.t0, t1: cxView.t1 }; moved = 99; } else st = null; if (wasTap) tap(e.clientX); };
+    plot.addEventListener("pointerup", up); plot.addEventListener("pointercancel", up);
+    plot.addEventListener("wheel", (e) => { if (e.ctrlKey || e.metaKey) { e.preventDefault(); zoom(Math.exp(e.deltaY * 0.01), tAt(e.clientX)); } else if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { e.preventDefault(); pan(e.deltaX / Math.max(1, plot.clientWidth)); } }, { passive: false });
+    plot.addEventListener("keydown", (e) => { const k = e.key; if (k === "ArrowLeft") { e.preventDefault(); pan(-0.15); } else if (k === "ArrowRight") { e.preventDefault(); pan(0.15); } else if (k === "+" || k === "=") { e.preventDefault(); zoom(1 / 1.5); } else if (k === "-" || k === "_") { e.preventDefault(); zoom(1.5); } else if (k === "Home") { e.preventDefault(); cxView = cxDefault(); cxSel = null; paint(); } });
+    // the chequing balance box: type it, see it on the chart
+    const nowInp = h("input", { id: "cxNow", type: "text", inputmode: "decimal", autocomplete: "off", placeholder: "for example 2450" }), dateInp = h("input", { id: "cxDate", type: "date", value: todayISO(), max: todayISO() }), err = h("div", { class: "sub", role: "alert" });
+    const swF = h("button", { type: "button", class: "sw", role: "switch", "aria-checked": String(state.cash.follow !== false), "aria-label": "Update the forecast from my chequing balance", onclick: () => { state.cash = { ...state.cash, follow: state.cash.follow === false }; persist(); render(); } });
+    const swSp = h("button", { type: "button", class: "sw", role: "switch", "aria-checked": String(state.cash.spend !== false), "aria-label": "Include everyday spending", onclick: () => { state.cash = { ...state.cash, spend: state.cash.spend === false }; persist(); render(); } });
+    const saveNow = () => { const t = String(nowInp.value).replace(/[$,\s]/g, ""), val = /^-?(\d+\.?\d*|\.\d+)$/.test(t) ? parseFloat(t) : NaN, d = dateInp.value && ISO.test(dateInp.value) ? dateInp.value : todayISO(); if (isNaN(val)) { err.textContent = "Type the balance your bank shows, like 2450."; nowInp.focus(); return; } if (d > todayISO()) { err.textContent = "Pick today or an earlier day."; return; } state.budgets[state.activeId].sample = false; state.cash = { ...state.cash, actuals: upsertActual(state.cash.actuals, d, val) }; persist(); const mk = cashModel(+d.slice(0, 4), +d.slice(5, 7) - 1, state.cash).marks.find((q) => q.d === d); state.note = "Saved. Your balance on " + niceDate(d) + " is " + fmt(val) + "." + (mk && Math.abs(mk.diff) >= 1 && cashModel(+d.slice(0, 4), +d.slice(5, 7) - 1, state.cash).st.kind !== "implied" ? " That is " + fmt(Math.abs(mk.diff)) + (mk.diff > 0 ? " ahead of" : " behind") + " the plan." : ""); render(); };
+    const logRows = acts.slice(-5).reverse().map((a) => { const y = +a.d.slice(0, 4), m = +a.d.slice(5, 7) - 1, mod = cashModel(y, m, state.cash), mk = mod.marks.find((q) => q.d === a.d), known = mod.st.kind !== "unset" && mod.st.kind !== "implied" || (mk && Math.abs(mk.diff) >= 1);
+      return h("div", { class: "cxrow" }, h("div", { class: "main" }, h("div", { class: "name" }, fmt(a.v)), h("div", { class: "meta" }, h("span", {}, niceDate(a.d)), known && mk && Math.abs(mk.diff) >= 1 ? h("span", { class: "tag " + (mk.diff > 0 ? "ok" : "") }, fmt(Math.abs(mk.diff)) + (mk.diff > 0 ? " ahead of plan" : " behind plan")) : null)),
+        h("button", { class: "btn small", "aria-label": "Remove the balance from " + niceDate(a.d), onclick: () => { state.cash = { ...state.cash, actuals: acts.filter((q) => q.d !== a.d) }; persist(); render(); } }, "Remove")); });
+    const vs = last ? (cashModel(+last.d.slice(0, 4), +last.d.slice(5, 7) - 1, state.cash).marks.find((q) => q.d === last.d) || { diff: 0 }).diff : 0;
+    host.append(h("div", { class: "list cxwrap" },
+      h("div", { class: "dsum" }, sum("Plan for today", fmt(todayV)), sum("My balance", last ? fmt(last.v) : "–", last ? niceDate(last.d) : "Type it below"), sum("Lowest ahead", fmt(minAhead.v), niceDate(dniso(minAhead.t)), minAhead.v < state.cash.warn ? "neg" : "")),
+      last && Math.abs(vs) >= 1 ? h("div", { class: "cxvs " + (vs > 0 ? "up" : "down") }, ico(vs > 0 ? "up" : "down"), h("span", {}, "You are " + fmt(Math.abs(vs)) + (vs > 0 ? " ahead of" : " behind") + " plan as of " + niceDate(last.d) + ".")) : null,
+      h("div", { class: "cxbar", role: "group", "aria-label": "Zoom and move" }, ctrl("−", "Zoom out", () => zoom(1.5)), ctrl("+", "Zoom in", () => zoom(1 / 1.5)), ctrl("←", "Move back in time", () => pan(-0.3)), ctrl("→", "Move forward in time", () => pan(0.3)), h("button", { type: "button", class: "btn", onclick: () => { cxView = cxDefault(); cxSel = null; paint(); } }, "Today")),
+      h("div", { class: "cxchips", role: "group", "aria-label": "How much to show" }, ...chipBtns),
+      plot, cap,
+      h("div", { class: "dlegend cxkey" }, h("span", {}, h("i", { style: "background:var(--primary)" }), "Balance"), ...(cxS2 ? [h("span", {}, h("i", { class: "dash" }), "Plan before my balance")] : []), h("span", {}, h("i", { style: "background:var(--cx-up)" }), "Money in"), h("span", {}, h("i", { style: "background:var(--cx-down)" }), "Bills"), ...(cxS.steps.some((q) => q.spend) ? [h("span", {}, h("i", { style: "background:var(--cx-spend)" }), "Everyday spending")] : []), h("span", {}, h("i", { class: "dia" }), "My balance"), h("span", {}, h("i", { class: "zone" }), "Low zone")),
+      h("div", { class: "cxform" }, h("div", { class: "linkhead", style: "margin-top:0" }, "My chequing balance"),
+        h("p", { class: "sub", style: "margin:2px 0 8px" }, "Type what your bank app shows. It becomes a marker on the chart, so you can see if you are ahead of or behind the plan."),
+        h("div", { class: "fields" }, h("label", { for: "cxNow" }, "Balance ($)", nowInp), h("label", { for: "cxDate" }, "As of", dateInp)), err,
+        h("div", { class: "actions" }, h("button", { class: "btn primary", onclick: saveNow }, "Save my balance"), h("button", { class: "btn", onclick: () => openSheet("cash") }, "Starting balance and warning line")),
+        h("div", { class: "cashrow" }, h("div", {}, h("b", {}, "Update the forecast from it"), h("span", { class: "sub" }, "From that day on, the chart starts again from your real balance. The dashed line shows the old plan.")), swF),
+        h("div", { class: "cashrow" }, h("div", {}, h("b", {}, "Include everyday spending"), h("span", { class: "sub" }, "Groceries, gas and the rest, spread through the month a week at a time. Turn it off to chart bills and money in only.")), swSp),
+        logRows.length ? h("div", { class: "cxlog" }, h("div", { class: "linkhead" }, "Recent balances"), ...logRows) : null)));
+    paint();
   }
 
   /* ---------- debt balance prediction ---------- */
@@ -2879,6 +3153,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
   state.easy = document.documentElement.hasAttribute("data-easy");
   applyTheme();
   applyLook();
+  applySw();
   applyColors(getColors());
   applyWallVars(getWall());
   load();
