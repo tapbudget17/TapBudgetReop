@@ -30,12 +30,22 @@ If someone already has budgets saved, the example is added to their list once. *
 - **Sheets:** Add item, Share, Import and Manage budgets open as a panel that slides up from the bottom. Close it with the X, by tapping outside it, or with Escape.
 - **Messages:** short confirmations such as "Link copied" appear above the tab bar and fade away.
 
+## Bill, money in or everyday spending?
+
+When you add an item, the **Type** decides how it behaves. The Add screen explains each type in a sentence under the fields.
+
+- **Bill:** a payment with a **due day**. It shows on the Bills tab, you tick it when you pay it, and it sits on its day on the cash flow.
+- **Money in:** a paycheck or other money coming in. Same as a bill, but it adds to your balance.
+- **Everyday spending:** a **monthly budget you spend from**, like groceries or gas. It lives on the **Spending** tab, where you type what you have spent as you go, and the bar shows what is left. It has no due date, so the cash flow spreads it through the month. If it **does** have a date (a vet bill, a pharmacy refill), add a **Day of the month (optional)** and it shows on the cash flow on that day instead. You can add or change the day later under **Menu → Edit items → Day of month (optional)**, and clear it to go back to spreading it. The Spending tab shows "on the 27th" next to an item that has a day.
+
+If something is a fixed payment you tick off, a **Bill** is usually the better fit. Use everyday spending for money you spend a little at a time.
+
 ## Cash flow explorer and my chequing balance
 
 **Tap the Cash flow card** on the Overview, or its **Explore the cash flow** button, and the app opens the **Cash flow** section at the top of Insights. (The **Start** pill on the card still opens the starting balance sheet.)
 
 - **A chart you can move and zoom.** It follows your balance through every bill and paycheck, from the first month you have a balance for to a year ahead. Drag to move through time. Pinch with two fingers, or use **+** and **−**, to zoom. The arrow buttons step back and forward, **Today** comes back to now, and the chips show 1 month, 3 months, 6 months or a year. On a computer, hold Ctrl and scroll to zoom, and use the arrow keys, **+** and **−** with the chart selected. Zoomed out, you see the trend line and the low-balance zone. Zoomed in, each bill and paycheck becomes a bar, with its amount. Tap a bar to read what it was and the balance after it.
-- **Everyday spending is in the chart too.** Groceries, gas and every other everyday spending item become one orange step a week (the 7th, 14th, 21st and 28th), so the chart shows your whole month and not only the bills. Add, change or remove an item and the Overview waterfall and this chart move right away. Weeks that have already passed count what you planned, or what you have spent so far if that is more. What is left is spread evenly over the weeks ahead. Other months use the plan, and earlier months use what you tracked. Turn **Include everyday spending** off, in the Starting balance sheet or under this chart, to chart bills and money in only. The low-balance warnings, the health light and Easy mode's account message follow the same setting.
+- **Everyday spending is in the chart too.** Everyday spending items with no day (Groceries, Gas and the like) become one orange step a week (the 7th, 14th, 21st and 28th). An item with a **day of the month** sits on that day instead, under its own name. Once its day has passed it uses what you typed as spent, or the plan if you typed nothing. Either way, the chart shows your whole month and not only the bills. Add, change or remove an item and the Overview waterfall and this chart move right away. Weeks that have already passed count what you planned, or what you have spent so far if that is more. What is left is spread evenly over the weeks ahead. Other months use the plan, and earlier months use what you tracked. Turn **Include everyday spending** off, in the Starting balance sheet or under this chart, to chart bills and money in only. The low-balance warnings, the health light and Easy mode's account message follow the same setting.
 - **Three numbers on top.** The plan for today, your balance (the last one you typed) and the lowest the balance gets from today on.
 - **My chequing balance.** Type what your bank app shows, and the day it is for (today by default). It appears on the chart as a marker, and a line says whether you are **ahead of or behind plan** (the same message shows on the Overview card, where the waterfall gets a white **Now** bar). Each entry is kept in **Recent balances**, so the markers become a record of how real life compares with the plan. **Remove** deletes one. You can also type it in the **Starting balance** sheet, in **Chequing balance right now**.
 - **Update the forecast from it** (on by default). From the day you typed, the chart starts again from your real balance. Later months carry on from there, the low-balance warnings and the health light use it, and a dashed line shows the old plan so you can see the gap. Turn it off to keep the plan as it was, with the markers only.
@@ -57,7 +67,7 @@ You no longer have to type a payment. Link each loan or card to the bills you al
 
 ## Version number
 
-The app shows its version, for example **TapBudget version 32**, so you can tell which copy a phone is running. It is at the very bottom of the **Settings** page (below the privacy line), pinned at the bottom of the **menu** (hidden when the menu is collapsed to icons), and at the bottom of **More** in Easy mode. It is the same number as the cache name in `sw.js` (`tapbudget-v32`).
+The app shows its version, for example **TapBudget version 33**, so you can tell which copy a phone is running. It is at the very bottom of the **Settings** page (below the privacy line), pinned at the bottom of the **menu** (hidden when the menu is collapsed to icons), and at the bottom of **More** in Easy mode. It is the same number as the cache name in `sw.js` (`tapbudget-v33`).
 
 ## Easy mode
 
@@ -150,4 +160,4 @@ Tap the budget name under the greeting, or use the menu. **Menu → Manage budge
 ## Notes
 
 - Data lives in the browser on that device and is not encrypted. The budgets and settings are in localStorage. Each budget's look is in localStorage too. The wallpaper pictures are in IndexedDB, so they never take room from your budgets. A different phone or browser starts with the example until you Import.
-- Updating the app: re-upload the files that changed. Each time `index.html` changes, also change the cache name at the top of `sw.js` (for example `tapbudget-v32` to `tapbudget-v33`) so phones drop the old copy, and change `APP_VERSION` near the top of the script in `index.html` to the same number (`"33"`). That number is what the app shows as its version (see below). If a change doesn't appear, close and reopen the app.
+- Updating the app: re-upload the files that changed. Each time `index.html` changes, also change the cache name at the top of `sw.js` (for example `tapbudget-v33` to `tapbudget-v34`) so phones drop the old copy, and change `APP_VERSION` near the top of the script in `index.html` to the same number (`"34"`). That number is what the app shows as its version (see below). If a change doesn't appear, close and reopen the app.

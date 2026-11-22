@@ -769,6 +769,8 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
 .drawer-ver { flex:none; padding:var(--s2) var(--s4) calc(var(--s3) + env(safe-area-inset-bottom, 0px)); text-align:center; font-size:var(--fs-xs); color:var(--dr-muted); font-variant-numeric:tabular-nums; }
 .drawer.rail .drawer-ver { display:none; }
 .ez-ver { text-align:center; margin-top:22px; }
+
+.typehint { margin:var(--s2) 0 0; }
 </style>
 
 <script>try{var t=localStorage.getItem("budget-tracker:theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("budget-tracker:look")==="glass")document.documentElement.setAttribute("data-look","glass");var sw=localStorage.getItem("budget-tracker:sw");if(sw==="check"||sw==="orb"||sw==="sun"||sw==="soft")document.documentElement.setAttribute("data-sw",sw);if(localStorage.getItem("budget-tracker:easy")==="1")document.documentElement.setAttribute("data-easy","1");if(localStorage.getItem("budget-tracker:easysize")==="xl")document.documentElement.setAttribute("data-easysize","xl");var k=localStorage.getItem("budget-tracker:colorsCss");if(k){var s=document.createElement("style");s.id="userColors";s.textContent=k;document.head.appendChild(s)}var w=JSON.parse(localStorage.getItem("budget-tracker:wall")||"null");if(w&&w.on){var r=document.documentElement;r.classList.add("has-wall");r.style.setProperty("--wall-dim",String(Math.min(80,Math.max(0,+w.dim||0))/100));r.style.setProperty("--wall-blur",(Math.min(100,Math.max(0,+w.blur||0))*0.24)+"px")}}catch(e){}</script>
@@ -864,7 +866,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
   let itemsCol = null, payCol = null;
 
   /* ---------- storage: this device's localStorage, one entry holding every budget ---------- */
-  const APP_VERSION = "32";                                        // keep equal to the number in sw.js (CACHE = "tapbudget-v32")
+  const APP_VERSION = "33";                                        // keep equal to the number in sw.js (CACHE = "tapbudget-v33")
   const KEY = "budget-tracker:v2", OLD_KEY = "budget-tracker:v1";
   const TYPES = ["income", "bill", "variable"];
   const ISO = /^\d{4}-\d{2}-\d{2}$/;
@@ -929,6 +931,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
     const it = { id: str(x.id, 80), name: str(x.name, 60) || "Untitled", type: x.type, amount: x.amount, account: str(x.account, 40), order: num(x.order) || 0, freq: x.freq === "biweekly" ? "biweekly" : "monthly" };
     if (it.freq === "biweekly") { if (!ISO.test(x.anchor || "")) return null; it.anchor = x.anchor; }
     else if (it.type !== "variable") it.day = Math.min(31, Math.max(1, Math.round(num(x.day) || 1)));
+    else { const dd = num(x.day); if (dd != null && dd >= 1 && dd <= 31) it.day = Math.round(dd); }          // optional for everyday spending
     if (x.recurring === true && it.type !== "variable") { it.recurring = true; it.autoSince = ISO.test(x.autoSince || "") ? x.autoSince : todayISO(); }
     return it;
   }
@@ -1767,21 +1770,26 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
   const actualsIn = (cash, y, m) => (cash && cash.follow !== false ? cleanActuals(cash.actuals) : []).filter((a) => a.d.slice(0, 7) === ymKey(y, m));
   function sampleCash() { const t = new Date(); return { starts: { [ymKey(t.getFullYear(), t.getMonth())]: 1700 }, warn: 500, carry: true, spend: true }; }
   const kfmt = (v) => { const a = Math.abs(v), t = a >= 1000 ? ("$" + (a / 1000).toFixed(1) + "k").replace(".0k", "k") : "$" + Math.round(a); return (v < 0 ? "−" : "") + t; };
-  function spendSteps(y, m, vars) {                                // everyday spending has no dates, so it becomes one step a week
-    const key = ymKey(y, m), t = new Date(), nowIdx = t.getFullYear() * 12 + t.getMonth(), idx = y * 12 + m; let planned = 0, spent = 0;
-    for (const it of vars) {
-      const pr = state.pay.get(it.id + "_" + key), sp = pr && isNum(+pr.amt) ? Math.max(0, +pr.amt) : 0;
-      spent += sp; planned += idx < nowIdx ? (sp > 0 ? sp : it.amount || 0) : Math.max(it.amount || 0, sp);     // an earlier month: what you tracked, else the plan
+  function spendSteps(y, m, items) {                               // everyday spending: items with a day sit on that day; the rest become one step a week
+    const key = ymKey(y, m), t = new Date(), nowIdx = t.getFullYear() * 12 + t.getMonth(), idx = y * 12 + m, last = daysIn(y, m), today = t.getDate();
+    const spentOf = (it) => { const pr = state.pay.get(it.id + "_" + key); return pr && isNum(+pr.amt) ? Math.max(0, +pr.amt) : 0; };
+    const out = [], pool = [];
+    for (const it of items) {
+      if (!it.day) { pool.push(it); continue; }
+      const sp = spentOf(it), passed = idx < nowIdx || (idx === nowIdx && it.day <= today), amt = passed ? (sp > 0 ? sp : it.amount || 0) : Math.max(it.amount || 0, sp);     // once its day has passed: what you spent, else the plan
+      if (amt > 0) out.push({ due: isoOf(y, m, Math.min(it.day, last)), name: it.name, amt: -Math.round(amt * 100) / 100, inc: false, spend: true });
     }
-    if (planned <= 0) return [];
-    const last = daysIn(y, m), days = [7, 14, 21, 28].filter((d) => d <= last), name = "Everyday spending";
+    let planned = 0, spent = 0;
+    for (const it of pool) { const sp = spentOf(it); spent += sp; planned += idx < nowIdx ? (sp > 0 ? sp : it.amount || 0) : Math.max(it.amount || 0, sp); }
+    if (planned <= 0) return out;
+    const days = [7, 14, 21, 28].filter((d) => d <= last), name = "Everyday spending";
     const mk = (day, amt) => ({ due: isoOf(y, m, day), name, amt: -Math.round(amt * 100) / 100, inc: false, spend: true });
     const spread = (list, total) => { if (!list.length || total <= 0) return []; const each = Math.floor((total / list.length) * 100) / 100, rest = Math.round((total - each * list.length) * 100) / 100; return list.map((d, k) => mk(d, each + (k === list.length - 1 ? rest : 0))); };
-    if (idx !== nowIdx) return spread(days, planned);              // other months: evenly through the month
-    const today = t.getDate(), w = planned / days.length, future = days.filter((d) => d > today); let past = days.filter((d) => d <= today);
+    if (idx !== nowIdx) return out.concat(spread(days, planned));  // other months: evenly through the month
+    const w = planned / days.length, future = days.filter((d) => d > today); let past = days.filter((d) => d <= today);
     const pastTotal = Math.max(spent, w * past.length);            // weeks that have passed: the plan, or what you actually spent if that is more
     if (!past.length && pastTotal > 0) past = [today];             // early in the month: anything spent so far lands on today
-    return [...spread(past, pastTotal), ...spread(future, Math.max(0, planned - pastTotal))];       // the rest, evenly over the weeks ahead
+    return out.concat(spread(past, pastTotal), spread(future, Math.max(0, planned - pastTotal)));       // the rest, evenly over the weeks ahead
   }
   function monthSteps(y, m, cash) {                                // bills, money in and everyday spending for a month, in date order (money in first on the same day)
     const rows = [], vars = [];
@@ -2601,7 +2609,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
     const cap = h("div", { class: "cxcap", role: "status", "aria-live": "polite" }, "Drag to move. Pinch, or use + and −, to zoom. Tap a bar for details.");
     const plot = h("div", { class: "cxplot", tabindex: "0", role: "group", "aria-label": "Cash flow chart. Arrow keys move it, plus and minus zoom." });
     let geom = null; const paint = () => { geom = cxDraw(plot); chips(); }; cxPaint = paint;
-    const setSpan = (days) => { const c = (cxView.t0 + cxView.t1) / 2, tdy = dnum(todayISO()), keep = c >= cxS.first && c <= cxS.last ? c : tdy; cxView = cxClamp({ t0: keep - days * 0.3, t1: keep + days * 0.7 }); cxSel = null; paint(); };
+    const setSpan = (days) => { const tdy = dnum(todayISO()), c = (cxView.t0 + cxView.t1) / 2, keep = tdy >= cxS.first && tdy <= cxS.last ? tdy : c; cxView = cxClamp({ t0: keep - days * 0.3, t1: keep + days * 0.7 }); cxSel = null; paint(); };      // the chips show that much time around today
     const zoom = (f, around) => { const span = cxView.t1 - cxView.t0, c = around == null ? (cxView.t0 + cxView.t1) / 2 : around, ns = span * f, t0 = c - (c - cxView.t0) * (ns / span); cxView = cxClamp({ t0, t1: t0 + ns }); paint(); };
     const pan = (frac) => { const span = cxView.t1 - cxView.t0; cxView = cxClamp({ t0: cxView.t0 + span * frac, t1: cxView.t1 + span * frac }); paint(); };
     const chipBtns = [[31, "1 month"], [92, "3 months"], [183, "6 months"], [365, "1 year"]].map(([d, l]) => h("button", { type: "button", class: "chipbtn", "data-d": String(d), onclick: () => setSpan(d) }, l));
@@ -2908,7 +2916,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
     const it = o.item, p = state.pay.get(o.key), spent = p ? p.amt || 0 : 0, over = spent > it.amount;
     const r = h("div", { class: "row vrow" },
       h("div", { class: "vline" },
-        h("div", { class: "main" }, h("div", { class: "name" }, it.name), h("div", { class: "meta" }, "Budget " + fmt(it.amount) + (over ? "" : " · " + fmt(it.amount - spent) + " left"), over ? h("span", { class: "tag bad" }, fmt(spent - it.amount) + " over") : null)),
+        h("div", { class: "main" }, h("div", { class: "name" }, it.name), h("div", { class: "meta" }, "Budget " + fmt(it.amount) + (it.day ? " · on the " + ordinal(it.day) : "") + (over ? "" : " · " + fmt(it.amount - spent) + " left"), over ? h("span", { class: "tag bad" }, fmt(spent - it.amount) + " over") : null)),
         h("div", { class: "spent" }, "Spent $", h("input", { type: "number", step: "0.01", min: "0", value: spent ? String(spent) : "", placeholder: "0", "aria-label": "Amount spent on " + it.name,
           onchange: (e) => { const v = parseFloat(e.target.value); if (!v || v <= 0) store.delPay(o.key); else store.setPay(o.key, { item: it.id, due: null, on: (p && p.on) || todayISO(), amt: v }); } }))),
       h("div", { class: "bar" + (over ? " over" : ""), role: "img", "aria-label": fmt(spent) + " of " + fmt(it.amount) + " spent" }, h("i", { style: "width:" + Math.min(100, Math.round((it.amount ? spent / it.amount : 0) * 100)) + "%" })));
@@ -2923,6 +2931,7 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
       h("label", {}, "Name", h("input", { type: "text", value: it.name, maxlength: "60", onchange: (e) => { const v = e.target.value.trim(); if (v) store.setItem({ ...it, name: v }); } })),
       h("label", {}, "Account", h("input", { type: "text", value: it.account || "", maxlength: "40", onchange: (e) => store.setItem({ ...it, account: e.target.value.trim() }) })),
       h("label", {}, "Amount $", h("input", { type: "number", step: "0.01", min: "0", value: String(it.amount), onchange: (e) => { const v = parseFloat(e.target.value); if (!isNaN(v) && v >= 0) store.setItem({ ...it, amount: v }); } })),
+      it.type === "variable" ? h("label", {}, "Day of month (optional)", h("input", { class: "day", type: "number", min: "1", max: "31", value: it.day ? String(it.day) : "", placeholder: "none", onchange: (e) => { const t = e.target.value.trim(); if (t === "") { const { day, ...rest } = it; store.setItem(rest); return; } const v = parseInt(t, 10); if (v >= 1 && v <= 31) store.setItem({ ...it, day: v }); } })) : null,
       it.type !== "variable" && it.freq !== "biweekly" ? h("label", {}, "Due day", h("input", { class: "day", type: "number", min: "1", max: "31", value: String(it.day || 1), onchange: (e) => { const v = parseInt(e.target.value, 10); if (v >= 1 && v <= 31) store.setItem({ ...it, day: v }); } })) : null,
       rm);
   }
@@ -3023,10 +3032,13 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
     f.day = h("input", { type: "number", min: "1", max: "31", placeholder: "1–31" });
     f.anchor = h("input", { type: "date", value: todayISO() });
     f.account = h("input", { type: "text", placeholder: "Optional", maxlength: "40" });
-    const dayF = field("Due day of month", f.day), freqF = field("How often", f.freq), anchorF = field("First date", f.anchor);
+    const dayText = document.createTextNode("Due day of month"), dayF = h("label", {}, dayText, f.day), freqF = field("How often", f.freq), anchorF = field("First date", f.anchor);
+    const typeHint = h("p", { class: "sub typehint" }), TYPE_HINTS = { bill: "A payment with a due date. Tick it when you pay it.", income: "Money coming in, like a paycheck. Tick it when it arrives.", variable: "A monthly budget you spend from, like groceries. Type what you have spent as you go. If it also has a date, add the day and the cash flow shows it on that date. Without a day, it is spread through the month." };
     const sync = () => {
       const v = f.type.value === "variable", bi = f.freq.value === "biweekly" && !v;
-      freqF.hidden = v; dayF.hidden = v || bi; anchorF.hidden = !bi;
+      freqF.hidden = v; dayF.hidden = bi; anchorF.hidden = !bi;
+      dayText.nodeValue = v ? "Day of the month (optional)" : "Due day of month"; f.day.placeholder = v ? "Optional, 1–31" : "1–31";
+      typeHint.textContent = TYPE_HINTS[f.type.value];
     };
     f.type.addEventListener("change", sync); f.freq.addEventListener("change", sync);
     const err = h("div", { class: "sub", role: "alert" });
@@ -3035,14 +3047,14 @@ html[data-easy] .toast { bottom:calc(6.2em + env(safe-area-inset-bottom, 0px)); 
       if (!name) { err.textContent = "Please enter a name."; return; }
       if (isNaN(amount) || amount < 0) { err.textContent = "Please enter an amount."; return; }
       const it = { id: name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) + "-" + Date.now().toString(36), name, type, amount, account: f.account.value.trim(), order: Math.max(0, ...state.items.map((x) => x.order || 0)) + 1 };
-      if (type === "variable") { it.freq = "monthly"; }
+      if (type === "variable") { it.freq = "monthly"; if (f.day.value.trim() !== "") { const d = parseInt(f.day.value, 10); if (!(d >= 1 && d <= 31)) { err.textContent = "Please enter a day from 1 to 31, or leave it empty."; return; } it.day = d; } }
       else if (f.freq.value === "biweekly") { if (!f.anchor.value) { err.textContent = "Please pick the first date."; return; } it.freq = "biweekly"; it.anchor = f.anchor.value; }
       else { const d = parseInt(f.day.value, 10); if (!(d >= 1 && d <= 31)) { err.textContent = "Please enter a due day from 1 to 31."; return; } it.freq = "monthly"; it.day = d; }
       store.setItem(it); state.adding = false; state.note = "Added “" + it.name + "”."; render();
     } }, "Save item");
     host.append(h("div", { class: "panel" }, h("h3", {}, "Add an item"),
       h("div", { class: "fields" }, field("Name", f.name), field("Type", f.type), field("Amount ($)", f.amount), freqF, dayF, anchorF, field("Account", f.account)),
-      err, h("div", { class: "actions" }, save, h("button", { class: "btn", onclick: () => { state.adding = false; render(); } }, "Cancel"))));
+      typeHint, err, h("div", { class: "actions" }, save, h("button", { class: "btn", onclick: () => { state.adding = false; render(); } }, "Cancel"))));
     sync();
   }
 
